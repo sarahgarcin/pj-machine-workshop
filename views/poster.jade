@@ -1,0 +1,39 @@
+doctype html
+html
+  include snippets/head.jade
+  
+  body(data-page='poster')
+
+    div.content-wrapper
+      div.sidebar
+        div.meta-data
+          p.block-select
+          p.file-select
+        div.page-function
+          div.zoomFunction
+            span.plusButton + 
+            span.zoom-value 100%
+            span.minusButton - 
+          div.gridButton grid
+
+      div.video-view
+        //- display camera
+        video(id="video" autoplay)
+          
+      div#page-content.page
+        div.middle
+
+        div(class="page-wrapper" data-part="0")
+
+          div.grid.row
+            - for (var i = 0; i < 30; ++i) {
+              div.grid-el.columns
+            - }
+
+    .js--templates
+      div.content.--js-content-el.small-push-1
+
+    include snippets/footer.jade
+    //script(src='/js/poster.js')
+
+

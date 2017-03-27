@@ -1,6 +1,7 @@
 // I M P O R T    F O N T 
 @import "../fonts/volkorn/stylesheet.css";
 @import "../fonts/inknut/stylesheet.css";
+@import "../fonts/nanook/stylesheet.css";
 @import "settings.scss";
 
 // PAGE
@@ -10,6 +11,11 @@ $margintop: $page-margintop;
 $marginleft: $page-marginleft;
 
 $scale : $page-scale;
+
+// T A I L L E S
+$margin: 16px;
+$marginrem: .9375rem;
+$t-navbarheight: 70px;
 
 
 // FONT SIZE

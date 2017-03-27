@@ -1,17 +1,24 @@
 var folder = 'data';
 
 var settings = {
+	"title": "PJ Machine @PrePostPrint",
+
 	"architecture" : [['01', 'text'], ['02', 'text'], ['03', 'text'],['pdf', 'pdf']],
 	"folder": folder,
 	"words" :['machine', 'research', 'computer', 'vision', 'network', 'data', 'algorithm', 'learning', 'AEO', 'AMB', 'ANO', 'DSP'],
 
 	"contentDir" : "content",
-  "metaFileext" : ".md",
+  "metaFileext" : ".txt",
   "confMetafilename" : "data",
 
   "metaDateFormat" : "YYYYMMDD_HHmmss",
   "textEncoding" : "UTF-8",
   "textFieldSeparator" : "\n\n----\n\n",
+
+  "regexpMatchFolderNames" : "^([^.]+)$",
+  "regexpMatchProjectPreviewNames" : "^(apercu|preview)",
+  "regexpGetFileExtension" : "\\.[^.]*$",
+  "regexpRemoveFileExtension" : "(.+?)(\\.[^.]*$|$)",
 
   // ZOOM settings
   "maxZoom" : 3,

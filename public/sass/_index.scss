@@ -1,0 +1,146 @@
+/******************
+  Mixins
+  ********************/
+
+@mixin clearfix {
+  &:before, &:after { content: " "; display: table; }
+  &:after { clear: both; }
+}
+
+@mixin container {
+  position: relative;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
+}
+
+
+@mixin button {
+  -webkit-appearance: none;
+  display: inline-block;
+  background: #FFF;
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  font-size: .8em;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-family: inherit;
+  &:hover{
+    background-color: #FFF; 
+    color: #000;
+  }
+  &:focus {
+    outline: none;
+
+  }
+}
+
+
+button, .btn {
+  @include button;
+}
+
+// I N D E X
+body[data-page="index"]{
+  background:#000;
+  color: #FFF;
+  font-family:"nanook", sans-serif;
+  h1,h2,h3,h4,h5{
+    font-family:"nanook", sans-serif;
+    color: #FFF;
+  }
+  .module--bandeau{
+    margin: 2em 3em;
+    h1{
+      font-family:"nanook", sans-serif;
+      font-weight:normal;
+      color: #FFF;
+      .p1{ 
+        transform: scale(1) rotate(0deg) translate(0px, 0px) skew(20deg, 0deg);
+        position:absolute; 
+        left:1.7em;
+      }
+      .p2{ 
+        transform: scale(1) rotate(0deg) translate(0px, 0px) skew(-20deg, 0deg);
+        position:absolute; 
+        left:3.6em;
+      }
+      .p3{
+        position: absolute; 
+        left:5.8em;
+      }
+    }
+  }
+  .module--listePresentations{
+    padding-top: 70px;
+    @include container;
+
+    h2 {
+      color: #FFF;
+      font-size: 1.2em;
+      margin-bottom: 1em;
+    }
+  }
+  .dossier-list {
+    @include clearfix;
+    margin: 0 -10px;
+  }
+  .dossier {
+    position: relative;
+    width: 285px;
+    float: left;
+    padding: 15px 20px 20px;
+    margin:10px;
+
+    background-color: #FFF;
+    border-bottom:  2px solid #FFF;
+    border-radius: 2px;
+
+
+    &_newconfform {
+      background-color: transparent;
+      border: 2px solid hsl(0, 0%, 94%);
+
+    }
+
+    input.title{
+      font-size: 1rem;
+    }
+
+    .title {
+      font-size:  1.2em;
+      margin-bottom:  30px;
+      color: #000;
+      margin-bottom:0;
+    }
+
+    input, textarea {
+      width:  100%;
+      padding:5px;
+      border:2px solid #eee;
+      &:focus {
+        outline: 2px solid #FFF;
+      }
+    }
+
+    input[type="submit"] {
+      @extend button;
+        width: auto;
+        float: right;
+        margin-top: 15px;
+    }
+  }
+
+}
+
+.js--templates {
+  display: none;
+}
+
+
+
+
+

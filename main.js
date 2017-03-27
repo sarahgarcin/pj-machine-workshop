@@ -1,14 +1,19 @@
-var fs = require('fs-extra'),
+const fs = require('fs-extra'),
 	junk = require('junk'),
 	glob = require("glob"),
 	moment = require('moment'),
 	path = require("path"),
 	exec = require('child_process').exec,
 	parsedown = require('woods-parsedown'),
-	phantom = require('phantom');
+	phantom = require('phantom'),
+	slugg = require('slugg');
+
+	const
+	  settings  = require('./content/settings.js'),
+	  api = require('./bin/api')
+	;
 
 	var _ph, _page, _outObj;
-	var settings  = require('./content/settings.js');
 	var readPageSettings = fs.readFileSync('./content/page.json', 'utf-8');
 	var pageSettings = JSON.parse(readPageSettings)
 
@@ -23,12 +28,13 @@ module.exports = function(app, io){
 	
 	io.on("connection", function(socket){
 
-		socket.on('test', function(info){
-			console.log(info);
-		});
 
 		//INDEX
-		createDataFile(socket);
+		socket.on('newConf', onNewConf);
+		socket.on('listConf', function (data){ onListConf(socket); });
+
+		// POSTER
+		//createDataFile(socket);
 		socket.on( 'listFiles', function (data){ onListFolders(socket); });
 		
 		socket.on('changeText', onChangeText);
@@ -62,6 +68,31 @@ module.exports = function(app, io){
 
 
 // ------------- F U N C T I O N S -------------------
+
+	// I N D E X    P A G E
+  function onListConf( socket){
+    console.log( "EVENT - onListConf");
+    listAllFolders().then(function( allFoldersData) {
+      sendEventWithContent( 'listAllFolders', allFoldersData, socket);
+    }, function(error) {
+      console.error("Failed to list folders! Error: ", error);
+    });
+  }
+
+	function onNewConf( confData) {
+    console.log('New Conf: ');
+    console.log(confData);
+    createNewConf(confData).then(function(newpdata) {
+      console.log('newpdata: '+newpdata);
+      sendEventWithContent('confCreated', newpdata);
+    }, function(errorpdata) {
+      console.error("Failed to create a new folder! Error: ", errorpdata);
+      sendEventWithContent('confAlreadyExist', errorpdata);
+    });
+  }
+
+  // P O S T E R   P A G E 
+
 	function onListFolders( socket){
 		console.log( "EVENT - onListFolders");
 		var printVar = getBaseFolderMeta('');
@@ -189,6 +220,49 @@ module.exports = function(app, io){
       console.error("Failed to update a folder! Error: ", error);
     });
 	}
+
+// C O N F    F U N C T I O N S
+function createNewConf( confData) {
+  return new Promise(function(resolve, reject) {
+    console.log("COMMON — createNewFolder");
+
+    var confName = confData.titre;
+    var slugConfName = slugg(confName);
+    var confPath = api.getContentPath(slugConfName);
+    var currentDateString = api.getCurrentDate();
+
+
+    fs.access(confPath, fs.F_OK, function( err) {
+      // if there's nothing at path
+      if (err) {
+        console.log("New conf created with name " + confName + " and path " + confPath);
+        fs.ensureDirSync(confPath);//write new folder in folders
+        var fmeta =
+          {
+            "name" : confName,
+            "created" : currentDateString,
+          };
+        storeData( getMetaFileOfFolder(confPath), fmeta, "create").then(function( meta) {
+            console.log('sucess ' + meta)
+          resolve( meta);
+        }, function(err) {
+          console.log( gutil.colors.red('--> Couldn\'t create conf meta.'));
+          reject( 'Couldn\'t create conf meta ' + err);
+        });
+
+      } else {
+        // if there's already something at path
+        console.log("WARNING - the following folder name already exists: " + slugConfName);
+        var objectJson = {
+          "name": confName,
+          "timestamp": currentDateString
+        };
+        reject( objectJson);
+      }
+    });
+
+  });
+}
 
 // -------  Z O O M     F U N C T I O N S ----------- 
 	
