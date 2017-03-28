@@ -31,17 +31,16 @@ var api = (function() {
       var fileExtension = new RegExp( settings.regexpGetFileExtension, 'i').exec( fileName)[0];
       var fileNameWithoutExtension = new RegExp( settings.regexpRemoveFileExtension, 'i').exec( fileName)[1];
       fileNameWithoutExtension = slugg(fileNameWithoutExtension);
-      dev.logverbose("Looking for existing file with name : " + fileNameWithoutExtension + " in confPath : " + confPath);
       try {
         var newFileName = fileNameWithoutExtension + fileExtension;
         var newMetaFileName = fileNameWithoutExtension + settings.metaFileext;
         var index = 0;
         var newPathToFile = path.join(confPath, newFileName);
         var newPathToMeta = path.join(confPath, newMetaFileName);
-        dev.logverbose( "2. about to look for existing files.");
+        console.log( "2. about to look for existing files.");
         // check si le nom du fichier et le nom du fichier méta sont déjà pris
         while( (!fs.accessSync( newPathToFile, fs.F_OK) && !fs.accessSync( newPathToMeta, fs.F_OK))){
-          dev.logverbose("- - following path is already taken : newPathToFile = " + newPathToFile + " or newPathToMeta = " + newPathToMeta);
+          console.log("- - following path is already taken : newPathToFile = " + newPathToFile + " or newPathToMeta = " + newPathToMeta);
           index++;
 
           newFileName = fileNameWithoutExtension + "-" + index + fileExtension;
@@ -52,7 +51,7 @@ var api = (function() {
       } catch(err) {
 
       }
-      dev.logverbose( "3. this filename is not taken : " + newFileName);
+      console.log( "3. this filename is not taken : " + newFileName);
       resolve(newFileName);
     });
   }
@@ -65,20 +64,11 @@ var api = (function() {
 
   function readConfMeta(slugConfName) {
     return new Promise(function(resolve, reject) {
-      dev.logfunction( "COMMON — readConfMeta: " + slugConfName);
+      console.log( "COMMON — readConfMeta: " + slugConfName);
       var metaConfPath = api.getMetaFileOfConf(slugConfName);
       var folderData = fs.readFileSync(metaConfPath, settings.textEncoding);
       var folderMetadata = api.parseData(folderData);
-
-      if(folderMetadata.introduction !== undefined) {
-        try {
-          folderMetadata.introduction = mm.parse(folderMetadata.introduction).content;
-        } catch(err){
-          console.log('Couldn’t parse conf introduction for conf ' + slugConfName);
-        }
-      }
-
-      dev.logverbose("conf meta : " + JSON.stringify(folderMetadata));
+      console.log("conf meta : " + JSON.stringify(folderMetadata));
       resolve(folderMetadata);
     });
   }
@@ -107,25 +97,25 @@ var api = (function() {
   }
   function textifyObj( obj) {
     var str = '';
-    dev.logverbose( '1. will prepare string for storage');
+    console.log( '1. will prepare string for storage');
     for (var prop in obj) {
       var value = obj[prop];
-      dev.logverbose('2. prop ? ' + prop + ' and value ? ' + value);
+      console.log('2. prop ? ' + prop + ' and value ? ' + value);
       // if value is a string, it's all good
       // but if it's an array (like it is for medias in publications) we'll need to make it into a string
       if( typeof value === 'array' || typeof value === 'object') {
-        dev.logverbose('this is an array');
+        console.log('this is an array');
         value = value.join('\n');
       // check if value contains a delimiter
       } else if( typeof value === 'string' && value.indexOf('\n----\n') >= 0) {
-        dev.logverbose( '2. WARNING : found a delimiter in string, replacing it with a backslash');
+        console.log( '2. WARNING : found a delimiter in string, replacing it with a backslash');
         // prepend with a space to neutralize it
         value = value.replace('\n----\n', '\n ----\n');
       }
       str += prop + ': ' + value + settings.textFieldSeparator;
-  //       dev.logverbose('Current string output : ' + str);
+  //       console.log('Current string output : ' + str);
     }
-  //     dev.logverbose( '3. textified object : ' + str);
+  //     console.log( '3. textified object : ' + str);
     return str;
   }
 
@@ -135,7 +125,7 @@ var api = (function() {
 
 
   function parseData(d) {
-    	dev.logverbose("Will parse data");
+    	console.log("Will parse data");
     	var parsed = parsedown(d);
     	// if there is a field called slides, this one has to be made into an array
     	if( parsed.hasOwnProperty('slides')) {

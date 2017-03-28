@@ -4,29 +4,41 @@ var url = require('url'),
     fs = require('fs-extra'),
     marked = require('marked');
 
-var settings  = require('./content/settings.js');
+const
+  settings  = require('./content/settings.js'),
+  api = require('./bin/api')
+;
+
 var projectTitle = settings.title;
 
 
 module.exports = function(app,io,m){
 
   app.get("/", getIndex);
-  app.get("/:project", getProject);
+  app.get("/:poster", getPoster);
 
   function getIndex(req, res) {
     
     var dataToSend = {
-      title: projectTitle,
+      "title": projectTitle,
     }
     res.render("index", dataToSend);
 
   };
 
-  function getProject(req, res) {
-    var dataToSend = {
-      title: projectTitle,
-    }
-    res.render("poster", dataToSend);
+  function getPoster(req, res) {
+    var slugConfName = req.params;
+    api.readConfMeta(slugConfName.poster).then(function(c) {
+
+      var pageTitle = c.name + ' | PJ Machine';
+      res.render("poster", {
+        "confName" : c.name,
+        "title" : pageTitle,
+        "slugConfName" : slugConfName,
+        "settings" : settings,
+      });
+
+    });
   };
 
 
