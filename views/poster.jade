@@ -4,36 +4,45 @@ html
   
   body(data-page='poster')
 
-    div.content-wrapper #{confName}
-      div.sidebar
-        div.meta-data
-          p.block-select
-          p.file-select
-        div.page-function
-          div.zoomFunction
-            span.plusButton + 
-            span.zoom-value 100%
-            span.minusButton - 
-          div.gridButton grid
+    header
+      .module--infos
+        h1 #{appName}
+        h2 #{confName}
+      .module--interface-features
+        .zoomFunction
+          span.plusButton + 
+          span.zoom-value 100%
+          span.minusButton - 
+        .gridButton grid
+        .debugButton debug
 
-      div.video-view
-        //- display camera
-        video(id="video" autoplay)
-          
-      div#page-content.page
-        div.middle
 
+    .content-wrapper
+      #page-content.page
         div(class="page-wrapper" data-part="0")
-
-          div.grid.row
+          .grid.row
             - for (var i = 0; i < 30; ++i) {
               div.grid-el.columns
             - }
+      .module--sidebar
+        button.js--add-block +
+        .module--block-selected
+          p
+        .module--md-editor
+          span  Markdown Editor
+          textarea
+          button.js--submit-md-editor Run
+        .module--css-editor
+          span Css Editor
+          textarea
+          button.js--submit-css-editor Run
+
 
     .js--templates
-      div.content.--js-content-el.small-push-1
+      .content.--js-content-el
+        button.js--remove-block -
 
     include snippets/footer.jade
-    //script(src='/js/poster.js')
+    script(src='/js/poster.js')
 
 

@@ -1,0 +1,32 @@
+path: content/data/poster-1/1
+
+----
+
+index: 1
+
+----
+
+zoom: 1
+
+----
+
+xPos: 0
+
+----
+
+yPos: 0
+
+----
+
+wordSpace: 0
+
+----
+
+blockSize: 8
+
+----
+
+content: # Write Markdown
+
+----
+

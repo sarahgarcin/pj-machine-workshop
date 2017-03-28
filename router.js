@@ -10,6 +10,7 @@ const
 ;
 
 var projectTitle = settings.title;
+var contentFolder = settings.folder;
 
 
 module.exports = function(app,io,m){
@@ -21,6 +22,7 @@ module.exports = function(app,io,m){
     
     var dataToSend = {
       "title": projectTitle,
+      "contentFolder":contentFolder
     }
     res.render("index", dataToSend);
 
@@ -30,11 +32,13 @@ module.exports = function(app,io,m){
     var slugConfName = req.params;
     api.readConfMeta(slugConfName.poster).then(function(c) {
 
-      var pageTitle = c.name + ' | PJ Machine';
+      var pageTitle = c.name + ' | ' + projectTitle;
       res.render("poster", {
         "confName" : c.name,
         "title" : pageTitle,
-        "slugConfName" : slugConfName,
+        "appName" : projectTitle,
+        "slugConfName" : slugConfName.poster,
+        "contentFolder":contentFolder,
         "settings" : settings,
       });
 

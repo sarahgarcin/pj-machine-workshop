@@ -1,7 +1,7 @@
 var folder = 'data';
 
 var settings = {
-	"title": "PJ Machine @PrePostPrint",
+	"title": "PJ Machine",
 
 	"architecture" : [['01', 'text'], ['02', 'text'], ['03', 'text'],['pdf', 'pdf']],
 	"folder": folder,

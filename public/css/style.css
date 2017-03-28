@@ -6884,9 +6884,6 @@ body[data-page="index"] {
       float: right;
       margin-top: 15px; }
 
-.js--templates {
-  display: none; }
-
 html {
   margin: 0; }
 
@@ -6956,92 +6953,82 @@ img {
   margin-bottom: 0.5cm; }
 
 .row {
+  width: 100%;
   max-width: 100%; }
 
-.sidebar {
-  position: absolute;
-  bottom: 0px;
-  right: 0;
-  background-color: #FFF;
-  z-index: 999;
-  width: 190px;
-  border: 0.5px solid #A6A6A6;
-  padding: 10px 10px 20px 15px;
-  text-transform: uppercase;
-  display: none; }
-  .sidebar.print {
-    display: none; }
-
-.meta-data p {
-  font-size: 12px;
-  color: #5E5B5D;
-  font-family: "inknut", sans-serif;
-  padding: 0 5px;
-  display: inline-block; }
-
-.page-function .gridButton {
-  font-size: 12px;
-  text-align: center;
-  margin-top: 10px;
-  padding: 5px 15px;
-  width: 80px;
-  border: 0.5px solid #A6A6A6;
-  color: #5E5B5D;
-  cursor: pointer; }
-  .page-function .gridButton.active {
-    background-color: #5E5B5D;
-    color: #FFF; }
-
-.page-function .zoomFunction {
-  font-size: 12px;
-  color: #5E5B5D; }
-  .page-function .zoomFunction .minusButton, .page-function .zoomFunction .plusButton {
-    text-align: center;
-    padding: 5px 10px;
-    border: 0.5px solid #A6A6A6;
-    cursor: pointer; }
-    .page-function .zoomFunction .minusButton:hover, .page-function .zoomFunction .minusButton:active, .page-function .zoomFunction .plusButton:hover, .page-function .zoomFunction .plusButton:active {
-      background-color: #5E5B5D;
+header {
+  height: 50px;
+  background-color: #000;
+  color: #FFF;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 200; }
+  header:before, header:after {
+    content: " ";
+    display: table; }
+  header:after {
+    clear: both; }
+  header .module--infos {
+    padding-left: 20px; }
+    header .module--infos h1, header .module--infos h2 {
+      position: relative;
+      margin: 0;
+      padding: 10px;
+      font-size: 20px;
+      float: left;
+      line-height: 120%;
       color: #FFF; }
-  .page-function .zoomFunction .zoom-value {
-    margin: 0 10px; }
+  header .module--interface-features {
+    float: right;
+    padding-right: 20px; }
+    header .module--interface-features div {
+      float: left;
+      position: relative;
+      padding: 10px;
+      cursor: pointer; }
 
-.page {
-  width: 29.7cm;
-  height: 21cm;
-  margin: 0 0;
-  position: relative;
-  transform: scale(1);
-  transform-origin: 0 0; }
-  .page.print {
-    left: -563px; }
-  .page .page-wrapper {
-    margin: 0.7cm 0cm;
+.content-wrapper {
+  background: #DFDFDF;
+  width: 100%;
+  padding-top: 70px; }
+  .content-wrapper .module--sidebar {
+    width: 400px;
+    height: 92vh;
+    position: fixed;
+    top: 50px;
+    right: 0;
+    background-color: #C3C3C3;
+    z-index: 100; }
+    .content-wrapper .module--sidebar textarea {
+      height: 28vh; }
+  .content-wrapper .page {
+    background-color: #FFF;
     width: 29.7cm;
-    height: 19.6cm; }
-    .page .page-wrapper .content {
-      width: 14.14286cm;
-      padding-right: 0.5cm;
-      position: absolute; }
-      .page .page-wrapper .content[data-folder="long"], .page .page-wrapper .content[data-folder="long2"] {
-        width: 25%; }
-      .page .page-wrapper .content[data-folder="short"], .page .page-wrapper .content[data-folder="short2"] {
-        width: 15%; }
-  .page .test {
-    height: 19.6cm;
-    width: 100%; }
-  .page .change-font {
-    font-family: "inknut", sans-serif, sans-serif;
-    font-size: 2em;
-    line-height: 1; }
-  .page .normal-font {
-    font-family: "vollkorn", sans-serif, serif; }
+    height: 21cm;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    position: relative;
+    transform: scale(1);
+    transform-origin: 0 0;
+    left: 50%;
+    margin-left: -25%; }
+    .content-wrapper .page .page-wrapper {
+      margin: 0.7cm 0cm;
+      width: 29.7cm;
+      height: 19.6cm; }
+      .content-wrapper .page .page-wrapper .content {
+        width: 14.14286cm;
+        padding-right: 0.5cm;
+        position: absolute;
+        border: 2px solid red; }
 
 .grid {
   height: 19.6cm;
   width: 100%;
-  border: 1px solid #00AADA;
-  display: none; }
+  border: 1px solid #00AADA; }
   .grid div {
     height: 100%;
     width: 3.33%;
@@ -7049,17 +7036,5 @@ img {
     .grid div:last-child {
       border: none; }
 
-.middle {
-  height: 21cm;
-  width: 1px;
-  border: 1px solid #000;
-  left: 49.8%;
-  position: absolute;
+.js--templates {
   display: none; }
-
-#video {
-  position: absolute;
-  width: 300px;
-  z-index: 999;
-  right: 0;
-  bottom: 0; }

@@ -34,6 +34,8 @@ module.exports = function(app, io){
 		socket.on('listConf', function (data){ onListConf(socket); });
 
 		// POSTER
+		socket.on('newBlock', onNewBlock);
+
 		//createDataFile(socket);
 		socket.on( 'listFiles', function (data){ onListFolders(socket); });
 		
@@ -108,57 +110,16 @@ module.exports = function(app, io){
     });
 	}
 
-	// save data in json file
-	function createDataFile(socket, event){
-		for(var i in settings.architecture){
-			var folder = contentFolder+chapterFolder+'/'+settings.architecture[i][0];
-			var left = parseInt(pageSettings.page.marginleft) + ((parseInt(pageSettings.page.widthPage) /3.8)* i) ;
-			if(settings.architecture[i][1] == 'text'){
-				if(event == 'reset'){
-					fs.unlinkSync(folder + '/' + settings.confMetafilename+ settings.metaFileext);
-					io.sockets.emit('pdfIsGenerated');
-				}
-				console.log('TEXT');
-				var txt = readTxtDir(folder);
-				var folderObj = {
-					path: folder,
-					txt : txt[txt.length-1],
-					index : 0,
-					zoom : 1,
-					xPos : left,
-					yPos : 1,
-					wordSpace : 0, 
-					nbOfFiles : txt.length, 
-					blockSize: 8
-				}
-			}
-			// if(settings.architecture[i][1] == 'img'){
-			// 	console.log('IMAGE');
-			// 	console.log(settings.architecture[i][1]);
-			// 	var images = readImagesDir(folder);
-			// 	var folderObj = {
-			// 		path: folder,
-			// 		currentImage : images[images.length-1],
-			// 		images: images,
-			// 		index : images.length,
-			// 		zoom : 1,
-			// 		xPos : left,
-			// 		yPos : 1,
-			// 		wordSpace : 0, 
-			// 		nbOfFiles : images.length, 
-			// 	}
-			// }
-
-			// console.log(folderObj);
-			createNewData(folderObj).then(function(newpdata) {
-				console.log('newpdata: '+newpdata);
-	      sendEventWithContent('displayPageEvents', newpdata);
-	    }, function(errorpdata) {
-	      console.log(errorpdata);
-
-	    });
-		}
+	function onNewBlock(blockData){
+		createNewBlock(blockData).then(function(newpdata) {
+      console.log('newpdata: '+newpdata);
+      sendEventWithContent('blockCreated', newpdata);
+    }, function(errorpdata) {
+      console.error("Failed to create a new folder! Error: ", errorpdata);
+      //sendEventWithContent('confAlreadyExist', errorpdata);
+    });
 	}
+
 
 	// reset 
 	function onReset(socket){
@@ -220,6 +181,59 @@ module.exports = function(app, io){
       console.error("Failed to update a folder! Error: ", error);
     });
 	}
+
+// BLOCK   FUNCTIONS
+function createNewBlock( blockData) {
+  return new Promise(function(resolve, reject) {
+    console.log("COMMON — createNewBlock");
+
+    var blockName = blockData.numBlocks;
+    var blockProjectPath = path.join(blockData.currentProject, blockName);
+    var blockPath = api.getContentPath(blockProjectPath);
+		var currentDateString = api.getCurrentDate();
+
+    fs.access(blockPath, fs.F_OK, function( err) {
+      // if there's nothing at path
+      if (err) {
+        console.log("New block created with name " + blockName + " and path " + blockPath);
+        fs.ensureDirSync(blockPath);//write new folder in folders
+        var fmeta = {
+          "path": blockPath,
+					"index" : blockName,
+					"zoom" : 1,
+					"xPos" : 0,
+					"yPos" : 0,
+					"wordSpace" : 0, 
+					"blockSize": 8,
+					"content": "# Write Markdown"
+        };
+        storeData( getMetaFileOfFolder(blockPath), fmeta, "create").then(function( meta) {
+          console.log('success ', meta);
+          storeMarkdownContent( path.join(meta.path, "1.txt"), fmeta.content, "create") 
+          resolve( meta);
+        }, function(err) {
+          console.log( gutil.colors.red('--> Couldn\'t create conf meta.'));
+          reject( 'Couldn\'t create conf meta ' + err);
+        });
+
+      } else {
+        // if there's already something at path
+        console.log("WARNING - the following folder name already exists: " + blockName);
+        var objectJson = {
+          "path": blockPath,
+					"index" : 0,
+					"zoom" : 1,
+					"xPos" : 0,
+					"yPos" : 1,
+					"wordSpace" : 0, 
+					"blockSize": 8
+        };
+        reject( objectJson);
+      }
+    });
+
+  });
+}
 
 // C O N F    F U N C T I O N S
 function createNewConf( confData) {
@@ -843,6 +857,24 @@ function createNewConf( confData) {
         fs.writeFile( mpath, textd, function(err) {
         if (err) reject( err);
           resolve(parseData(textd));
+        });
+      }
+    });
+	}
+
+	function storeMarkdownContent( mpath, d, e) {
+    return new Promise(function(resolve, reject) {
+      console.log('Will store Markdown data', mpath);
+      if( e === "create") {
+        fs.appendFile( mpath, d, function(err) {
+          if (err) reject( err);
+          resolve(d);
+        });
+      }
+		  if( e === "update") {
+        fs.writeFile( mpath, d, function(err) {
+        if (err) reject( err);
+          resolve(d);
         });
       }
     });
