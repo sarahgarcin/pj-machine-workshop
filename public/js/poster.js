@@ -10,7 +10,8 @@ var converter = new showdown.Converter({'tables':true});
 function onSocketConnect() {
 	sessionId = socket.io.engine.id;
 	console.log('Connected ' + sessionId);
-	socket.emit('listFiles', {"currentFolder":currentFolder, "currentProject" : currentProject,});
+	socket.emit('listFiles', {"currentFolder":currentFolder, "currentProject" : currentProject});
+	socket.emit('loadCSS',{"currentProject" : currentProject} );
 };
 
 function onSocketError(reason) {
@@ -24,6 +25,8 @@ socket.on('blockCreated', onBlockCreated);
 socket.on('displayPageEvents', onDisplayPage);
 socket.on('BlockData', onBlockData);
 socket.on('updatePoster', onUpdatePoster);
+socket.on('cssContent', onUpdateCSS);
+socket.on('cssLoaded', onCSSLoaded);
 
 (function init(){
 	
@@ -60,6 +63,21 @@ socket.on('updatePoster', onUpdatePoster);
 			"currentProject" : currentProject,
 			"currentBlock" : blockActive,
 			"newMdContent": newMdContent, 
+		});
+	});
+
+	// Run CSS on click "Run button"
+	$('.js--submit-css-editor').on('click', function(){
+		var newCSSContent = 
+		$('.module--css-editor textarea')
+		.val()
+		.replace(" ", "")
+		.replace("\n","")
+		;
+		
+		socket.emit('newCssContent', {
+			"newCSSContent": newCSSContent, 
+			"currentProject": currentProject
 		});
 	});
 
@@ -146,4 +164,15 @@ function onUpdatePoster(data){
 	//update content in block
 	$('.active-block').html(converter.makeHtml(data.content));
 	console.log(data);
+}
+
+function onUpdateCSS(css){
+	$('style').html(css);
+
+}
+
+function onCSSLoaded(pdata){
+	console.log("CSS loaded", pdata);
+	$('style').html(pdata.css);
+	$('.module--css-editor textarea').val(pdata.css);
 }

@@ -1,0 +1,38 @@
+path: content/data/poster-1/3
+
+----
+
+content: ![alt](https://pbs.twimg.com/profile_images/842668059957563392/b7Ul3eqy.jpg)
+
+
+
+----
+
+index: 3
+
+----
+
+zoom: 1
+
+----
+
+xPos: 0
+
+----
+
+yPos: 9
+
+----
+
+wordSpace: 0
+
+----
+
+blockSize: 8
+
+----
+
+filesNb: 1
+
+----
+

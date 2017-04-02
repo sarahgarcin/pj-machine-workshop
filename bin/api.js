@@ -95,7 +95,7 @@ var api = (function() {
       }
     });
   }
-  
+
   function textifyObj( obj) {
     var str = '';
     console.log( '1. will prepare string for storage');
@@ -128,13 +128,6 @@ var api = (function() {
   function parseData(d) {
     	console.log("Will parse data");
     	var parsed = parsedown(d);
-    	// if there is a field called slides, this one has to be made into an array
-    	if( parsed.hasOwnProperty('slides')) {
-      	parsed.slides = parsed.slides.trim();
-    	  parsed.slides = parsed.slides.split('\n');
-    	  // remove empty items from array
-      parsed.slides = parsed.slides.filter(String);
-    }
     	return parsed;
   }
 

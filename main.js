@@ -41,9 +41,14 @@ module.exports = function(app, io){
     // List all the blocks
 		socket.on( 'listFiles', function (data){ onListBlocks(data, socket); });
 
+    // Load CSS when start
+    socket.on('loadCSS', function (data){ onLoadCSS(data, socket)});
+
     // functions on blocks
     socket.on('loadBlockData', onLoadBlockData);
     socket.on('newMdContent', onNewMdContent);
+
+    socket.on('newCssContent', onNewCssContent);
 		
 		socket.on('changeText', onChangeText);
 		socket.on('changeTextPrev', onChangeTextPrev);
@@ -109,6 +114,12 @@ module.exports = function(app, io){
       });
   	}
 
+    function onLoadCSS(data, socket){
+      api.readConfMeta(data.currentProject).then(function(posterData){
+        socket.emit('cssLoaded', posterData);
+      });
+    }
+
   	function onNewBlock(blockData){
   		createNewBlock(blockData).then(function(newpdata) {
         console.log('newpdata: '+newpdata);
@@ -138,6 +149,23 @@ module.exports = function(app, io){
         console.error("Failed to update a folder! Error: ", error);
       });
 
+    }
+
+    function onNewCssContent(data){
+      console.log( "EVENT - onNewCssContent");
+
+      var newData = {
+        'css': data.newCSSContent,
+      }
+
+      updateFolderMeta(newData, data.currentProject).then(function( currentDataJSON) {
+        console.log(currentDataJSON);
+        sendEventWithContent('cssContent', data.newCSSContent);
+      }, function(error) {
+        console.error("Failed to update a folder! Error: ", error);
+      });
+
+      // io.sockets.emit('cssContent', data.newCSSContent);
     }
 
 // ------
@@ -683,6 +711,7 @@ module.exports = function(app, io){
       var newYPos = newData.yPos;
       var newSpace = newData.wordSpace;
       var newBlockSize = newData.blockSize;
+      var newCSS = newData.css;
 
       api.readConfMeta(pathToRead).then(function(fmeta){
         if(newText != undefined)
@@ -699,6 +728,9 @@ module.exports = function(app, io){
          fmeta.wordSpace = newSpace;
         if(newBlockSize != undefined)
          fmeta.blockSize = newBlockSize;
+        if(newCSS != undefined)
+         fmeta.css = newCSS;
+
 
         //envoyer les changements dans le JSON du folder
         api.storeData( api.getMetaFileOfConf( pathToRead), fmeta, "update").then(function( ufmeta) {

@@ -146,7 +146,8 @@ header{
       width: $widthPage - ($marginleft * 2);
       height: $heightPage - ($margintop * 2);
       .content{
-        width: ($widthPage - ($marginleft * 2))/2.1;
+        // width: ($widthPage - ($marginleft * 2))/2.1;
+        width: auto;
         padding-right: 0.5cm;
         position:absolute;
         border:2px solid red;
