@@ -150,6 +150,10 @@ header{
         padding-right: 0.5cm;
         position:absolute;
         border:2px solid red;
+        cursor: pointer;
+        &.active-block{
+          background-color: #DEDEDE;
+        }
       }
 
     }

@@ -1,8 +1,8 @@
-path: content/data/poster-1/1
+path: content/data/poster-1/2
 
 ----
 
-index: 1
+index: 2
 
 ----
 
@@ -14,7 +14,7 @@ xPos: 0
 
 ----
 
-yPos: 1
+yPos: 4
 
 ----
 
@@ -30,7 +30,7 @@ filesNb: 1
 
 ----
 
-content: # yoooooo
+content: # hello baby
 
 ----
 

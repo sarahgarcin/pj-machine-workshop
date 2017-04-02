@@ -37,7 +37,12 @@ module.exports = function(app, io){
 		socket.on('newBlock', onNewBlock);
 
 		//createDataFile(socket);
-		socket.on( 'listFiles', function (data){ onListFolders(socket); });
+
+    // List all the blocks
+		socket.on( 'listFiles', function (data){ onListBlocks(data, socket); });
+
+    // functions on blocks
+    socket.on('loadBlockData', onLoadBlockData);
 		
 		socket.on('changeText', onChangeText);
 		socket.on('changeTextPrev', onChangeTextPrev);
@@ -74,7 +79,7 @@ module.exports = function(app, io){
 	// I N D E X    P A G E
   function onListConf( socket){
     console.log( "EVENT - onListConf");
-    listAllFolders().then(function( allFoldersData) {
+    listAllFolders(api.getContentPath()).then(function( allFoldersData) {
       sendEventWithContent( 'listAllFolders', allFoldersData, socket);
     }, function(error) {
       console.error("Failed to list folders! Error: ", error);
@@ -95,15 +100,12 @@ module.exports = function(app, io){
 
   // P O S T E R   P A G E 
 
-	function onListFolders( socket){
+	function onListBlocks(data, socket){
 		console.log( "EVENT - onListFolders");
-		var printVar = getBaseFolderMeta('');
-		sendEventWithContent('displayPrintPage', printVar);
+    var pathToRead = api.getContentPath(data.currentProject);
 
-
-
-    listAllFolders().then(function( allFoldersData) {
-    	// console.log(allFoldersData)
+    listAllFolders(pathToRead).then(function( allFoldersData) {
+    	console.log(allFoldersData)
       sendEventWithContent( 'displayPageEvents', allFoldersData, socket);
     }, function(error) {
       console.error("Failed to list folders! Error: ", error);
@@ -120,6 +122,13 @@ module.exports = function(app, io){
     });
 	}
 
+  function onLoadBlockData(data){
+    var pathToRead = api.getContentPath(data.currentProject);
+    var folderMetaData = getFolderMeta( data.dataFolder, pathToRead);
+    sendEventWithContent( 'BlockData', folderMetaData);
+  }
+
+// ------
 
 	// reset 
 	function onReset(socket){
@@ -183,100 +192,103 @@ module.exports = function(app, io){
 	}
 
 // BLOCK   FUNCTIONS
-function createNewBlock( blockData) {
-  return new Promise(function(resolve, reject) {
-    console.log("COMMON — createNewBlock");
+  function createNewBlock( blockData) {
+    return new Promise(function(resolve, reject) {
+      console.log("COMMON — createNewBlock");
 
-    var blockName = blockData.numBlocks;
-    var blockProjectPath = path.join(blockData.currentProject, blockName);
-    var blockPath = api.getContentPath(blockProjectPath);
-		var currentDateString = api.getCurrentDate();
+      var blockName = blockData.numBlocks;
+      var blockProjectPath = path.join(blockData.currentProject, blockName);
+      var blockPath = api.getContentPath(blockProjectPath);
+  		var currentDateString = api.getCurrentDate();
 
-    fs.access(blockPath, fs.F_OK, function( err) {
-      // if there's nothing at path
-      if (err) {
-        console.log("New block created with name " + blockName + " and path " + blockPath);
-        fs.ensureDirSync(blockPath);//write new folder in folders
-        var fmeta = {
-          "path": blockPath,
-					"index" : blockName,
-					"zoom" : 1,
-					"xPos" : 0,
-					"yPos" : 0,
-					"wordSpace" : 0, 
-					"blockSize": 8,
-					"content": "# Write Markdown"
-        };
-        storeData( getMetaFileOfFolder(blockPath), fmeta, "create").then(function( meta) {
-          console.log('success ', meta);
-          storeMarkdownContent( path.join(meta.path, "1.txt"), fmeta.content, "create") 
-          resolve( meta);
-        }, function(err) {
-          console.log( gutil.colors.red('--> Couldn\'t create conf meta.'));
-          reject( 'Couldn\'t create conf meta ' + err);
-        });
+      fs.access(blockPath, fs.F_OK, function( err) {
+        // if there's nothing at path
+        if (err) {
+          console.log("New block created with name " + blockName + " and path " + blockPath);
+          fs.ensureDirSync(blockPath);//write new folder in folders
+          var fmeta = {
+            "path": blockPath,
+  					"index" : blockName,
+  					"zoom" : 1,
+  					"xPos" : 0,
+  					"yPos" : blockName * blockName,
+  					"wordSpace" : 0, 
+  					"blockSize": 8,
+  					"filesNb": 1,
+  					"content": "# Write Markdown"
+          };
+          storeData( getMetaFileOfFolder(blockPath), fmeta, "create").then(function( meta) {
+            console.log('success ', meta);
+            storeMarkdownContent( path.join(meta.path, "1.txt"), fmeta.content, "create") 
+            resolve( meta);
+          }, function(err) {
+            console.log( gutil.colors.red('--> Couldn\'t create conf meta.'));
+            reject( 'Couldn\'t create conf meta ' + err);
+          });
 
-      } else {
-        // if there's already something at path
-        console.log("WARNING - the following folder name already exists: " + blockName);
-        var objectJson = {
-          "path": blockPath,
-					"index" : 0,
-					"zoom" : 1,
-					"xPos" : 0,
-					"yPos" : 1,
-					"wordSpace" : 0, 
-					"blockSize": 8
-        };
-        reject( objectJson);
-      }
+        } else {
+          // if there's already something at path
+          console.log("WARNING - the following folder name already exists: " + blockName);
+          var objectJson = {
+            "path": blockPath,
+  					"index" : 0,
+  					"zoom" : 1,
+  					"xPos" : 0,
+  					"yPos" : 1,
+  					"wordSpace" : 0, 
+  					"filesNb":1,
+  					"blockSize": 8,
+  					"content": "# Write Markdown"
+          };
+          reject( objectJson);
+        }
+      });
+
     });
-
-  });
-}
+  }
 
 // C O N F    F U N C T I O N S
-function createNewConf( confData) {
-  return new Promise(function(resolve, reject) {
-    console.log("COMMON — createNewFolder");
+  function createNewConf( confData) {
+    return new Promise(function(resolve, reject) {
+      console.log("COMMON — createNewFolder");
 
-    var confName = confData.titre;
-    var slugConfName = slugg(confName);
-    var confPath = api.getContentPath(slugConfName);
-    var currentDateString = api.getCurrentDate();
+      var confName = confData.titre;
+      var slugConfName = slugg(confName);
+      var confPath = api.getContentPath(slugConfName);
+      var currentDateString = api.getCurrentDate();
 
 
-    fs.access(confPath, fs.F_OK, function( err) {
-      // if there's nothing at path
-      if (err) {
-        console.log("New conf created with name " + confName + " and path " + confPath);
-        fs.ensureDirSync(confPath);//write new folder in folders
-        var fmeta =
-          {
-            "name" : confName,
-            "created" : currentDateString,
+      fs.access(confPath, fs.F_OK, function( err) {
+        // if there's nothing at path
+        if (err) {
+          console.log("New conf created with name " + confName + " and path " + confPath);
+          fs.ensureDirSync(confPath);//write new folder in folders
+          var fmeta =
+            {
+              "name" : confName,
+              "created" : currentDateString,
+            };
+          storeData( getMetaFileOfFolder(confPath), fmeta, "create").then(function( meta) {
+              console.log('sucess ' + meta)
+            resolve( meta);
+          }, function(err) {
+            console.log( gutil.colors.red('--> Couldn\'t create conf meta.'));
+            reject( 'Couldn\'t create conf meta ' + err);
+          });
+
+        } else {
+          // if there's already something at path
+          console.log("WARNING - the following folder name already exists: " + slugConfName);
+          var objectJson = {
+            "name": confName,
+            "timestamp": currentDateString
           };
-        storeData( getMetaFileOfFolder(confPath), fmeta, "create").then(function( meta) {
-            console.log('sucess ' + meta)
-          resolve( meta);
-        }, function(err) {
-          console.log( gutil.colors.red('--> Couldn\'t create conf meta.'));
-          reject( 'Couldn\'t create conf meta ' + err);
-        });
+          reject( objectJson);
+        }
+      });
 
-      } else {
-        // if there's already something at path
-        console.log("WARNING - the following folder name already exists: " + slugConfName);
-        var objectJson = {
-          "name": confName,
-          "timestamp": currentDateString
-        };
-        reject( objectJson);
-      }
     });
-
-  });
-}
+  }
 
 // -------  Z O O M     F U N C T I O N S ----------- 
 	
@@ -685,9 +697,9 @@ function createNewConf( confData) {
     return files;
 	}
 
-	function listAllFolders() {
+	function listAllFolders(pathToRead, slugCurrentProject) {
     return new Promise(function(resolve, reject) {
-  		fs.readdir(settings.contentDir+'/'+settings.folder, function (err, filenames) {
+  		fs.readdir(pathToRead, function (err, filenames) {
         if (err) return console.log( 'Couldn\'t read content dir : ' + err);
 
         var folders = filenames.filter( function(slugFolderName){ return new RegExp("^([^.]+)$", 'i').test( slugFolderName); });
@@ -698,7 +710,7 @@ function createNewConf( confData) {
   		  folders.forEach( function( slugFolderName) {
   		  	console.log(slugFolderName);
   		    if( new RegExp("^([^.]+)$", 'i').test( slugFolderName) && slugFolderName != 'pdf'){
-          	var fmeta = getFolderMeta( slugFolderName);
+          	var fmeta = getFolderMeta( slugFolderName, pathToRead);
           	fmeta.slugFolderName = slugFolderName;
             allFoldersData.push( fmeta);
           }
@@ -880,13 +892,15 @@ function createNewConf( confData) {
     });
 	}
 
-	function getFolderMeta( slugFolderName) {
-		console.log( "COMMON — getFolderMeta");
-    var folderPath = getFullPath( slugFolderName);
-  	var folderMetaFile = getMetaFileOfFolder( folderPath);
+  function getFolderMeta( slugFolderName, pathToRead) {
+    console.log(`COMMON — getFolderMeta for ${slugFolderName}`);
+    console.log(slugFolderName, pathToRead);
+    var folderPath = path.join(pathToRead, slugFolderName);
+    var folderMetaFile = getMetaFileOfFolder( folderPath);
 
-		var folderData = fs.readFileSync( folderMetaFile, settings.textEncoding);
-		var folderMetadata = parseData( folderData);
+
+    var folderData = fs.readFileSync( folderMetaFile,settings.textEncoding);
+    var folderMetadata = api.parseData( folderData);
 
     return folderMetadata;
   }

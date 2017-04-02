@@ -10,6 +10,7 @@ var converter = new showdown.Converter({'tables':true});
 function onSocketConnect() {
 	sessionId = socket.io.engine.id;
 	console.log('Connected ' + sessionId);
+	socket.emit('listFiles', {"currentFolder":currentFolder, "currentProject" : currentProject,});
 };
 
 function onSocketError(reason) {
@@ -20,8 +21,12 @@ function onSocketError(reason) {
 socket.on('connect', onSocketConnect);
 socket.on('error', onSocketError);
 socket.on('blockCreated', onBlockCreated);
+socket.on('displayPageEvents', onDisplayPage);
+socket.on('BlockData', onBlockData);
 
 (function init(){
+	
+	// Create a new block on click plus button
 	$('.js--add-block').on('click',function(){
 		var numBlocks = $('.content').length;
 		console.log(numBlocks);
@@ -32,16 +37,44 @@ socket.on('blockCreated', onBlockCreated);
 		});
 	});
 
+	// Select block on click 
+	$('body').on('click', '.content', function(){
+		var $this = $(this);
+		var dataFolder = $this.attr('data-folder');
+		if($this.attr("class") == 'active-block'){
+			$(this).removeClass('active-block');
+		}
+		else{
+			$('.content').removeClass('active-block')
+			$this.addClass('active-block');
+			loadBlockData(dataFolder);
+		}
+	});
+
 })();
+
+function onDisplayPage(foldersData){
+	$.each( foldersData, function( index, fdata) {
+  	var $folderContent = makeFolderContent( fdata);
+    return insertOrReplaceFolder( fdata.slugFolderName, $folderContent);
+  });
+	console.log(foldersData);
+
+	var partCount = parseInt($('.page-wrapper').attr('data-part'));
+	data = foldersData[partCount];
+	loadCurrentBlockMarkdown(data.content);
+
+	// Put the object into storage
+	localStorage.setItem('foldersdata', JSON.stringify(foldersData));
+	localStorage.setItem('data', JSON.stringify(data));
+}
 
 function onBlockCreated(fdata){
 	console.log(fdata);
 	var $folderContent = makeFolderContent( fdata);
 	insertOrReplaceFolder( fdata.index, $folderContent).then(function(blockIndex){
-		var currentMd = loadCurrentBlockMarkdown(fdata.content);
-		$('.module--md-editor textarea').val(currentMd);
-	});
-	
+		loadCurrentBlockMarkdown(fdata.content);
+	});	
 }
 
 function insertOrReplaceFolder( blockIndex, $folderContent) {
@@ -49,7 +82,6 @@ function insertOrReplaceFolder( blockIndex, $folderContent) {
   	$(".page-wrapper").append($folderContent);
   	resolve(blockIndex);
   });
-  // return "inserted";
 }
 
 function makeFolderContent( projectData){
@@ -81,7 +113,16 @@ function makeFolderContent( projectData){
 }
 
 function loadCurrentBlockMarkdown(mdContent){
-	// var currentMarkdown = $('.content[data-index="'+blockIndex+'"').html();
-	console.log(mdContent);
+	$('.module--md-editor textarea').val(mdContent);
 	return mdContent;
+}
+
+// Functions de blocks
+function loadBlockData(dataFolder){
+	socket.emit('loadBlockData', {"currentProject" : currentProject, "dataFolder": dataFolder});
+}
+
+function onBlockData(fdata){
+	console.log(fdata);
+	loadCurrentBlockMarkdown(fdata.content);
 }
