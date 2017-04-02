@@ -10,11 +10,12 @@ created: 20170327_190500
 
 ----
 
-css: h1{color:black;
-width:10cm;
-font-size: 100pt;
-}
+css: h1{color:black;font-size:50pt ; }img{width: 20cm;}p{color: blue; font-size: 30pt;}
 
+----
+
+border: 1px solid #000;
+}
 
 ----
 

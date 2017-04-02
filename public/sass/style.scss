@@ -8,6 +8,10 @@
 @import "_index.scss";
 
 
+*{
+  box-sizing: border;
+}
+
 html {
 	margin:0;
 }
@@ -107,6 +111,9 @@ header{
       position:relative;
       padding: 10px;
       cursor: pointer;
+      &.active{
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -150,10 +157,13 @@ header{
         width: auto;
         padding-right: 0.5cm;
         position:absolute;
-        border:2px solid red;
         cursor: pointer;
+        background-color: #FFF;
         &.active-block{
           background-color: #DEDEDE;
+        }
+        &.debug{
+          border:2px solid red;
         }
       }
 
@@ -202,12 +212,15 @@ header{
   height: $heightPage - ($margintop * 2);
   width: 100%;
   border: 1px solid #00AADA;
-  //display:none;
+  display:none;
   div{
     height:100%;
     width: 3.33%;
     border-right: 1px solid #DA0097;
     &:last-child{border:none;}
+  }
+  &.active{
+    display:block;
   }
 }
 

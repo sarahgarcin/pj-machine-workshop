@@ -13,14 +13,14 @@ html
           span.plusButton + 
           span.zoom-value 100%
           span.minusButton - 
-        .gridButton grid
+        .gridButton.active grid
         .debugButton debug
 
 
     .content-wrapper
       #page-content.page
         div(class="page-wrapper" data-part="0")
-          .grid.row
+          .grid.row.active
             - for (var i = 0; i < 30; ++i) {
               div.grid-el.columns
             - }

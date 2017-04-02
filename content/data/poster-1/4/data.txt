@@ -1,27 +1,8 @@
-path: content/data/poster-1/2
+path: content/data/poster-1/4
 
 ----
 
-content: # PrePostPrint
-hello pipou  
-c'ets beau non ? 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+content: ![pjmachine](http://poptronics.fr/IMG/jpg_PJmachine.jpg)
 
 
 
@@ -36,7 +17,7 @@ c'ets beau non ?
 
 ----
 
-index: 2
+index: 4
 
 ----
 
@@ -48,7 +29,7 @@ xPos: 0
 
 ----
 
-yPos: 4
+yPos: 16
 
 ----
 

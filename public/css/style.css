@@ -6884,6 +6884,9 @@ body[data-page="index"] {
       float: right;
       margin-top: 15px; }
 
+* {
+  box-sizing: border; }
+
 html {
   margin: 0; }
 
@@ -6987,6 +6990,8 @@ header {
       position: relative;
       padding: 10px;
       cursor: pointer; }
+      header .module--interface-features div.active {
+        text-decoration: underline; }
 
 .content-wrapper {
   background: #DFDFDF;
@@ -7023,21 +7028,26 @@ header {
         width: auto;
         padding-right: 0.5cm;
         position: absolute;
-        border: 2px solid red;
-        cursor: pointer; }
+        cursor: pointer;
+        background-color: #FFF; }
         .content-wrapper .page .page-wrapper .content.active-block {
           background-color: #DEDEDE; }
+        .content-wrapper .page .page-wrapper .content.debug {
+          border: 2px solid red; }
 
 .grid {
   height: 58.6cm;
   width: 100%;
-  border: 1px solid #00AADA; }
+  border: 1px solid #00AADA;
+  display: none; }
   .grid div {
     height: 100%;
     width: 3.33%;
     border-right: 1px solid #DA0097; }
     .grid div:last-child {
       border: none; }
+  .grid.active {
+    display: block; }
 
 .js--templates {
   display: none; }

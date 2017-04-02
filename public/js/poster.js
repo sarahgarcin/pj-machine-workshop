@@ -45,12 +45,17 @@ socket.on('cssLoaded', onCSSLoaded);
 	$('body').on('click', '.content', function(){
 		var $this = $(this);
 		var dataFolder = $this.attr('data-folder');
-		if($this.attr("class") == 'active-block'){
+		if($this.hasClass('active-block')){
 			$(this).removeClass('active-block');
+			$('.module--md-editor textarea').val('');
+			$('.module--md-editor textarea').attr("disabled","disabled"); 
+			$('.js--submit-md-editor').attr("disabled","disabled");
 		}
 		else{
-			$('.content').removeClass('active-block')
+			$('.content').removeClass('active-block');
 			$this.addClass('active-block');
+			$('.module--md-editor textarea').attr("disabled",false); 
+			$('.js--submit-md-editor').attr("disabled",false);
 			loadBlockData(dataFolder);
 		}
 	});
@@ -71,8 +76,7 @@ socket.on('cssLoaded', onCSSLoaded);
 		var newCSSContent = 
 		$('.module--css-editor textarea')
 		.val()
-		.replace(" ", "")
-		.replace("\n","")
+		.replace(/\n/g, "")
 		;
 		
 		socket.emit('newCssContent', {
@@ -80,6 +84,31 @@ socket.on('cssLoaded', onCSSLoaded);
 			"currentProject": currentProject
 		});
 	});
+
+	// I N T E R F A C E
+		// Grid
+		$('.gridButton').on('click',function(){
+			if($(this).hasClass('active')){
+				$(this).removeClass('active');
+				$(".grid").removeClass('active');
+			}
+			else{
+				$(this).addClass('active');
+				$(".grid").addClass('active');
+			}
+		});
+
+		// Debug mode
+		$('.debugButton').on('click',function(){
+			if($(this).hasClass('active')){
+				$(this).removeClass('active');
+				$(".content").removeClass('debug');
+			}
+			else{
+				$(this).addClass('active');
+				$(".content").addClass('debug');
+			}
+		});
 
 })();
 
@@ -134,7 +163,7 @@ function makeFolderContent( projectData){
 	  	'left': projectData.xPos+'cm',
 			'top':projectData.yPos+'cm',
 			'word-spacing': projectData.wordSpace +'px', 
-			'width': projectData.blockSize +'cm'
+			// 'width': projectData.blockSize +'cm'
 	  })
 
   ;

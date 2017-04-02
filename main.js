@@ -152,7 +152,7 @@ module.exports = function(app, io){
     }
 
     function onNewCssContent(data){
-      console.log( "EVENT - onNewCssContent");
+      console.log( "EVENT - onNewCssContent", data.newCSSContent);
 
       var newData = {
         'css': data.newCSSContent,
