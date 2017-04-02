@@ -95,6 +95,7 @@ var api = (function() {
       }
     });
   }
+  
   function textifyObj( obj) {
     var str = '';
     console.log( '1. will prepare string for storage');

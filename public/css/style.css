@@ -6918,7 +6918,7 @@ h4 {
 h6 {
   position: absolute;
   font-size: 16pt;
-  max-width: 14.85cm;
+  max-width: 20cm;
   line-height: 110%; }
 
 li {
@@ -7004,23 +7004,23 @@ header {
       height: 28vh; }
   .content-wrapper .page {
     background-color: #FFF;
-    width: 29.7cm;
-    height: 21cm;
+    width: 40cm;
+    height: 60cm;
     border-right: 1px solid #000;
     border-bottom: 1px solid #000;
     border-top: 1px solid #000;
     border-left: 1px solid #000;
     position: relative;
-    transform: scale(1);
+    transform: scale(0.3);
     transform-origin: 0 0;
-    left: 50%;
+    left: 40%;
     margin-left: -25%; }
     .content-wrapper .page .page-wrapper {
       margin: 0.7cm 0cm;
-      width: 29.7cm;
-      height: 19.6cm; }
+      width: 40cm;
+      height: 58.6cm; }
       .content-wrapper .page .page-wrapper .content {
-        width: 14.14286cm;
+        width: 19.04762cm;
         padding-right: 0.5cm;
         position: absolute;
         border: 2px solid red;
@@ -7029,7 +7029,7 @@ header {
           background-color: #DEDEDE; }
 
 .grid {
-  height: 19.6cm;
+  height: 58.6cm;
   width: 100%;
   border: 1px solid #00AADA; }
   .grid div {

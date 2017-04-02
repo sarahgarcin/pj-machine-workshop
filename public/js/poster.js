@@ -23,6 +23,7 @@ socket.on('error', onSocketError);
 socket.on('blockCreated', onBlockCreated);
 socket.on('displayPageEvents', onDisplayPage);
 socket.on('BlockData', onBlockData);
+socket.on('updatePoster', onUpdatePoster);
 
 (function init(){
 	
@@ -51,6 +52,17 @@ socket.on('BlockData', onBlockData);
 		}
 	});
 
+	// Run markdown on click "Run button"
+	$('.js--submit-md-editor').on('click', function(){
+		var newMdContent = $('.module--md-editor textarea').val();
+		var blockActive = $(".active-block").attr('data-folder');
+		socket.emit('newMdContent', {
+			"currentProject" : currentProject,
+			"currentBlock" : blockActive,
+			"newMdContent": newMdContent, 
+		});
+	});
+
 })();
 
 function onDisplayPage(foldersData){
@@ -63,6 +75,8 @@ function onDisplayPage(foldersData){
 	var partCount = parseInt($('.page-wrapper').attr('data-part'));
 	data = foldersData[partCount];
 	loadCurrentBlockMarkdown(data.content);
+
+	$('.content[data-folder="1"]').addClass('active-block');
 
 	// Put the object into storage
 	localStorage.setItem('foldersdata', JSON.stringify(foldersData));
@@ -125,4 +139,11 @@ function loadBlockData(dataFolder){
 function onBlockData(fdata){
 	console.log(fdata);
 	loadCurrentBlockMarkdown(fdata.content);
+}
+
+function onUpdatePoster(data){
+
+	//update content in block
+	$('.active-block').html(converter.makeHtml(data.content));
+	console.log(data);
 }

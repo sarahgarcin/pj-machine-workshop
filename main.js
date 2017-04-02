@@ -43,6 +43,7 @@ module.exports = function(app, io){
 
     // functions on blocks
     socket.on('loadBlockData', onLoadBlockData);
+    socket.on('newMdContent', onNewMdContent);
 		
 		socket.on('changeText', onChangeText);
 		socket.on('changeTextPrev', onChangeTextPrev);
@@ -66,9 +67,6 @@ module.exports = function(app, io){
 
 		socket.on('reset', function(){onReset(socket)});
 
-		socket.on('cleanForPrint', onCleanPrint);
-		socket.on('printSecondPage', onPrintSecondPage);
-		socket.on('resetPrint', onPrintReset);
 		socket.on('generate', generatePdf);
 
 	});
@@ -76,57 +74,71 @@ module.exports = function(app, io){
 
 // ------------- F U N C T I O N S -------------------
 
-	// I N D E X    P A G E
-  function onListConf( socket){
-    console.log( "EVENT - onListConf");
-    listAllFolders(api.getContentPath()).then(function( allFoldersData) {
-      sendEventWithContent( 'listAllFolders', allFoldersData, socket);
-    }, function(error) {
-      console.error("Failed to list folders! Error: ", error);
-    });
-  }
+  // I N D E X    P A G E
+    function onListConf( socket){
+      console.log( "EVENT - onListConf");
+      listAllFolders(api.getContentPath()).then(function( allFoldersData) {
+        sendEventWithContent( 'listAllFolders', allFoldersData, socket);
+      }, function(error) {
+        console.error("Failed to list folders! Error: ", error);
+      });
+    }
 
-	function onNewConf( confData) {
-    console.log('New Conf: ');
-    console.log(confData);
-    createNewConf(confData).then(function(newpdata) {
-      console.log('newpdata: '+newpdata);
-      sendEventWithContent('confCreated', newpdata);
-    }, function(errorpdata) {
-      console.error("Failed to create a new folder! Error: ", errorpdata);
-      sendEventWithContent('confAlreadyExist', errorpdata);
-    });
-  }
+  	function onNewConf( confData) {
+      console.log('New Conf: ');
+      console.log(confData);
+      createNewConf(confData).then(function(newpdata) {
+        console.log('newpdata: '+newpdata);
+        sendEventWithContent('confCreated', newpdata);
+      }, function(errorpdata) {
+        console.error("Failed to create a new folder! Error: ", errorpdata);
+        sendEventWithContent('confAlreadyExist', errorpdata);
+      });
+    }
 
   // P O S T E R   P A G E 
+  	function onListBlocks(data, socket){
+  		console.log( "EVENT - onListFolders");
+      var pathToRead = api.getContentPath(data.currentProject);
 
-	function onListBlocks(data, socket){
-		console.log( "EVENT - onListFolders");
-    var pathToRead = api.getContentPath(data.currentProject);
+      listAllFolders(pathToRead).then(function( allFoldersData) {
+      	console.log(allFoldersData)
+        sendEventWithContent( 'displayPageEvents', allFoldersData, socket);
+      }, function(error) {
+        console.error("Failed to list folders! Error: ", error);
+      });
+  	}
 
-    listAllFolders(pathToRead).then(function( allFoldersData) {
-    	console.log(allFoldersData)
-      sendEventWithContent( 'displayPageEvents', allFoldersData, socket);
-    }, function(error) {
-      console.error("Failed to list folders! Error: ", error);
-    });
-	}
+  	function onNewBlock(blockData){
+  		createNewBlock(blockData).then(function(newpdata) {
+        console.log('newpdata: '+newpdata);
+        sendEventWithContent('blockCreated', newpdata);
+      }, function(errorpdata) {
+        console.error("Failed to create a new folder! Error: ", errorpdata);
+      });
+  	}
 
-	function onNewBlock(blockData){
-		createNewBlock(blockData).then(function(newpdata) {
-      console.log('newpdata: '+newpdata);
-      sendEventWithContent('blockCreated', newpdata);
-    }, function(errorpdata) {
-      console.error("Failed to create a new folder! Error: ", errorpdata);
-      //sendEventWithContent('confAlreadyExist', errorpdata);
-    });
-	}
+    function onLoadBlockData(data){
+      var pathToRead = api.getContentPath(data.currentProject);
+      var folderMetaData = getFolderMeta( data.dataFolder, pathToRead);
+      sendEventWithContent( 'BlockData', folderMetaData);
+    }
 
-  function onLoadBlockData(data){
-    var pathToRead = api.getContentPath(data.currentProject);
-    var folderMetaData = getFolderMeta( data.dataFolder, pathToRead);
-    sendEventWithContent( 'BlockData', folderMetaData);
-  }
+    function onNewMdContent(data){
+      console.log( "EVENT - onNewMdContent");
+      var pathToRead = path.join(data.currentProject, data.currentBlock);
+      var newData = {
+        'content': data.newMdContent,
+      }
+
+      updateFolderMeta(newData, pathToRead).then(function( currentDataJSON) {
+        console.log(currentDataJSON);
+        sendEventWithContent('updatePoster', currentDataJSON);
+      }, function(error) {
+        console.error("Failed to update a folder! Error: ", error);
+      });
+
+    }
 
 // ------
 
@@ -217,7 +229,7 @@ module.exports = function(app, io){
   					"filesNb": 1,
   					"content": "# Write Markdown"
           };
-          storeData( getMetaFileOfFolder(blockPath), fmeta, "create").then(function( meta) {
+          api.storeData( api.getMetaFileOfConf(blockProjectPath), fmeta, "create").then(function( meta) {
             console.log('success ', meta);
             storeMarkdownContent( path.join(meta.path, "1.txt"), fmeta.content, "create") 
             resolve( meta);
@@ -268,7 +280,7 @@ module.exports = function(app, io){
               "name" : confName,
               "created" : currentDateString,
             };
-          storeData( getMetaFileOfFolder(confPath), fmeta, "create").then(function( meta) {
+          api.storeData( api.getMetaFileOfConf(slugConfName), fmeta, "create").then(function( meta) {
               console.log('sucess ' + meta)
             resolve( meta);
           }, function(err) {
@@ -563,58 +575,9 @@ module.exports = function(app, io){
 // -------  E N D      C H A N G E   B L O C K   S I Z E    F U N C T I O N S -----------
 
 //------------- PDF -------------------
-
-	function onCleanPrint(){
-		console.log("ON CLEAN PRINT");
-
-    var newData = {
-    	'sidebar': true, 
-    	"slugFolderName" : ''
-    }
-
-    updateFolderMeta(newData, 'print').then(function( currentDataJSON) {
-      sendEventWithContent( 'cleanForPrintEv', currentDataJSON);
-      generatePdf(false);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-	}
-
-	function onPrintSecondPage(){
-		console.log("ON PRINT SECOND PAGE");
-    var newData = {
-    	'print': true, 
-    	"slugFolderName" : ''
-    }
-
-    updateFolderMeta(newData, 'print').then(function( currentDataJSON) {
-      // sendEventWithContent( 'printSecondPage', currentDataJSON);
-      	generatePdf(true);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-
-	}
-
-	function onPrintReset(){
-		console.log("ON RESET PRINT");
-    var newData = {
-    	'print': false, 
-    	'sidebar': false,
-    	"slugFolderName" : ''
-    }
-
-    updateFolderMeta(newData, 'print').then(function( currentDataJSON) {
-    	console.log('Print Reset')
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-
-	}
-
 	function generatePdf(pdf){	
 		console.log('generate pdf');
-		var date = getCurrentDate();
+		var date = api.getCurrentDate();
 		var url = 'http://localhost:1337/';
 		var filePath = pdfFolderPath+'/'+date+'-'+chapterFolder+'.pdf';
 
@@ -681,22 +644,6 @@ module.exports = function(app, io){
     return textArray;
   }
 
- 	function readImagesDir(dir){
- 		console.log('COMMON - Read images files');
-		var fileType = ['.jpg', '.jpeg', '.png'],
-        files = [];
-    var arrayOfFiles = fs.readdirSync(dir);
-    var arrayOfFiles = arrayOfFiles.filter(junk.not);
-    arrayOfFiles.forEach( function (file) {
-    	// console.log(fileType.indexOf(path.extname(file))>-1, file);
-      if(fileType.indexOf(path.extname(file))>-1) {
-        files.push(file); //store the file name into the array files
-      }
-    });
-    console.log(files);
-    return files;
-	}
-
 	function listAllFolders(pathToRead, slugCurrentProject) {
     return new Promise(function(resolve, reject) {
   		fs.readdir(pathToRead, function (err, filenames) {
@@ -725,154 +672,67 @@ module.exports = function(app, io){
     });
 	}
 
-	function createNewData(folderData) {
+  function updateFolderMeta(newData, pathToRead) {
     return new Promise(function(resolve, reject) {
-    	console.log("COMMON — create data file of folder");
-    	var path =  folderData.path;
-			var txt = folderData.txt;
-			var index = folderData.index;
+      console.log( "COMMON — updateFolderMeta", pathToRead);
 
-			fs.access(getMetaFileOfFolder(path), fs.F_OK, function( err) {
-				if (err) {
-					console.log("New data file created");
-					if(txt != undefined){
-						var fmeta =
-			      {
-			        "path" : path,
-			        "index" : index,
-			        "zoom" : folderData.zoom,
-							"xPos" : folderData.xPos,
-							"yPos" : folderData.yPos,
-							"wordSpace" : folderData.wordSpace, 
-							"nbOfFiles" : folderData.nbOfFiles, 
-			        "text" : txt,
-			        'blockSize': folderData.blockSize
-			      };
-			    }
-			   //  if(folderData.currentImage != undefined){
-			   //  	var fmeta =
-			   //    {
-				  //   	"path" : path,
-			   //      "index" : index,
-			   //      "zoom" : folderData.zoom,
-						// 	"xPos" : folderData.xPos,
-						// 	"yPos" : folderData.yPos,
-						// 	"wordSpace" : folderData.wordSpace, 
-						// 	"nbOfFiles" : folderData.nbOfFiles, 
-			   //      "currentImage" : folderData.currentImage,
-						// 	'images': folderData.images,
-				  //   };
-				  // }
-		      storeData( getMetaFileOfFolder(path), fmeta, "create").then(function( meta) {
-		      	// console.log('sucess ' + meta)
-		        resolve( meta);
-		      });
-		    } else {
-          // if there's already something at path
-          reject( 'data file already exist');
-        }
+      var newText = newData.content;
+      var newIndex = newData.index;
+      var newZoom = newData.zoom;
+      var newXPos = newData.xPos;
+      var newYPos = newData.yPos;
+      var newSpace = newData.wordSpace;
+      var newBlockSize = newData.blockSize;
+
+      api.readConfMeta(pathToRead).then(function(fmeta){
+        if(newText != undefined)
+         fmeta.content = newText;
+        if(newIndex != undefined)
+         fmeta.index = newIndex;
+        if(newZoom != undefined)
+         fmeta.zoom = newZoom;
+        if(newXPos != undefined)
+         fmeta.xPos = newXPos;
+        if(newYPos != undefined)
+         fmeta.yPos = newYPos;
+        if(newSpace != undefined)
+         fmeta.wordSpace = newSpace;
+        if(newBlockSize != undefined)
+         fmeta.blockSize = newBlockSize;
+
+        //envoyer les changements dans le JSON du folder
+        api.storeData( api.getMetaFileOfConf( pathToRead), fmeta, "update").then(function( ufmeta) {
+          // ufmeta.slugFolderName = slugFolderName;
+          resolve( ufmeta);
+        });
       });
-
-    });
-  }
-
-  function updateFolderMeta( folderData, print) {
-    return new Promise(function(resolve, reject) {
-      console.log( "COMMON — updateFolderMeta");
-      // console.log(folderData);
-      var slugFolderName = folderData.slugFolderName;
-      if(print == 'print'){
-      	var folderPath = getFullBasePath( slugFolderName);
-      }
-      else{
-      	var folderPath = getFullPath( slugFolderName);
-      }
       
-      var newText = folderData.text;
-      var newIndex = folderData.index;
-      var newZoom = folderData.zoom;
-      var newXPos = folderData.xPos;
-      var newYPos = folderData.yPos;
-      var newSpace = folderData.wordSpace;
-      var newPrint = folderData.print;
-      var newBar = folderData.sidebar;
-      var newBlockSize = folderData.blockSize;
+     //  if(newText != undefined)
+     //   fmeta.content = newText;
+     //  if(newIndex != undefined)
+     //   fmeta.index = newIndex;
+     //  else
+     //    fmeta.index = fmeta.index;
+     //  if(newZoom != undefined)
+     //   fmeta.zoom = newZoom;
+     //  if(newXPos != undefined)
+     //   fmeta.xPos = newXPos;
+     //  if(newYPos != undefined)
+     //   fmeta.yPos = newYPos;
+     //  if(newSpace != undefined)
+     //   fmeta.wordSpace = newSpace;
+     //  if(newBlockSize != undefined)
+     //   fmeta.blockSize = newBlockSize;
 
-
-      // récupérer les infos sur le folder
-      if(print == 'print'){
-      	var fmeta = getBaseFolderMeta( slugFolderName);
-      }
-      else{
-      	var fmeta = getFolderMeta( slugFolderName);
-      }
-      if(newText != undefined)
-      	fmeta.text = newText;
-      if(newIndex != undefined)
-      	fmeta.index = newIndex;
-      if(newZoom != undefined)
-      	fmeta.zoom = newZoom;
-      if(newXPos != undefined)
-      	fmeta.xPos = newXPos;
-      if(newYPos != undefined)
-      	fmeta.yPos = newYPos;
-      if(newSpace != undefined)
-      	fmeta.wordSpace = newSpace;
-     	if(newPrint != undefined)
-      	fmeta.print = newPrint;
-      if(newBar != undefined)
-      	fmeta.sidebar = newBar;
-      if(newBlockSize != undefined)
-      	fmeta.blockSize = newBlockSize;
+     // console.log(api.getMetaFileOfConf( pathToRead));
 
       // envoyer les changements dans le JSON du folder
-      storeData( getMetaFileOfFolder( folderPath), fmeta, "update").then(function( ufmeta) {
-        ufmeta.slugFolderName = slugFolderName;
-        resolve( ufmeta);
-      });
+      // api.storeData( api.getMetaFileOfConf( pathToRead), fmeta, "update").then(function( ufmeta) {
+      //   // ufmeta.slugFolderName = slugFolderName;
+      //   resolve( ufmeta);
+      // });
     });
   }
-
-  function textifyObj( obj) {
-    var str = '';
-    console.log( '1. will prepare string for storage');
-    for (var prop in obj) {
-      var value = obj[prop];
-      console.log('2. value ? ' + value);
-      // if value is a string, it's all good
-      // but if it's an array (like it is for medias in publications) we'll need to make it into a string
-      if( typeof value === 'array')
-        value = value.join(', ');
-      // check if value contains a delimiter
-      if( typeof value === 'string' && value.indexOf('\n----\n') >= 0) {
-        console.log( '2. WARNING : found a delimiter in string, replacing it with a backslash');
-        // prepend with a space to neutralize it
-        value = value.replace('\n----\n', '\n ----\n');
-      }
-      str += prop + ': ' + value + settings.textFieldSeparator;
-    }
-    console.log( '3. textified object : ' + str);
-    return str;
-  }
-
-  function storeData( mpath, d, e) {
-    return new Promise(function(resolve, reject) {
-      console.log('Will store data', mpath);
-      var textd = textifyObj(d);
-      if( e === "create") {
-        fs.appendFile( mpath, textd, function(err) {
-          if (err) reject( err);
-          resolve(parseData(textd));
-        });
-      }
-		  if( e === "update") {
-        fs.writeFile( mpath, textd, function(err) {
-        if (err) reject( err);
-          resolve(parseData(textd));
-        });
-      }
-    });
-	}
 
 	function storeMarkdownContent( mpath, d, e) {
     return new Promise(function(resolve, reject) {
@@ -911,7 +771,7 @@ module.exports = function(app, io){
   	var folderMetaFile = getMetaFileOfFolder( folderPath);
 
 		var folderData = fs.readFileSync( folderMetaFile, settings.textEncoding);
-		var folderMetadata = parseData( folderData);
+		var folderMetadata = api.parseData( folderData);
 
     return folderMetadata;
 
@@ -924,23 +784,6 @@ module.exports = function(app, io){
 	function sendEventWithContent( sendEvent, objectContent, socket) {
     io.sockets.emit( sendEvent,objectContent);
   }
-
-  function getFullPath( path) {
-    return settings.contentDir +'/'+ settings.folder + '/'+ path;
-  }
-
-   function getFullBasePath( path) {
-    return settings.contentDir +'/'+ path;
-  }
-
-	function getCurrentDate() {
-    return moment().format("YYYYMMDD_HHmmss");
-  }
-
-  function parseData(d) {
-  	var parsed = parsedown(d);
-		return parsed;
-	}
 
 	 // C O M M O N     F U N C T I O N S
   function eventAndContent( sendEvent, objectJson) {
