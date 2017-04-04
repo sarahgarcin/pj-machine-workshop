@@ -2,27 +2,7 @@ path: content/data/poster-1/4
 
 ----
 
-content: 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+content: # block PJ machine
 
 ----
 

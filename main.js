@@ -50,6 +50,10 @@ module.exports = function(app, io){
 
     socket.on('newCssContent', onNewCssContent);
 		
+
+    // Pj machine function 
+    socket.on('changeBlock', onChangeBlock);
+
 		socket.on('changeText', onChangeText);
 		socket.on('changeTextPrev', onChangeTextPrev);
 
@@ -170,10 +174,27 @@ module.exports = function(app, io){
 
 // ------
 
-	// reset 
-	function onReset(socket){
-		createDataFile(socket, 'reset');
-	}
+  // P J   M A C H I N E
+
+  function onChangeBlock(data){
+    console.log('EVENT - Change Block ', data);
+    var blockToGo = parseInt(data.currentBlock);
+    console.log(blockToGo);
+    if(data.direction == "prev" && data.currentBlock != "1"){
+      blockToGo --;
+    }  
+    if(data.direction == "prev" && data.currentBlock == "1"){
+      blockToGo = data.numBlocks - 1;
+    } 
+    if(data.direction == "next" && data.currentBlock != (data.numBlocks -1)){
+      blockToGo ++;
+    } 
+    if(data.direction == "next" && data.currentBlock == (data.numBlocks-1)){
+      blockToGo = 1;
+    } 
+    console.log(blockToGo);
+    sendEventWithContent( 'blockChanged', blockToGo);
+  }
 	
 	function onChangeText(element){
 		var dir = element.path;

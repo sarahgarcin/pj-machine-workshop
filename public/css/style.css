@@ -7007,6 +7007,8 @@ header {
     z-index: 100; }
     .content-wrapper .module--sidebar textarea {
       height: 28vh; }
+    .content-wrapper .module--sidebar.pj-machine-mode {
+      display: none; }
   .content-wrapper .page {
     background-color: #FFF;
     width: 40cm;
@@ -7026,6 +7028,8 @@ header {
       height: 58.6cm; }
       .content-wrapper .page .page-wrapper .content {
         width: auto;
+        min-width: 7cm;
+        min-height: 3cm;
         padding-right: 0.5cm;
         position: absolute;
         cursor: pointer;
@@ -7034,6 +7038,9 @@ header {
           background-color: #DEDEDE; }
         .content-wrapper .page .page-wrapper .content.debug {
           border: 2px solid red; }
+
+.page.pj-machine-mode .content.active-pj {
+  background-color: #0092FF !important; }
 
 .grid {
   height: 58.6cm;

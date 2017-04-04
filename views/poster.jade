@@ -15,11 +15,12 @@ html
           span.minusButton - 
         .gridButton.active grid
         .debugButton debug
+        .pjMachineButton PJ Machine Mode
 
 
     .content-wrapper
-      #page-content.page
-        div(class="page-wrapper" data-part="0")
+      #page-content.page(data-active-block= 1)
+        .page-wrapper
           .grid.row.active
             - for (var i = 0; i < 30; ++i) {
               div.grid-el.columns
@@ -30,7 +31,7 @@ html
           p
         .module--md-editor
           span  Markdown Editor
-          textarea
+          textarea(disabled=true)
           button.js--submit-md-editor Run
         .module--css-editor
           span Css Editor

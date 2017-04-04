@@ -133,6 +133,9 @@ header{
     textarea{
       height: 28vh;
     }
+    &.pj-machine-mode{
+      display:none;
+    }
   }
   .page{
     background-color: #FFF;
@@ -155,6 +158,8 @@ header{
       .content{
         // width: ($widthPage - ($marginleft * 2))/2.1;
         width: auto;
+        min-width: 7cm;
+        min-height: 3cm;
         padding-right: 0.5cm;
         position:absolute;
         cursor: pointer;
@@ -167,6 +172,14 @@ header{
         }
       }
 
+    }
+  }
+}
+
+.page.pj-machine-mode{
+  .content{
+    &.active-pj{
+      background-color: #0092FF !important;
     }
   }
 }

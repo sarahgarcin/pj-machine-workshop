@@ -28,29 +28,34 @@ socket.on('updatePoster', onUpdatePoster);
 socket.on('cssContent', onUpdateCSS);
 socket.on('cssLoaded', onCSSLoaded);
 
+// pj machine sockets
+socket.on('blockChanged', onBlockChanged);
+
 (function init(){
 
 	// KEY PRESS EVENTS
-	// $(document).on('keypress', function(e){
-	// 	var code = e.keyCode;
-	// 	console.log(code);
-	// 	var activePJBlock = $('.content.active-pj');
-	// 	// CALL FUNCTION YOU NEED HERE 
-	// 	// CHANGE THE KEYPRESS CODE IN EACH FUNCTION
-	// 	//changeBlock(activePJBlock, code);
-	// 	// changeText(data, code);
-	// 	// zoomEvents(data, code);
-	// 	// moveEvents(data, code);
-	// 	// wordSpacing(data, code);
-	// 	// // changeFontFamily(data, code);
-	// 	// changeBlockSize(data, code);
-	// 	// generatePDF(data, code);
+	$(document).on('keypress', function(e){
+		if($('.page').hasClass('pj-machine-mode')){
+			var code = e.keyCode;
+			console.log(code);
+			var activePJBlock = $('.content.active-pj');
+			// CALL FUNCTION YOU NEED HERE 
+			// CHANGE THE KEYPRESS CODE IN EACH FUNCTION
+			changeBlock(activePJBlock, code);
+			// changeText(data, code);
+			// zoomEvents(data, code);
+			// moveEvents(data, code);
+			// wordSpacing(data, code);
+			// // changeFontFamily(data, code);
+			// changeBlockSize(data, code);
+			// generatePDF(data, code);
 
-	// 	// gridDisplayer(code);
-	// 	// zoomVideo(code);
-		
-	// 	e.preventDefault(); // prevent the default action (scroll / move caret)
-	// });
+			// gridDisplayer(code);
+			// zoomVideo(code);
+			
+			e.preventDefault(); // prevent the default action (scroll / move caret)
+		}
+	});
 
 	// INTERFACE ACTIONS
 		// Create a new block on click plus button
@@ -133,64 +138,63 @@ socket.on('cssLoaded', onCSSLoaded);
 			}
 		});
 
+		$(".pjMachineButton").on('click', function(){
+			if($(this).hasClass('active')){
+				$(this).removeClass('active');
+				$(".module--sidebar").removeClass('pj-machine-mode');
+				$(".page").removeClass('pj-machine-mode');
+			}
+			else{
+				$(this).addClass('active');
+				$(".module--sidebar").addClass('pj-machine-mode');
+				$(".page").addClass('pj-machine-mode');
+			}
+		});
+
 })();
 
 // PJ EVENTS FUNCTION
-	function changeText(data, code){
+	function changeBlock(data, code){
 		// press "p" to go to next block, press "o" to do to previous block
 		var nextKey = 112;
 		var prevKey = 111; 
 
-		// setTimeout(function(){
-		// 	var indexTest = $(".page-wrapper").find("[data-folder='" + data.slugFolderName + "']").attr('data-index');
-		// 	console.log(data.slugFolderName);
-		// 	console.log(indexTest);
-		// 	data.index = indexTest;
+		console.log(data);
+		var blockActive = $(".active-pj").attr('data-folder');
+		var numBlocks = $('.content').length;
+		var direction ; 
+		if(code == nextKey){
+			direction = "next";
+		}
 
+		if(code == prevKey){
+			direction = "prev";
+		}
 		
-
-
-		// if(code == nextKey){
-		// 	socket.emit('changeText', data);
-		// }
-
-		// if(code == prevKey){
-		// 	socket.emit('changeTextPrev', data);
-		// }
-		// }, 100);
-
-		// if(code == submitKey){
-		// 	if(partCount < foldersdata.length-1){
-		// 		partCount ++;
-		// 		$('.page-wrapper').attr('data-part', partCount);
-		// 	}
-		// 	else{ 
-		// 		partCount = 0; 
-		// 		$('.page-wrapper').attr('data-part', partCount);
-		// 	}
-		// 	localStorage.setItem('data', JSON.stringify(foldersdata[partCount]));
-		// 	var data = JSON.parse(localStorage.getItem('data'))
-		// 	var type = data.slugFolderName;
-		// 	$('.meta-data .block-select').html(type + ' folder:');
-		// 	// $('.meta-data .file-select').html((parseInt(data.index)+1) + '/' + parseInt(data.nbOfFiles));
-		// 	var $textEl = $(".page-wrapper").find("[data-folder='" + data.slugFolderName + "']");
-		// 	$textEl.css('border', '1px solid red');
-		// 	setTimeout(function(){
-		// 		$textEl.css('border', 'none');
-		// 	}, 1000);
-		// }
+		socket.emit('changeBlock', {
+			"currentProject" : currentProject,
+			"currentBlock" : blockActive,
+			"direction": direction, 
+			"numBlocks":numBlocks
+		});
 	}
+
+function onBlockChanged(blockToGo){
+	// console.log(blockToGo);
+	$('.content').removeClass('active-pj');
+	$('.content[data-folder="'+blockToGo+'"]').addClass('active-pj');
+}
 
 function onDisplayPage(foldersData){
 	$.each( foldersData, function( index, fdata) {
   	var $folderContent = makeFolderContent( fdata);
     return insertOrReplaceFolder( fdata.slugFolderName, $folderContent);
   });
-	console.log(foldersData);
+	//console.log(foldersData);
 }
 
 function onBlockCreated(fdata){
-	console.log(fdata);
+	//console.log(fdata);
 	var $folderContent = makeFolderContent( fdata);
 	insertOrReplaceFolder( fdata.index, $folderContent).then(function(blockIndex){
 		loadCurrentBlockMarkdown(fdata.content);
@@ -207,19 +211,20 @@ function insertOrReplaceFolder( blockIndex, $folderContent) {
 
 function makeFolderContent( projectData){
 
-	console.log(projectData)
+	//console.log(projectData)
 	
 	var index = projectData.index;
 	var folder = projectData.index;
 
 	var newFolder = $(".js--templates > .content").clone(false);
-	$('.content').removeClass('active-block');
+	$('.content').removeClass('active-block').removeClass('active-pj');
 
 	// customisation du projet
 	newFolder
 	  .attr( 'data-index', index)
 	  .attr( 'data-folder', folder)
 	  .addClass('active-block')
+	  .addClass('active-pj')
 	  .css({
 	  	'transform': 'scale('+projectData.zoom+')',
 	  	'left': projectData.xPos+'cm',
@@ -247,7 +252,7 @@ function loadBlockData(dataFolder){
 }
 
 function onBlockData(fdata){
-	console.log(fdata);
+	//console.log(fdata);
 	loadCurrentBlockMarkdown(fdata.content);
 }
 
@@ -255,7 +260,7 @@ function onUpdatePoster(data){
 	//update content in block
 	$('.content[data-folder="'+data.index+'"]').html(converter.makeHtml(data.content));
 	loadCurrentBlockMarkdown(data.content);
-	console.log(data);
+	//console.log(data);
 }
 
 function onUpdateCSS(css){

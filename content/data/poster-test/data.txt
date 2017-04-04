@@ -1,8 +1,0 @@
-name: Poster test
-
-----
-
-created: 20170402_141036
-
-----
-
