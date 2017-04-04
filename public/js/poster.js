@@ -30,6 +30,7 @@ socket.on('cssLoaded', onCSSLoaded);
 
 // pj machine sockets
 socket.on('blockChanged', onBlockChanged);
+socket.on('updateBlock', onUpdateBlock);
 
 (function init(){
 
@@ -42,7 +43,7 @@ socket.on('blockChanged', onBlockChanged);
 			// CALL FUNCTION YOU NEED HERE 
 			// CHANGE THE KEYPRESS CODE IN EACH FUNCTION
 			changeBlock(activePJBlock, code);
-			// changeText(data, code);
+			moveBlock(activePJBlock, code);
 			// zoomEvents(data, code);
 			// moveEvents(data, code);
 			// wordSpacing(data, code);
@@ -179,6 +180,72 @@ socket.on('blockChanged', onBlockChanged);
 		});
 	}
 
+	function moveBlock(activeBlock, code){
+
+		//press "q" to move image on the right
+		var right = 113;
+		//press "a" to move image on the left
+		var left = 97; 
+		//press "w" to move image down
+		var down = 119;
+		//press "s" to move image up
+		var up = 115;
+
+		var blockActive = $(".active-pj").attr('data-folder');
+		var numBlocks = $('.content').length;
+		var direction; 
+		if(code == right){
+			direction = "right";
+		}
+		if(code == left){
+			direction = "left";
+		}
+		if(code == up){
+			direction = "up";
+		}
+		if(code == down){
+			direction = "down";
+		}
+		
+		socket.emit('moveBlock', {
+			"currentProject" : currentProject,
+			"currentBlock" : blockActive,
+			"direction": direction, 
+			"numBlocks":numBlocks
+		});
+
+	}
+
+	// ------   M O V E    E L E M E N T S -----------
+function moveEvents(data, code){
+	
+	//press "q" to move image on the right
+	var right = 113;
+	//press "a" to move image on the left
+	var left = 97; 
+	//press "w" to move image down
+	var down = 119;
+	//press "s" to move image up
+	var up = 115;
+
+  
+	if(code == right){
+		socket.emit("moveRight", data);
+	}
+	
+	if(code == left){
+		socket.emit("moveLeft", data);
+	}
+
+	if(code == down){
+		socket.emit("moveDown", data);
+	}
+
+	if(code == up){
+		socket.emit("moveUp", data);
+	}
+}
+
 function onBlockChanged(blockToGo){
 	// console.log(blockToGo);
 	$('.content').removeClass('active-pj');
@@ -273,3 +340,12 @@ function onCSSLoaded(pdata){
 	$('style').html(pdata.css);
 	$('.module--css-editor textarea').val(pdata.css);
 }
+
+function onUpdateBlock(blockdata){
+	console.log(blockdata);
+	var $element = $('.content[data-folder="'+blockdata.index+'"]');
+	$element.move(blockdata.xPos, blockdata.yPos);
+}
+
+
+

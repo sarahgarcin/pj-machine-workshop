@@ -53,9 +53,7 @@ module.exports = function(app, io){
 
     // Pj machine function 
     socket.on('changeBlock', onChangeBlock);
-
-		socket.on('changeText', onChangeText);
-		socket.on('changeTextPrev', onChangeTextPrev);
+    socket.on('moveBlock', onMoveBlock);
 
 		socket.on('zoomIn', onZoomIn);
 		socket.on('zoomOut', onZoomOut);
@@ -195,62 +193,53 @@ module.exports = function(app, io){
     console.log(blockToGo);
     sendEventWithContent( 'blockChanged', blockToGo);
   }
+
+  function onMoveBlock(data){
+    console.log('EVENT - Move Block ', data);
+    var xStep = settings.xStep;
+    var yStep = settings.yStep;
+    var newX, newY, newData;
+
+    var pathToRead = api.getContentPath(data.currentProject);
+    var folderMetaData = getFolderMeta( data.currentBlock, pathToRead);
+    var blockPath = path.join(data.currentProject, data.currentBlock);
+    
+    console.log(folderMetaData);
+    
+    if(data.direction == "up"){
+      newY = parseFloat(folderMetaData.yPos) - yStep;
+      newData = {
+        'yPos': newY,
+      }
+    }
+    if(data.direction == "down"){
+      newY = parseFloat(folderMetaData.yPos) + yStep; 
+      newData = {
+        'yPos': newY,
+      }  
+    }
+    if(data.direction == "left"){
+      newX = parseFloat(folderMetaData.xPos) - xStep;
+      newData = {
+        'xPos': newX,
+      }
+    }
+    if(data.direction == "right"){
+      newX = parseFloat(folderMetaData.xPos) + xStep;
+      newData = {
+        'xPos': newX,
+      }
+    }
+
+    updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
+      console.log(currentDataJSON);
+      sendEventWithContent('updateBlock', currentDataJSON);
+    }, function(error) {
+      console.error("Failed to move the block! Error: ", error);
+    });
+
+  }
 	
-	function onChangeText(element){
-		var dir = element.path;
-		var arrayOfFiles = readTxtDir(dir);
-
-		var elIndex =parseInt(element.index)
-    var prevIndex = elIndex + 1;
-    console.log("ON CHANGE TEXT EVENTS", prevIndex);
-
-    if(prevIndex > arrayOfFiles.length - 1){
-    	prevIndex = 0;
-    }
-
-    console.log(prevIndex, element.index, arrayOfFiles.length - 1);
-
-    var newData = {
-    	'text': arrayOfFiles[prevIndex],
-    	'index': prevIndex,
-    	"slugFolderName" : element.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-    	console.log(currentDataJSON);
-      sendEventWithContent( 'changeTextEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-	}
-
-	function onChangeTextPrev(element){
-		var dir = element.path;
-		var arrayOfFiles = readTxtDir(dir);
-
-		var elIndex =parseInt(element.index)
-    var prevIndex = elIndex - 1;
-    console.log("ON CHANGE TEXT EVENTS", prevIndex);
-
-    if(prevIndex < 0){
-    	prevIndex = arrayOfFiles.length - 1;
-    }
-
-    console.log(prevIndex, element.index, arrayOfFiles.length - 1);
-
-    var newData = {
-    	'text': arrayOfFiles[prevIndex],
-    	'index': prevIndex,
-    	"slugFolderName" : element.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-    	console.log(currentDataJSON);
-      sendEventWithContent( 'changeTextEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-	}
 
 // BLOCK   FUNCTIONS
   function createNewBlock( blockData) {
