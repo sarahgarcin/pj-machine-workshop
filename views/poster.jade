@@ -13,7 +13,7 @@ html
           span.plusButton + 
           span.zoom-value 100%
           span.minusButton - 
-        .gridButton.active grid
+        .gridButton grid
         .debugButton debug
         .pjMachineButton PJ Machine Mode
 
@@ -21,7 +21,7 @@ html
     .content-wrapper
       #page-content.page(data-active-block= 1)
         .page-wrapper
-          .grid.row.active
+          .grid.row
             - for (var i = 0; i < 30; ++i) {
               div.grid-el.columns
             - }

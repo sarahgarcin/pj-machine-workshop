@@ -6,7 +6,9 @@ const fs = require('fs-extra'),
 	exec = require('child_process').exec,
 	parsedown = require('woods-parsedown'),
 	phantom = require('phantom'),
-	slugg = require('slugg');
+	slugg = require('slugg'),
+  Horseman = require('node-horseman'),
+  NodePDF = require('nodepdf');
 
 	const
 	  settings  = require('./content/settings.js'),
@@ -14,6 +16,13 @@ const fs = require('fs-extra'),
 	;
 
 	var _ph, _page, _outObj;
+  var horseman = new Horseman([
+    '--ignore-ssl-errors=yes',
+    '--ssl-protocol=any', 
+    '--load-images=true',
+    '--local-to-remote-url-access=yes'
+    ]);
+
 	var readPageSettings = fs.readFileSync('./content/page.json', 'utf-8');
 	var pageSettings = JSON.parse(readPageSettings)
 
@@ -54,14 +63,7 @@ module.exports = function(app, io){
     // Pj machine function 
     socket.on('changeBlock', onChangeBlock);
     socket.on('moveBlock', onMoveBlock);
-
-		socket.on('zoomIn', onZoomIn);
-		socket.on('zoomOut', onZoomOut);
-		
-		socket.on('moveRight', onMoveRight);
-		socket.on('moveLeft', onMoveLeft);
-		socket.on('moveDown', onMoveDown);
-		socket.on('moveUp', onMoveUp);
+    socket.on('zoomBlock', onZoomBlock);
 
 
 		socket.on('increaseWordSpacing', onIncreaseWordSpacing);
@@ -239,6 +241,38 @@ module.exports = function(app, io){
     });
 
   }
+
+  function onZoomBlock(data){
+    console.log('EVENT - Zoom Block ', data);
+    var newZoom;
+
+    var pathToRead = api.getContentPath(data.currentProject);
+    var folderMetaData = getFolderMeta( data.currentBlock, pathToRead);
+    var blockPath = path.join(data.currentProject, data.currentBlock);
+    
+    console.log(folderMetaData);
+    
+    if(data.zoom == "zoomin"){
+      var newZoom = zoomIn(parseFloat(folderMetaData.zoom));
+      newData = {
+        'zoom': newZoom,
+      }
+    }
+    if(data.zoom == "zoomout"){
+      var newZoom = zoomOut(parseFloat(folderMetaData.zoom));
+      newData = {
+        'zoom': newZoom,
+      } 
+    }
+
+    updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
+      console.log(currentDataJSON);
+      sendEventWithContent('updateBlock', currentDataJSON);
+    }, function(error) {
+      console.error("Failed to zoom the block! Error: ", error);
+    });
+
+  }
 	
 
 // BLOCK   FUNCTIONS
@@ -341,41 +375,6 @@ module.exports = function(app, io){
   }
 
 // -------  Z O O M     F U N C T I O N S ----------- 
-	
-	function onZoomIn(data){
-		console.log("ON ZOOM IN");
-		var newZoom = zoomIn(parseFloat(data.zoom));
-		
-
-    var newData = {
-    	'zoom': newZoom, 
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'zoomEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-
-	}
-
-	function onZoomOut(data){
-		console.log("ON ZOOM OUT");
-		var zoom = zoomOut(parseFloat(data.zoom));
-
-    var newData = {
-    	'zoom': zoom,
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'zoomEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-
-	}
 
 	function zoomIn(zoom){
 	  var maxZoom = settings.maxZoom,
@@ -401,84 +400,6 @@ module.exports = function(app, io){
 
 // -------  E N D       Z O O M     F U N C T I O N S ----------- 
 
-// -------  M O V E     F U N C T I O N S ----------- 
-
-	function onMoveRight(data){
-		console.log("ON MOVE RIGHT");
-		var xStep = settings.xStep;
-
-		var newXPos = parseFloat(data.xPos) + xStep;
-
-    var newData = {
-    	'xPos': newXPos, 
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'moveEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-
-	}
-
-	function onMoveLeft(data){
-		console.log("ON MOVE RIGHT");
-		var xStep = settings.xStep;
-
-		var newXPos = parseFloat(data.xPos) - xStep;
-
-    var newData = {
-    	'xPos': newXPos, 
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'moveEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-	}
-
-	function onMoveDown(data){
-		console.log("ON MOVE RIGHT");
-		var yStep = settings.yStep;
-
-		var newYPos = parseFloat(data.yPos) + yStep;
-
-    var newData = {
-    	'yPos': newYPos, 
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'moveEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-
-	}
-
-	function onMoveUp(data){
-		console.log("ON MOVE RIGHT");
-		var yStep = settings.yStep;
-
-		var newYPos = parseFloat(data.yPos) - yStep;
-
-    var newData = {
-    	'yPos': newYPos, 
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'moveEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-
-	}
-
-// -------  E N D       M O V E     F U N C T I O N S ----------- 
 
 // -------  W O R D    S P A C I N G     F U N C T I O N S -----------
 	
@@ -613,49 +534,37 @@ module.exports = function(app, io){
 // -------  E N D      C H A N G E   B L O C K   S I Z E    F U N C T I O N S -----------
 
 //------------- PDF -------------------
-	function generatePdf(pdf){	
-		console.log('generate pdf');
+	function generatePdf(currentUrl){	
+		console.log('EVENT- generate pdf', currentUrl);
 		var date = api.getCurrentDate();
-		var url = 'http://localhost:1337/';
-		var filePath = pdfFolderPath+'/'+date+'-'+chapterFolder+'.pdf';
+		var url = currentUrl;
+		var filePath = pdfFolderPath+'/'+date+'.pdf';
 
-		phantom.create([
-	  '--ignore-ssl-errors=yes',
-	  '--ssl-protocol=any', 
-	  '--load-images=yes',
-	  '--local-to-remote-url-access=yes'
-		]).then(function(ph) {
-		  ph.createPage().then(function(page) {
-		  	// 	page.property('clipRect',{
-					//     top:    0,
-					//     left:   1365,
-					//     width:  1365,
-					//     height: 1970
-					// });
-		  	page.open(url)
-		  	.then(function(){
-		  		// page.property('viewportSize', {width: 600, height: 	});
-		  		// page.property('paperSize', {format: 'A4', orientation: 'landscape'})
-		  		page.property('paperSize')
-		  		// page.property('clipRect', {top: 0, left: 1000, width:3000,height:890})
-		  		.then(function() {
-			  		return page.property('content')
-			    	.then(function() {
-				      setTimeout(function(){
-					      page.render(filePath).then(function() {
-					      	console.log('success', pdf);
-					      	// if(pdf == true){
-					      		io.sockets.emit('pdfIsGenerated');
-					      	// }
-					      	page.close();
-						    	ph.exit();
-					      });
-				     	}, 2000)
-				    });
-				  });
-		    });
-		  });
-		});
+    var pdf = new NodePDF(url, filePath, {
+        'viewportSize': {
+            'width': 1440,
+            'height': 900
+        }, 
+        'args': '--debug=true'
+    });
+     
+    pdf.on('error', function(msg){
+        console.log(msg);
+    });
+     
+    pdf.on('done', function(pathToFile){
+        console.log(pathToFile);
+    });
+     
+    // listen for stdout from phantomjs 
+    pdf.on('stdout', function(stdout){
+         // handle 
+    });
+     
+    // listen for stderr from phantomjs 
+    pdf.on('stderr', function(stderr){
+        // handle 
+    });
 
 	}
 //------ E N D        P D F -------------------

@@ -39,20 +39,18 @@ socket.on('updateBlock', onUpdateBlock);
 		if($('.page').hasClass('pj-machine-mode')){
 			var code = e.keyCode;
 			console.log(code);
-			var activePJBlock = $('.content.active-pj');
+			var activePJBlock = $(".active-pj").attr('data-folder');
 			// CALL FUNCTION YOU NEED HERE 
 			// CHANGE THE KEYPRESS CODE IN EACH FUNCTION
 			changeBlock(activePJBlock, code);
 			moveBlock(activePJBlock, code);
-			// zoomEvents(data, code);
-			// moveEvents(data, code);
+			zoomBlock(activePJBlock, code);
 			// wordSpacing(data, code);
 			// // changeFontFamily(data, code);
 			// changeBlockSize(data, code);
-			// generatePDF(data, code);
+			generatePDF(code);
 
 			// gridDisplayer(code);
-			// zoomVideo(code);
 			
 			e.preventDefault(); // prevent the default action (scroll / move caret)
 		}
@@ -155,13 +153,11 @@ socket.on('updateBlock', onUpdateBlock);
 })();
 
 // PJ EVENTS FUNCTION
-	function changeBlock(data, code){
+	function changeBlock(blockActive, code){
 		// press "p" to go to next block, press "o" to do to previous block
 		var nextKey = 112;
 		var prevKey = 111; 
 
-		console.log(data);
-		var blockActive = $(".active-pj").attr('data-folder');
 		var numBlocks = $('.content').length;
 		var direction ; 
 		if(code == nextKey){
@@ -180,7 +176,7 @@ socket.on('updateBlock', onUpdateBlock);
 		});
 	}
 
-	function moveBlock(activeBlock, code){
+	function moveBlock(blockActive, code){
 
 		//press "q" to move image on the right
 		var right = 113;
@@ -207,44 +203,51 @@ socket.on('updateBlock', onUpdateBlock);
 			direction = "down";
 		}
 		
-		socket.emit('moveBlock', {
-			"currentProject" : currentProject,
-			"currentBlock" : blockActive,
-			"direction": direction, 
-			"numBlocks":numBlocks
-		});
-
+		if(code == right || code == left ||code == up ||code == down ){
+			socket.emit('moveBlock', {
+				"currentProject" : currentProject,
+				"currentBlock" : blockActive,
+				"direction": direction, 
+				"numBlocks":numBlocks
+			});
+		}
 	}
 
-	// ------   M O V E    E L E M E N T S -----------
-function moveEvents(data, code){
-	
-	//press "q" to move image on the right
-	var right = 113;
-	//press "a" to move image on the left
-	var left = 97; 
-	//press "w" to move image down
-	var down = 119;
-	//press "s" to move image up
-	var up = 115;
+	function zoomBlock(blockActive, code){
+		//zoomIn press "u"
+		var zoomInKey = 117; 
+		//zoomOut press "space"
+		var zoomOutKey = 32; 
+		var zoom; 
 
-  
-	if(code == right){
-		socket.emit("moveRight", data);
-	}
-	
-	if(code == left){
-		socket.emit("moveLeft", data);
-	}
-
-	if(code == down){
-		socket.emit("moveDown", data);
+		if(code == zoomInKey){
+			zoom = "zoomin";
+		}
+		
+		if(code == zoomOutKey){
+			zoom = "zoomout";
+		}
+		if(code == zoomInKey || code == zoomOutKey){
+			socket.emit("zoomBlock", {
+				"currentProject" : currentProject,
+				"currentBlock" : blockActive,
+				"zoom": zoom
+			});
+		}
 	}
 
-	if(code == up){
-		socket.emit("moveUp", data);
+	function generatePDF(code){
+
+		// press "t" to generate pdf
+		var pdf = 116;
+		var currentUrl = window.location.href ;
+
+		if(code == pdf){
+			socket.emit('generate', currentUrl);							
+		}
+		
 	}
-}
+
 
 function onBlockChanged(blockToGo){
 	// console.log(blockToGo);
@@ -294,6 +297,7 @@ function makeFolderContent( projectData){
 	  .addClass('active-pj')
 	  .css({
 	  	'transform': 'scale('+projectData.zoom+')',
+	  	'transform-origin': '0 0',
 	  	'left': projectData.xPos+'cm',
 			'top':projectData.yPos+'cm',
 			'word-spacing': projectData.wordSpace +'px', 
@@ -345,6 +349,7 @@ function onUpdateBlock(blockdata){
 	console.log(blockdata);
 	var $element = $('.content[data-folder="'+blockdata.index+'"]');
 	$element.move(blockdata.xPos, blockdata.yPos);
+	$element.zoom(blockdata.zoom, '0 0');
 }
 
 
