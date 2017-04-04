@@ -3,8 +3,27 @@ path: content/data/poster-1/2
 ----
 
 content: # PrePostPrint
-hello pipou  
-c'ets beau non ? 
+@parsons Paris   
+Raphaël Bastide, Sarah Garcin,   
+Romain Marula, Etienne Ozeray
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

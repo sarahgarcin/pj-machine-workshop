@@ -1,0 +1,50 @@
+path: content/data/angeline/2
+
+----
+
+content: ## Best graphic designer ever
+
+blablab ehjeh jkeh jkeh ejk hjkehjke
+ehkjeh jkehr kr
+
+
+
+
+
+
+
+
+
+
+
+
+----
+
+index: 2
+
+----
+
+zoom: 1
+
+----
+
+xPos: 0
+
+----
+
+yPos: 4
+
+----
+
+wordSpace: 0
+
+----
+
+blockSize: 8
+
+----
+
+filesNb: 1
+
+----
+

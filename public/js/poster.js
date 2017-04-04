@@ -29,63 +29,86 @@ socket.on('cssContent', onUpdateCSS);
 socket.on('cssLoaded', onCSSLoaded);
 
 (function init(){
-	
-	// Create a new block on click plus button
-	$('.js--add-block').on('click',function(){
-		var numBlocks = $('.content').length;
-		console.log(numBlocks);
-		socket.emit('newBlock', {
-			"currentFolder":currentFolder, 
-			"currentProject" : currentProject,
-			"numBlocks":numBlocks.toString()
-		});
-	});
 
-	// Select block on click 
-	$('body').on('click', '.content', function(){
-		var $this = $(this);
-		var dataFolder = $this.attr('data-folder');
-		if($this.hasClass('active-block')){
-			$(this).removeClass('active-block');
-			$('.module--md-editor textarea').val('');
-			$('.module--md-editor textarea').attr("disabled","disabled"); 
-			$('.js--submit-md-editor').attr("disabled","disabled");
-		}
-		else{
-			$('.content').removeClass('active-block');
-			$this.addClass('active-block');
-			$('.module--md-editor textarea').attr("disabled",false); 
-			$('.js--submit-md-editor').attr("disabled",false);
-			loadBlockData(dataFolder);
-		}
-	});
+	// KEY PRESS EVENTS
+	// $(document).on('keypress', function(e){
+	// 	var code = e.keyCode;
+	// 	console.log(code);
+	// 	var activePJBlock = $('.content.active-pj');
+	// 	// CALL FUNCTION YOU NEED HERE 
+	// 	// CHANGE THE KEYPRESS CODE IN EACH FUNCTION
+	// 	//changeBlock(activePJBlock, code);
+	// 	// changeText(data, code);
+	// 	// zoomEvents(data, code);
+	// 	// moveEvents(data, code);
+	// 	// wordSpacing(data, code);
+	// 	// // changeFontFamily(data, code);
+	// 	// changeBlockSize(data, code);
+	// 	// generatePDF(data, code);
 
-	// Run markdown on click "Run button"
-	$('.js--submit-md-editor').on('click', function(){
-		var newMdContent = $('.module--md-editor textarea').val();
-		var blockActive = $(".active-block").attr('data-folder');
-		socket.emit('newMdContent', {
-			"currentProject" : currentProject,
-			"currentBlock" : blockActive,
-			"newMdContent": newMdContent, 
-		});
-	});
-
-	// Run CSS on click "Run button"
-	$('.js--submit-css-editor').on('click', function(){
-		var newCSSContent = 
-		$('.module--css-editor textarea')
-		.val()
-		.replace(/\n/g, "")
-		;
+	// 	// gridDisplayer(code);
+	// 	// zoomVideo(code);
 		
-		socket.emit('newCssContent', {
-			"newCSSContent": newCSSContent, 
-			"currentProject": currentProject
-		});
-	});
+	// 	e.preventDefault(); // prevent the default action (scroll / move caret)
+	// });
 
-	// I N T E R F A C E
+	// INTERFACE ACTIONS
+		// Create a new block on click plus button
+		$('.js--add-block').on('click',function(){
+			var numBlocks = $('.content').length;
+			console.log(numBlocks);
+			socket.emit('newBlock', {
+				"currentFolder":currentFolder, 
+				"currentProject" : currentProject,
+				"numBlocks":numBlocks.toString()
+			});
+		});
+
+		// Select block on click 
+		$('body').on('click', '.content', function(){
+			var $this = $(this);
+			var dataFolder = $this.attr('data-folder');
+			if($this.hasClass('active-block')){
+				$(this).removeClass('active-block');
+				$('.module--md-editor textarea').val('');
+				$('.module--md-editor textarea').attr("disabled","disabled"); 
+				$('.js--submit-md-editor').attr("disabled","disabled");
+			}
+			else{
+				$('.content').removeClass('active-block');
+				$this.addClass('active-block');
+				$('.module--md-editor textarea').attr("disabled",false); 
+				$('.js--submit-md-editor').attr("disabled",false);
+				loadBlockData(dataFolder);
+			}
+		});
+
+		// Run markdown on click "Run button"
+		$('.js--submit-md-editor').on('click', function(){
+			var newMdContent = $('.module--md-editor textarea').val();
+			var blockActive = $(".active-block").attr('data-folder');
+			socket.emit('newMdContent', {
+				"currentProject" : currentProject,
+				"currentBlock" : blockActive,
+				"newMdContent": newMdContent, 
+			});
+		});
+
+		// Run CSS on click "Run button"
+		$('.js--submit-css-editor').on('click', function(){
+			var newCSSContent = 
+			$('.module--css-editor textarea')
+			.val()
+			.replace(/\n/g, "")
+			;
+			
+			socket.emit('newCssContent', {
+				"newCSSContent": newCSSContent, 
+				"currentProject": currentProject
+			});
+		});
+
+	// I N T E R F A C E    F E A T U R E S
 		// Grid
 		$('.gridButton').on('click',function(){
 			if($(this).hasClass('active')){
@@ -112,22 +135,58 @@ socket.on('cssLoaded', onCSSLoaded);
 
 })();
 
+// PJ EVENTS FUNCTION
+	function changeText(data, code){
+		// press "p" to go to next block, press "o" to do to previous block
+		var nextKey = 112;
+		var prevKey = 111; 
+
+		// setTimeout(function(){
+		// 	var indexTest = $(".page-wrapper").find("[data-folder='" + data.slugFolderName + "']").attr('data-index');
+		// 	console.log(data.slugFolderName);
+		// 	console.log(indexTest);
+		// 	data.index = indexTest;
+
+		
+
+
+		// if(code == nextKey){
+		// 	socket.emit('changeText', data);
+		// }
+
+		// if(code == prevKey){
+		// 	socket.emit('changeTextPrev', data);
+		// }
+		// }, 100);
+
+		// if(code == submitKey){
+		// 	if(partCount < foldersdata.length-1){
+		// 		partCount ++;
+		// 		$('.page-wrapper').attr('data-part', partCount);
+		// 	}
+		// 	else{ 
+		// 		partCount = 0; 
+		// 		$('.page-wrapper').attr('data-part', partCount);
+		// 	}
+		// 	localStorage.setItem('data', JSON.stringify(foldersdata[partCount]));
+		// 	var data = JSON.parse(localStorage.getItem('data'))
+		// 	var type = data.slugFolderName;
+		// 	$('.meta-data .block-select').html(type + ' folder:');
+		// 	// $('.meta-data .file-select').html((parseInt(data.index)+1) + '/' + parseInt(data.nbOfFiles));
+		// 	var $textEl = $(".page-wrapper").find("[data-folder='" + data.slugFolderName + "']");
+		// 	$textEl.css('border', '1px solid red');
+		// 	setTimeout(function(){
+		// 		$textEl.css('border', 'none');
+		// 	}, 1000);
+		// }
+	}
+
 function onDisplayPage(foldersData){
 	$.each( foldersData, function( index, fdata) {
   	var $folderContent = makeFolderContent( fdata);
     return insertOrReplaceFolder( fdata.slugFolderName, $folderContent);
   });
 	console.log(foldersData);
-
-	var partCount = parseInt($('.page-wrapper').attr('data-part'));
-	data = foldersData[partCount];
-	loadCurrentBlockMarkdown(data.content);
-
-	$('.content[data-folder="1"]').addClass('active-block');
-
-	// Put the object into storage
-	localStorage.setItem('foldersdata', JSON.stringify(foldersData));
-	localStorage.setItem('data', JSON.stringify(data));
 }
 
 function onBlockCreated(fdata){
@@ -135,6 +194,7 @@ function onBlockCreated(fdata){
 	var $folderContent = makeFolderContent( fdata);
 	insertOrReplaceFolder( fdata.index, $folderContent).then(function(blockIndex){
 		loadCurrentBlockMarkdown(fdata.content);
+
 	});	
 }
 
@@ -153,11 +213,13 @@ function makeFolderContent( projectData){
 	var folder = projectData.index;
 
 	var newFolder = $(".js--templates > .content").clone(false);
+	$('.content').removeClass('active-block');
 
 	// customisation du projet
 	newFolder
 	  .attr( 'data-index', index)
 	  .attr( 'data-folder', folder)
+	  .addClass('active-block')
 	  .css({
 	  	'transform': 'scale('+projectData.zoom+')',
 	  	'left': projectData.xPos+'cm',
@@ -169,6 +231,7 @@ function makeFolderContent( projectData){
   ;
 
   newFolder.html(converter.makeHtml(projectData.content));
+  loadCurrentBlockMarkdown(projectData.content);
 
 	return newFolder;
 }
@@ -189,9 +252,9 @@ function onBlockData(fdata){
 }
 
 function onUpdatePoster(data){
-
 	//update content in block
-	$('.active-block').html(converter.makeHtml(data.content));
+	$('.content[data-folder="'+data.index+'"]').html(converter.makeHtml(data.content));
+	loadCurrentBlockMarkdown(data.content);
 	console.log(data);
 }
 

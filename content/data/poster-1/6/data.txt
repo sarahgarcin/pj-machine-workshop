@@ -1,32 +1,14 @@
-path: content/data/poster-1/4
+path: content/data/poster-1/6
 
 ----
 
-content: 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+content: # Yes
 
 
 
 ----
 
-index: 4
+index: 6
 
 ----
 
@@ -38,7 +20,7 @@ xPos: 0
 
 ----
 
-yPos: 16
+yPos: 36
 
 ----
 
