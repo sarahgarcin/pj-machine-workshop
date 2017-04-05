@@ -6,22 +6,12 @@ const fs = require('fs-extra'),
 	exec = require('child_process').exec,
 	parsedown = require('woods-parsedown'),
 	phantom = require('phantom'),
-	slugg = require('slugg'),
-  Horseman = require('node-horseman'),
-  NodePDF = require('nodepdf');
+	slugg = require('slugg');
 
 	const
 	  settings  = require('./content/settings.js'),
 	  api = require('./bin/api')
 	;
-
-	var _ph, _page, _outObj;
-  var horseman = new Horseman([
-    '--ignore-ssl-errors=yes',
-    '--ssl-protocol=any', 
-    '--load-images=true',
-    '--local-to-remote-url-access=yes'
-    ]);
 
 	var readPageSettings = fs.readFileSync('./content/page.json', 'utf-8');
 	var pageSettings = JSON.parse(readPageSettings)
@@ -76,7 +66,8 @@ module.exports = function(app, io){
 
 		socket.on('reset', function(){onReset(socket)});
 
-		socket.on('generate', generatePdf);
+		socket.on('generate', generatePDF);
+    socket.on('generatePDFfromHTML', generatePDFfromHTML);
 
 	});
 
@@ -273,6 +264,28 @@ module.exports = function(app, io){
     });
 
   }
+
+  function zoomIn(zoom){
+    var maxZoom = settings.maxZoom,
+        zoomStep = settings.zoomStep;
+    
+    if(zoom > maxZoom){
+      zoom = zoom;
+    }
+    else{ 
+      zoom += zoomStep;
+    }
+    return zoom;
+  }
+
+  function zoomOut(zoom){
+    var minZoom = settings.minZoom, 
+        zoomStep = settings.zoomStep;
+
+    if(zoom < minZoom) zoom = zoom; 
+    else zoom -= zoomStep; 
+    return zoom;
+  }
 	
 
 // BLOCK   FUNCTIONS
@@ -373,33 +386,6 @@ module.exports = function(app, io){
 
     });
   }
-
-// -------  Z O O M     F U N C T I O N S ----------- 
-
-	function zoomIn(zoom){
-	  var maxZoom = settings.maxZoom,
-	      zoomStep = settings.zoomStep;
-	  
-	  if(zoom > maxZoom){
-	  	zoom = zoom;
-	  }
-	  else{ 
-	  	zoom += zoomStep;
-	  }
-	  return zoom;
-	}
-
-	function zoomOut(zoom){
-	  var minZoom = settings.minZoom, 
-	      zoomStep = settings.zoomStep;
-
-	  if(zoom < minZoom) zoom = zoom; 
-	  else zoom -= zoomStep; 
-	  return zoom;
-	}
-
-// -------  E N D       Z O O M     F U N C T I O N S ----------- 
-
 
 // -------  W O R D    S P A C I N G     F U N C T I O N S -----------
 	
@@ -534,39 +520,115 @@ module.exports = function(app, io){
 // -------  E N D      C H A N G E   B L O C K   S I Z E    F U N C T I O N S -----------
 
 //------------- PDF -------------------
-	function generatePdf(currentUrl){	
-		console.log('EVENT- generate pdf', currentUrl);
-		var date = api.getCurrentDate();
-		var url = currentUrl;
-		var filePath = pdfFolderPath+'/'+date+'.pdf';
 
-    var pdf = new NodePDF(url, filePath, {
-        'viewportSize': {
-            'width': 1440,
-            'height': 900
-        }, 
-        'args': '--debug=true'
-    });
-     
-    pdf.on('error', function(msg){
-        console.log(msg);
-    });
-     
-    pdf.on('done', function(pathToFile){
-        console.log(pathToFile);
-    });
-     
-    // listen for stdout from phantomjs 
-    pdf.on('stdout', function(stdout){
-         // handle 
-    });
-     
-    // listen for stderr from phantomjs 
-    pdf.on('stderr', function(stderr){
-        // handle 
-    });
+  function generatePDF() {
+    console.log('EVENT - pdfIsGenerating');
+    io.sockets.emit('pdfIsGenerating');
+    // var htmlPath = pdfFolderPath+'/'+date+'.html';
 
-	}
+    // fs.writeFile('htmlPath', data.html, function(err) {
+    //   if (err) return( err);
+    //   else{console.log('html print file has been writen')}
+    // });
+    //exportPubliToPDF.exportPubliToPDF( socket, data, io);
+  }
+
+  function generatePDFfromHTML(data){
+    console.log('EVENT - generate pdf');
+    var date = api.getCurrentDate();
+    var htmlPath = pdfFolderPath+'/'+date+'.html';
+    var filePath = pdfFolderPath+'/'+date+'.pdf';
+
+    fs.writeFile(htmlPath, data.html, function(err) {
+      if (err) return( err);
+      else{
+        console.log('html print file has been writen');
+        phantom.create([
+          '--ignore-ssl-errors=yes',
+          '--ssl-protocol=any', 
+          '--load-images=yes',
+          '--local-to-remote-url-access=yes'
+          ]).then(function(ph) {
+            ph.createPage().then(function(page) {
+              page.open(htmlPath).then(function(status) {
+                console.log(status);
+                page.property('content').then(function(content) {
+                  setTimeout(function(){
+                    page.render(filePath).then(function() {
+                      console.log('success');
+                      //io.sockets.emit('pdfIsGenerated');
+                      page.close();
+                      ph.exit();
+                    });
+                  }, 2000);
+                });
+              });
+            });
+          });
+      }
+    });
+  }
+
+  // function generatePdf(currentUrl){  
+  //   console.log('EVENT - generate pdf');
+  //   var date = api.getCurrentDate();
+  //   var url = path.join(currentUrl, "print");
+  //   var filePath = pdfFolderPath+'/'+date+'.pdf';
+
+  //   phantom.create([
+  //   '--ignore-ssl-errors=yes',
+  //   '--ssl-protocol=any', 
+  //   '--load-images=yes',
+  //   '--local-to-remote-url-access=yes'
+  //   ]).then(function(ph) {
+  //     ph.createPage().then(function(page) {
+  //       page.open(url).then(function(status) {
+  //         console.log(status);
+  //         page.property('content').then(function(content) {
+  //           setTimeout(function(){
+  //             page.render(filePath).then(function() {
+  //               console.log('success');
+  //               //io.sockets.emit('pdfIsGenerated');
+  //               page.close();
+  //               ph.exit();
+  //             });
+  //           }, 2000);
+  //         });
+  //       });
+  //     });
+  //   });
+
+    
+
+  //   // phantom.create([
+  //   // '--ignore-ssl-errors=yes',
+  //   // '--ssl-protocol=any', 
+  //   // '--load-images=yes',
+  //   // '--local-to-remote-url-access=yes'
+  //   // ]).then(function(ph) {
+  //   //   ph.createPage().then(function(page) {
+  //   //     page.open(url)
+  //   //     .then(function(){
+  //   //       page.property('paperSize', {width: '40cm', height:'60cm', orientation: 'portrait'})
+  //   //       .then(function() {
+  //   //           return page.property('content')
+  //   //           .then(function() {
+  //   //             setTimeout(function(){
+  //   //               page.render(filePath).then(function() {
+  //   //                 console.log('success');
+  //   //                 //io.sockets.emit('pdfIsGenerated');
+  //   //                 page.close();
+  //   //                 ph.exit();
+  //   //               });
+  //   //             }, 2000)
+  //   //           });
+  //   //       });
+  //   //     });
+  //   //   });
+  //   // });
+
+  // }
+  
 //------ E N D        P D F -------------------
 
 // -------------- Folders method !! ------------

@@ -240,7 +240,7 @@ socket.on('updateBlock', onUpdateBlock);
 
 		// press "t" to generate pdf
 		var pdf = 116;
-		var currentUrl = window.location.href ;
+		var currentUrl = window.location.href ; 
 
 		if(code == pdf){
 			socket.emit('generate', currentUrl);							

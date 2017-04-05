@@ -1,8 +1,17 @@
 // I M P O R T    F O N T 
 @import "../fonts/volkorn/stylesheet.css";
-@import "../fonts/inknut/stylesheet.css";
+//@import "../fonts/inknut/stylesheet.css";
 @import "../fonts/nanook/stylesheet.css";
 @import "settings.scss";
+
+@font-face {
+    font-family: 'inknut';
+    src: url('../fonts/inknut/InknutAntiqua-SemiBold.woff2') format('woff2'),
+         url('../fonts/inknut/InknutAntiqua-SemiBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+
+}
 
 // PAGE
 $widthPage: $page-widthPage;

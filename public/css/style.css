@@ -5,7 +5,6 @@
  *    without disabling user zoom.
  */
 @import url(../fonts/volkorn/stylesheet.css);
-@import url(../fonts/inknut/stylesheet.css);
 @import url(../fonts/nanook/stylesheet.css);
 html {
   font-family: sans-serif;
@@ -6791,6 +6790,12 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
+@font-face {
+  font-family: 'inknut';
+  src: url("../fonts/inknut/InknutAntiqua-SemiBold.woff2") format("woff2"), url("../fonts/inknut/InknutAntiqua-SemiBold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal; }
+
 /******************
   Mixins
   ********************/
@@ -6885,7 +6890,7 @@ body[data-page="index"] {
       margin-top: 15px; }
 
 * {
-  box-sizing: border; }
+  box-sizing: border-box; }
 
 html {
   margin: 0; }
@@ -7035,12 +7040,23 @@ header {
         cursor: pointer;
         background-color: #FFF; }
         .content-wrapper .page .page-wrapper .content.active-block {
-          background-color: #DEDEDE; }
+          border: 2px solid violet; }
         .content-wrapper .page .page-wrapper .content.debug {
           border: 2px solid red; }
 
 .page.pj-machine-mode .content.active-pj {
-  background-color: #0092FF !important; }
+  border: 2px solid blue !important; }
+
+body[data-page="print"] .content-wrapper {
+  padding-top: 0;
+  background-color: #FFF; }
+  body[data-page="print"] .content-wrapper .page {
+    border: none;
+    transform: none;
+    left: 0;
+    margin: 0; }
+    body[data-page="print"] .content-wrapper .page .page-wrapper {
+      margin: 0; }
 
 .grid {
   height: 58.6cm;

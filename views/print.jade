@@ -1,0 +1,17 @@
+doctype html
+html
+  include snippets/head.jade
+  
+  body(data-page='print')
+
+    .content-wrapper
+      #page-content.page(data-active-block= 1)
+        .page-wrapper
+
+    .js--templates
+      .content.--js-content-el
+
+    include snippets/footer.jade
+    script(src='/js/print.js')
+
+

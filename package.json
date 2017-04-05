@@ -30,6 +30,7 @@
     "socket.io": "^1.4.5",
     "underscore": "^1.8.3",
     "url": "^0.11.0",
+    "webpage": "^0.3.0",
     "woods-parsedown": "git://github.com/louis-ev/woods-parsedown.git#master"
   },
   "devDependencies": {

@@ -17,6 +17,7 @@ module.exports = function(app,io,m){
 
   app.get("/", getIndex);
   app.get("/:poster", getPoster);
+  app.get("/:poster/print", getPrint);
 
   function getIndex(req, res) {
     
@@ -34,6 +35,23 @@ module.exports = function(app,io,m){
 
       var pageTitle = c.name + ' | ' + projectTitle;
       res.render("poster", {
+        "confName" : c.name,
+        "title" : pageTitle,
+        "appName" : projectTitle,
+        "slugConfName" : slugConfName.poster,
+        "contentFolder":contentFolder,
+        "settings" : settings,
+      });
+
+    });
+  };
+
+  function getPrint(req, res) {
+    var slugConfName = req.params;
+    api.readConfMeta(slugConfName.poster).then(function(c) {
+
+      var pageTitle = c.name + ' | ' + projectTitle;
+      res.render("print", {
         "confName" : c.name,
         "title" : pageTitle,
         "appName" : projectTitle,
