@@ -6,6 +6,8 @@ var currentProject = app.currentProject;
 
 var converter = new showdown.Converter({'tables':true});
 
+var scale = 0.3;
+
 
 function onSocketConnect() {
 	sessionId = socket.io.engine.id;
@@ -113,6 +115,19 @@ socket.on('updateBlock', onUpdateBlock);
 		});
 
 	// I N T E R F A C E    F E A T U R E S
+		// Zoom 
+		$('.plusButton').on('click', function(){
+			scale = scale + 0.01;
+			$(".page").zoom(scale, '0 0');
+			$('.zoom-value').html(parseInt(scale*100) + '%');
+		});
+
+		$('.minusButton').on('click', function(){
+			scale = scale - 0.01;
+			$(".page").zoom(scale, '0 0');
+			$('.zoom-value').html(parseInt(scale*100) + '%');
+		});
+
 		// Grid
 		$('.gridButton').on('click',function(){
 			if($(this).hasClass('active')){
@@ -122,6 +137,18 @@ socket.on('updateBlock', onUpdateBlock);
 			else{
 				$(this).addClass('active');
 				$(".grid").addClass('active');
+			}
+		});
+
+		// Preview
+		$('.previewButton').on('click',function(){
+			if($(this).hasClass('active')){
+				$(this).removeClass('active');
+				$("body").removeClass('preview');
+			}
+			else{
+				$(this).addClass('active');
+				$("body").addClass('preview');
 			}
 		});
 
@@ -137,6 +164,8 @@ socket.on('updateBlock', onUpdateBlock);
 			}
 		});
 
+
+		// pj machine mode
 		$(".pjMachineButton").on('click', function(){
 			if($(this).hasClass('active')){
 				$(this).removeClass('active');
@@ -285,6 +314,7 @@ function makeFolderContent( projectData){
 	
 	var index = projectData.index;
 	var folder = projectData.index;
+	var blockClass = 'block' + index;
 
 	var newFolder = $(".js--templates > .content").clone(false);
 	$('.content').removeClass('active-block').removeClass('active-pj');
@@ -295,6 +325,7 @@ function makeFolderContent( projectData){
 	  .attr( 'data-folder', folder)
 	  .addClass('active-block')
 	  .addClass('active-pj')
+	  .addClass(blockClass)
 	  .css({
 	  	'transform': 'scale('+projectData.zoom+')',
 	  	'transform-origin': '0 0',
@@ -303,10 +334,12 @@ function makeFolderContent( projectData){
 			'word-spacing': projectData.wordSpace +'px', 
 			// 'width': projectData.blockSize +'cm'
 	  })
-
   ;
 
-  newFolder.html(converter.makeHtml(projectData.content));
+  newFolder
+  	.html(converter.makeHtml(projectData.content))
+  	.append('<div class="infos-css"><span>.'+blockClass+'</span></div>')
+  	;
   loadCurrentBlockMarkdown(projectData.content);
 
 	return newFolder;
@@ -329,7 +362,11 @@ function onBlockData(fdata){
 
 function onUpdatePoster(data){
 	//update content in block
-	$('.content[data-folder="'+data.index+'"]').html(converter.makeHtml(data.content));
+	$('.content[data-folder="'+data.index+'"]')
+	.html(converter.makeHtml(data.content))
+	.append('<div class="infos-css"><span>.block'+data.index+'</span></div>')
+	;
+	
 	loadCurrentBlockMarkdown(data.content);
 	//console.log(data);
 }
@@ -342,7 +379,8 @@ function onUpdateCSS(css){
 function onCSSLoaded(pdata){
 	console.log("CSS loaded", pdata);
 	$('style').html(pdata.css);
-	$('.module--css-editor textarea').val(pdata.css);
+	var cssFormatted = pdata.css.replace(/{/g, '{\n').replace(/}/g, '\n}\n');
+	$('.module--css-editor textarea').val(cssFormatted);
 }
 
 function onUpdateBlock(blockdata){
@@ -351,6 +389,7 @@ function onUpdateBlock(blockdata){
 	$element.move(blockdata.xPos, blockdata.yPos);
 	$element.zoom(blockdata.zoom, '0 0');
 }
+
 
 
 

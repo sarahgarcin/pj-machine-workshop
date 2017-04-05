@@ -1,0 +1,102 @@
+path: content/data/example/3
+
+----
+
+content: # Big Title
+## Medium Title
+### Medium smaller title
+#### Small title
+##### Tiny tiny title
+**Bold**
+
+*Italic*
+
+![Alt](https://github.com/sarahgarcin/pj-machine/raw/master/content/data/02/01.jpg) → add an image  
+  
+space + space + return → linebreak
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----
+
+index: 3
+
+----
+
+zoom: 1
+
+----
+
+xPos: 0
+
+----
+
+yPos: 9
+
+----
+
+wordSpace: 0
+
+----
+
+blockSize: 8
+
+----
+
+filesNb: 1
+
+----
+

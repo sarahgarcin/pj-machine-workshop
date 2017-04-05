@@ -1,0 +1,60 @@
+path: content/data/example/2
+
+----
+
+content: You can add content by clicking on "add a block".   
+Then write your content in the Markdown Editor on the right sidebar.  
+Click on run to proceed.  
+ 
+In the Markdown editor you can write in Markdown or in html. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----
+
+index: 2
+
+----
+
+zoom: 1
+
+----
+
+xPos: 0
+
+----
+
+yPos: 4
+
+----
+
+wordSpace: 0
+
+----
+
+blockSize: 8
+
+----
+
+filesNb: 1
+
+----
+

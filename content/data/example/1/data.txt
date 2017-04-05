@@ -1,0 +1,38 @@
+path: content/data/example/1
+
+----
+
+content: # Welcome on the PJ Machine
+
+
+
+----
+
+index: 1
+
+----
+
+zoom: 1
+
+----
+
+xPos: 0
+
+----
+
+yPos: 1
+
+----
+
+wordSpace: 0
+
+----
+
+blockSize: 8
+
+----
+
+filesNb: 1
+
+----
+

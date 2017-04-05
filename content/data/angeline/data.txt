@@ -10,7 +10,7 @@ created: 20170403_135656
 
 ----
 
-css: h1{color: blue;}img{width: 20cm;}
+css: .page{background: orange;}h1{font-family: "nanook", sans-serif;}.block1 h1{color:red;}
 
 ----
 

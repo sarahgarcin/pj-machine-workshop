@@ -55,6 +55,7 @@ function makeFolderContent( projectData){
 	
 	var index = projectData.index;
 	var folder = projectData.index;
+	var blockClass = 'block' + index;
 
 	var newFolder = $(".js--templates > .content").clone(false);
 
@@ -62,6 +63,7 @@ function makeFolderContent( projectData){
 	newFolder
 	  .attr( 'data-index', index)
 	  .attr( 'data-folder', folder)
+	  .addClass(blockClass)
 	  .css({
 	  	'transform': 'scale('+projectData.zoom+')',
 	  	'transform-origin': '0 0',

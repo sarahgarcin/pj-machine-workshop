@@ -1,0 +1,16 @@
+name: Example
+
+----
+
+content: 
+
+----
+
+created: 20170405_173400
+
+----
+
+css: p{font-size: 20pt;}img{width: 15cm;}
+
+----
+

@@ -6,13 +6,15 @@ html
 
     header
       .module--infos
-        h1 #{appName}
+        h1 
+          a(href="/") #{appName}
         h2 #{confName}
       .module--interface-features
         .zoomFunction
           span.plusButton + 
-          span.zoom-value 100%
+          span.zoom-value 30%
           span.minusButton - 
+        .previewButton preview
         .gridButton grid
         .debugButton debug
         .pjMachineButton PJ Machine Mode
@@ -20,18 +22,19 @@ html
 
     .content-wrapper
       #page-content.page(data-active-block= 1)
+        .infos-css .page
         .page-wrapper
           .grid.row
             - for (var i = 0; i < 30; ++i) {
               div.grid-el.columns
             - }
       .module--sidebar
-        button.js--add-block +
+        button.js--add-block + add a block
         .module--block-selected
           p
         .module--md-editor
           span  Markdown Editor
-          textarea(disabled=true)
+          textarea(disabled=false)
           button.js--submit-md-editor Run
         .module--css-editor
           span Css Editor
@@ -41,7 +44,7 @@ html
 
     .js--templates
       .content.--js-content-el
-        button.js--remove-block -
+
 
     include snippets/footer.jade
     script(src='/js/poster.js')

@@ -4,8 +4,14 @@
  * 2. Prevent iOS and IE text size adjust after device orientation change,
  *    without disabling user zoom.
  */
-@import url(../fonts/volkorn/stylesheet.css);
+@import url(../fonts/aileron/stylesheet.css);
+@import url(../fonts/Fira-Sans/stylesheet.css);
+@import url(../fonts/inknut/stylesheet.css);
 @import url(../fonts/nanook/stylesheet.css);
+@import url(../fonts/Reglo/stylesheet.css);
+@import url(../fonts/roboto/stylesheet.css);
+@import url(../fonts/terminal/stylesheet.css);
+@import url(../fonts/volkorn/stylesheet.css);
 html {
   font-family: sans-serif;
   /* 1 */
@@ -6790,12 +6796,6 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
-@font-face {
-  font-family: 'inknut';
-  src: url("../fonts/inknut/InknutAntiqua-SemiBold.woff2") format("woff2"), url("../fonts/inknut/InknutAntiqua-SemiBold.woff") format("woff");
-  font-weight: bold;
-  font-style: normal; }
-
 /******************
   Mixins
   ********************/
@@ -6892,80 +6892,28 @@ body[data-page="index"] {
 * {
   box-sizing: border-box; }
 
-html {
-  margin: 0; }
-
-body, html {
-  height: 100%; }
-
 body {
   margin: 0;
-  color: #000;
-  font-size: 15pt;
-  font-family: "vollkorn", sans-serif;
-  font-weight: normal; }
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: "inknut", sans-serif, sans-serif;
-  margin-bottom: 0.1cm; }
-
-h1 {
-  font-size: 30pt;
-  line-height: 125%; }
-
-h2 {
-  font-size: 25pt; }
-
-h3, h4, h5 {
-  font-size: 18pt; }
-
-h4 {
-  text-align: right;
-  margin-bottom: 0.3cm; }
-
-h6 {
-  position: absolute;
-  font-size: 16pt;
-  max-width: 20cm;
-  line-height: 110%; }
-
-li {
-  font-family: "vollkorn", sans-serif, serif;
-  font-size: 15pt;
-  line-height: 125%;
-  word-wrap: break-word; }
+  width: 100%;
+  height: 100%;
+  margin: 0; }
 
 p {
-  font-family: "vollkorn", sans-serif, serif;
-  font-size: 15pt;
-  line-height: 125%;
-  word-wrap: break-word; }
-  p:first-child {
-    margin: 0; }
-
-a {
-  color: #000;
-  text-decoration: underline; }
-
-pre {
-  margin-bottom: 0.5cm;
-  box-sizing: content-box;
-  border: 0; }
-
-code {
-  background-color: #FFF;
-  border: none; }
+  margin-bottom: 0; }
 
 img {
-  max-width: 100%;
-  margin-bottom: 0.5cm; }
+  max-width: 100%; }
 
 .row {
   width: 100%;
   max-width: 100%; }
 
+textarea {
+  font-family: monospace;
+  font-size: 11pt; }
+
 header {
-  height: 50px;
+  height: 45px;
   background-color: #000;
   color: #FFF;
   position: fixed;
@@ -6982,21 +6930,45 @@ header {
     header .module--infos h1, header .module--infos h2 {
       position: relative;
       margin: 0;
-      padding: 10px;
-      font-size: 20px;
+      padding: 14px 10px;
+      font-size: 14px;
       float: left;
       line-height: 120%;
-      color: #FFF; }
+      color: #FFF;
+      font-weight: normal;
+      font-family: "nanook", serif; }
+      header .module--infos h1 a, header .module--infos h2 a {
+        color: #FFF;
+        text-decoration: none; }
+        header .module--infos h1 a:hover, header .module--infos h2 a:hover {
+          color: #FFF;
+          text-decoration: none; }
   header .module--interface-features {
     float: right;
     padding-right: 20px; }
     header .module--interface-features div {
       float: left;
       position: relative;
-      padding: 10px;
-      cursor: pointer; }
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      border: 2px solid #FFF;
+      border-radius: 15%; }
+      header .module--interface-features div.zoomFunction {
+        border: none;
+        margin-top: 7px; }
+        header .module--interface-features div.zoomFunction span {
+          padding-left: 10px;
+          padding-right: 10px; }
+          header .module--interface-features div.zoomFunction span.plusButton, header .module--interface-features div.zoomFunction span.minusButton {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border: 2px solid #FFF;
+            border-radius: 20%; }
       header .module--interface-features div.active {
-        text-decoration: underline; }
+        color: #000;
+        background-color: #FFF; }
 
 .content-wrapper {
   background: #DFDFDF;
@@ -7015,7 +6987,6 @@ header {
     .content-wrapper .module--sidebar.pj-machine-mode {
       display: none; }
   .content-wrapper .page {
-    background-color: #FFF;
     width: 40cm;
     height: 60cm;
     border-right: 1px solid #000;
@@ -7027,22 +6998,38 @@ header {
     transform-origin: 0 0;
     left: 40%;
     margin-left: -25%; }
+    .content-wrapper .page .infos-css {
+      font-size: 35px;
+      background-color: #A6A6A6;
+      padding: 10px 20px;
+      position: absolute;
+      right: 0;
+      transform: translateX(100%);
+      top: 0; }
+      .content-wrapper .page .infos-css span {
+        color: #000; }
     .content-wrapper .page .page-wrapper {
       margin: 0.7cm 0cm;
       width: 40cm;
       height: 58.6cm; }
       .content-wrapper .page .page-wrapper .content {
         width: auto;
+        height: auto;
         min-width: 7cm;
-        min-height: 3cm;
-        padding-right: 0.5cm;
+        min-height: 1cm;
         position: absolute;
-        cursor: pointer;
-        background-color: #FFF; }
+        cursor: pointer; }
+        .content-wrapper .page .page-wrapper .content .infos-css {
+          display: none; }
         .content-wrapper .page .page-wrapper .content.active-block {
           border: 2px solid violet; }
+          .content-wrapper .page .page-wrapper .content.active-block .infos-css {
+            display: block; }
         .content-wrapper .page .page-wrapper .content.debug {
           border: 2px solid red; }
+
+.page {
+  background-color: #FFF; }
 
 .page.pj-machine-mode .content.active-pj {
   border: 2px solid blue !important; }
@@ -7051,12 +7038,20 @@ body[data-page="print"] .content-wrapper {
   padding-top: 0;
   background-color: #FFF; }
   body[data-page="print"] .content-wrapper .page {
-    border: none;
     transform: none;
     left: 0;
     margin: 0; }
     body[data-page="print"] .content-wrapper .page .page-wrapper {
       margin: 0; }
+
+body.preview .grid {
+  display: none; }
+
+body.preview .content {
+  border: none !important; }
+
+body.preview .infos-css, body.preview .module--sidebar {
+  display: none !important; }
 
 .grid {
   height: 58.6cm;
