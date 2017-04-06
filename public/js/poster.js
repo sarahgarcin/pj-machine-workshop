@@ -14,6 +14,7 @@ function onSocketConnect() {
 	console.log('Connected ' + sessionId);
 	socket.emit('listFiles', {"currentFolder":currentFolder, "currentProject" : currentProject});
 	socket.emit('loadCSS',{"currentProject" : currentProject} );
+	socket.emit('room', currentProject);
 };
 
 function onSocketError(reason) {
@@ -27,7 +28,6 @@ socket.on('blockCreated', onBlockCreated);
 socket.on('displayPageEvents', onDisplayPage);
 socket.on('BlockData', onBlockData);
 socket.on('updatePoster', onUpdatePoster);
-socket.on('cssContent', onUpdateCSS);
 socket.on('cssLoaded', onCSSLoaded);
 
 // pj machine sockets
@@ -49,7 +49,8 @@ socket.on('updateBlock', onUpdateBlock);
 			zoomBlock(activePJBlock, code);
 			// wordSpacing(data, code);
 			// // changeFontFamily(data, code);
-			// changeBlockSize(data, code);
+			changeBlockSize(activePJBlock, code);
+			
 			generatePDF(code);
 
 			// gridDisplayer(code);
@@ -265,6 +266,34 @@ socket.on('updateBlock', onUpdateBlock);
 		}
 	}
 
+	function changeBlockSize(blockActive, code){
+		// press 'i' to make Block Size smaller
+		var decreaseSize = 105;
+		// press 'e' to make Block Size larger
+		var increaseSize = 101;
+		var direction;
+
+		if(code == decreaseSize){
+			direction = "decreaseSize";
+		}
+		
+		if(code == increaseSize){
+			direction = "increaseSize";
+		}
+
+		if(code == decreaseSize || code == increaseSize){
+			socket.emit("changeBlockSize", {
+				"currentProject" : currentProject,
+				"currentBlock" : blockActive,
+				"direction": direction
+			});
+		}
+
+		// if(code == blockSizeKey){
+		// 	socket.emit("changeBlockSize", data);
+		// }
+	}
+
 	function generatePDF(code){
 
 		// press "t" to generate pdf
@@ -332,7 +361,7 @@ function makeFolderContent( projectData){
 	  	'left': projectData.xPos+'cm',
 			'top':projectData.yPos+'cm',
 			'word-spacing': projectData.wordSpace +'px', 
-			// 'width': projectData.blockSize +'cm'
+			'width': projectData.blockSize + 'cm'
 	  })
   ;
 
@@ -371,11 +400,6 @@ function onUpdatePoster(data){
 	//console.log(data);
 }
 
-function onUpdateCSS(css){
-	$('style').html(css);
-
-}
-
 function onCSSLoaded(pdata){
 	console.log("CSS loaded", pdata);
 	$('style').html(pdata.css);
@@ -388,6 +412,8 @@ function onUpdateBlock(blockdata){
 	var $element = $('.content[data-folder="'+blockdata.index+'"]');
 	$element.move(blockdata.xPos, blockdata.yPos);
 	$element.zoom(blockdata.zoom, '0 0');
+	// $element.blockSize(blockdata.blockSize);
+	$element.css({'width': blockdata.blockSize + 'cm'});
 }
 
 

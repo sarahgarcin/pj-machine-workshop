@@ -6899,7 +6899,11 @@ body {
   margin: 0; }
 
 p {
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  width: 100%; }
+
+p + img {
+  width: 100%; }
 
 img {
   max-width: 100%; }
@@ -7015,10 +7019,11 @@ header {
       .content-wrapper .page .page-wrapper .content {
         width: auto;
         height: auto;
-        min-width: 7cm;
+        min-width: 1cm;
         min-height: 1cm;
         position: absolute;
-        cursor: pointer; }
+        cursor: pointer;
+        word-wrap: break-word; }
         .content-wrapper .page .page-wrapper .content .infos-css {
           display: none; }
         .content-wrapper .page .page-wrapper .content.active-block {

@@ -10,7 +10,7 @@ created: 20170327_190500
 
 ----
 
-css: h1{color:black;font-size:50pt ; }p{font-size: 25pt; margin-top:50px;}.page{background-color:orange !important;}.content{background-color: transparent !important}img{transform:rotate(-10deg);}
+css: h1{color:black;font-size:50pt ; font-family:'nanook';}p{font-size: 25pt; margin-top:50px;}.page{background-color: orange !important;font-family:'nanook';}.content{background-color: transparent !important}img{transform:rotate(-10deg);}
 
 ----
 

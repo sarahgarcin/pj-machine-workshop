@@ -35,7 +35,10 @@ module.exports = function(app, io){
 		// POSTER
 		socket.on('newBlock', onNewBlock);
 
-		//createDataFile(socket);
+    // add client in room
+		socket.on('room', function(room) {
+        socket.join(room);
+    });
 
     // List all the blocks
 		socket.on( 'listFiles', function (data){ onListBlocks(data, socket); });
@@ -51,9 +54,10 @@ module.exports = function(app, io){
 		
 
     // Pj machine function 
-    socket.on('changeBlock', onChangeBlock);
+    socket.on('changeBlock', function (data){onChangeBlock(data, socket)});
     socket.on('moveBlock', onMoveBlock);
     socket.on('zoomBlock', onZoomBlock);
+    socket.on('changeBlockSize', onChangeBlockSize);
 
 
 		socket.on('increaseWordSpacing', onIncreaseWordSpacing);
@@ -62,7 +66,7 @@ module.exports = function(app, io){
 		socket.on('changeFont', onChangeFont);
 		socket.on('removeFont', onRemoveFont);
 
-		socket.on('changeBlockSize', onChangeBlockSize);
+		
 
 		socket.on('reset', function(){onReset(socket)});
 
@@ -118,7 +122,7 @@ module.exports = function(app, io){
   	function onNewBlock(blockData){
   		createNewBlock(blockData).then(function(newpdata) {
         console.log('newpdata: '+newpdata);
-        sendEventWithContent('blockCreated', newpdata);
+        sendEventWithContent('blockCreated', newpdata, 'room', blockData.currentProject);
       }, function(errorpdata) {
         console.error("Failed to create a new folder! Error: ", errorpdata);
       });
@@ -127,7 +131,7 @@ module.exports = function(app, io){
     function onLoadBlockData(data){
       var pathToRead = api.getContentPath(data.currentProject);
       var folderMetaData = getFolderMeta( data.dataFolder, pathToRead);
-      sendEventWithContent( 'BlockData', folderMetaData);
+      sendEventWithContent( 'BlockData', folderMetaData, 'room', data.currentProject);
     }
 
     function onNewMdContent(data){
@@ -139,7 +143,7 @@ module.exports = function(app, io){
 
       updateFolderMeta(newData, pathToRead).then(function( currentDataJSON) {
         console.log(currentDataJSON);
-        sendEventWithContent('updatePoster', currentDataJSON);
+        sendEventWithContent('updatePoster', currentDataJSON, 'room', data.currentProject);
       }, function(error) {
         console.error("Failed to update a folder! Error: ", error);
       });
@@ -155,7 +159,7 @@ module.exports = function(app, io){
 
       updateFolderMeta(newData, data.currentProject).then(function( currentDataJSON) {
         console.log(currentDataJSON);
-        sendEventWithContent('cssContent', data.newCSSContent);
+        sendEventWithContent('cssLoaded', newData, 'room', data.currentProject);
       }, function(error) {
         console.error("Failed to update a folder! Error: ", error);
       });
@@ -167,7 +171,7 @@ module.exports = function(app, io){
 
   // P J   M A C H I N E
 
-  function onChangeBlock(data){
+  function onChangeBlock(data, socket){
     console.log('EVENT - Change Block ', data);
     var blockToGo = parseInt(data.currentBlock);
     console.log(blockToGo);
@@ -184,7 +188,7 @@ module.exports = function(app, io){
       blockToGo = 1;
     } 
     console.log(blockToGo);
-    sendEventWithContent( 'blockChanged', blockToGo);
+    sendEventWithContent( 'blockChanged', blockToGo, 'room', data.currentProject);
   }
 
   function onMoveBlock(data){
@@ -226,7 +230,7 @@ module.exports = function(app, io){
 
     updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
       console.log(currentDataJSON);
-      sendEventWithContent('updateBlock', currentDataJSON);
+      sendEventWithContent('updateBlock', currentDataJSON, 'room', data.currentProject);
     }, function(error) {
       console.error("Failed to move the block! Error: ", error);
     });
@@ -258,7 +262,7 @@ module.exports = function(app, io){
 
     updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
       console.log(currentDataJSON);
-      sendEventWithContent('updateBlock', currentDataJSON);
+      sendEventWithContent('updateBlock', currentDataJSON, 'room', data.currentProject);
     }, function(error) {
       console.error("Failed to zoom the block! Error: ", error);
     });
@@ -286,6 +290,64 @@ module.exports = function(app, io){
     else zoom -= zoomStep; 
     return zoom;
   }
+
+  function onChangeBlockSize(data){
+    console.log("EVENT - onChangeBlockSize");
+
+    var pathToRead = api.getContentPath(data.currentProject);
+    var folderMetaData = getFolderMeta( data.currentBlock, pathToRead);
+    var blockPath = path.join(data.currentProject, data.currentBlock);
+    
+    //console.log(folderMetaData);
+    
+    if(data.direction == "decreaseSize"){
+      var newSize = decreaseSize(parseFloat(folderMetaData.blockSize));
+      newData = {
+        'blockSize': newSize,
+      }
+    }
+    if(data.direction == "increaseSize"){
+      var newSize = increaseSize(parseFloat(folderMetaData.blockSize));
+      newData = {
+        'blockSize': newSize,
+      } 
+    }
+
+    updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
+      //console.log(currentDataJSON);
+      sendEventWithContent('updateBlock', currentDataJSON, 'room', data.currentProject);
+    }, function(error) {
+      console.error("Failed to zoom the block! Error: ", error);
+    });
+
+  }
+
+  function increaseSize(size){
+    var maxBlockSize = 45,
+        sizeStep = 0.5;
+    
+    if(size > maxBlockSize){
+      size = size;
+    }
+    else{ 
+      size += sizeStep;
+    }
+    console.log(size);
+    return size;
+  }
+
+  function decreaseSize(size){
+    var minBlockSize = 1, 
+        sizeStep = 0.5;
+
+    if(size < minBlockSize) {
+      size = minBlockSize;
+    }
+    else {
+      size -= sizeStep; 
+    }
+    return size;
+  }
 	
 
 // BLOCK   FUNCTIONS
@@ -310,7 +372,7 @@ module.exports = function(app, io){
   					"xPos" : 0,
   					"yPos" : blockName * blockName,
   					"wordSpace" : 0, 
-  					"blockSize": 8,
+  					"blockSize": 20,
   					"filesNb": 1,
   					"content": "# Write Markdown"
           };
@@ -486,36 +548,36 @@ module.exports = function(app, io){
 
 // -------  C H A N G E    B L O C K   S I Z E   F U N C T I O N S -----------
 
-	function onChangeBlockSize(data){
-		console.log("ON CHANGE BLOCK SIZE");
+	// function onChangeBlockSize(data){
+	// 	console.log("ON CHANGE BLOCK SIZE");
 		
-		var newBlockSize = changeSizeFunction(parseFloat(data.blockSize));
+	// 	var newBlockSize = changeSizeFunction(parseFloat(data.blockSize));
 
-    var newData = {
-    	'blockSize': newBlockSize, 
-    	"slugFolderName" : data.slugFolderName
-    }
+ //    var newData = {
+ //    	'blockSize': newBlockSize, 
+ //    	"slugFolderName" : data.slugFolderName
+ //    }
 
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'changeBlockSizeEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-	}
+ //    updateFolderMeta(newData).then(function( currentDataJSON) {
+ //      sendEventWithContent( 'changeBlockSizeEvents', currentDataJSON);
+ //    }, function(error) {
+ //      console.error("Failed to update a folder! Error: ", error);
+ //    });
+	// }
 
-	function changeSizeFunction(size){
-		var maxBlockSize = 29;
-		var minBlockSize = 3;
-		var sizeStep = 1;
+	// function changeSizeFunction(size){
+	// 	var maxBlockSize = 29;
+	// 	var minBlockSize = 3;
+	// 	var sizeStep = 1;
 	  
-	  if(size > maxBlockSize){
-	  	size = minBlockSize;
-	  }
-	  else{ 
-	  	size += sizeStep;
-	  }
-	  return size;
-	}
+	//   if(size > maxBlockSize){
+	//   	size = minBlockSize;
+	//   }
+	//   else{ 
+	//   	size += sizeStep;
+	//   }
+	//   return size;
+	// }
 
 // -------  E N D      C H A N G E   B L O C K   S I Z E    F U N C T I O N S -----------
 
@@ -794,9 +856,9 @@ module.exports = function(app, io){
     return folderPath + '/' + settings.confMetafilename + settings.metaFileext;
   }
 
-	function sendEventWithContent( sendEvent, objectContent, socket) {
-    io.sockets.emit( sendEvent,objectContent);
-  }
+	// function sendEventWithContent( sendEvent, objectContent, socket) {
+ //    io.sockets.emit( sendEvent,objectContent);
+ //  }
 
 	 // C O M M O N     F U N C T I O N S
   function eventAndContent( sendEvent, objectJson) {
@@ -808,11 +870,14 @@ module.exports = function(app, io){
     return eventContentJSON;
   }
 
-  function sendEventWithContent( sendEvent, objectContent, socket) {
+  function sendEventWithContent( sendEvent, objectContent, socket, room) {
     var eventAndContentJson = eventAndContent( sendEvent, objectContent);
     console.log("eventAndContentJson " + JSON.stringify( eventAndContentJson, null, 4));
     if( socket === undefined)
       io.sockets.emit( eventAndContentJson["socketevent"], eventAndContentJson["content"]);
+    else if(socket === 'room'){
+      io.sockets.in(room).emit(eventAndContentJson["socketevent"], eventAndContentJson["content"]);
+    }
     else
       socket.emit( eventAndContentJson["socketevent"], eventAndContentJson["content"]);
   }

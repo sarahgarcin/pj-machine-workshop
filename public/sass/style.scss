@@ -67,6 +67,11 @@ body {
 
 p{
   margin-bottom: 0;
+  width: 100%;
+}
+
+p + img{
+  width: 100%;
 }
 
 img{
@@ -191,10 +196,11 @@ header{
       .content{
         width: auto;
         height: auto;
-        min-width: 7cm;
+        min-width: 1cm;
         min-height: 1cm;
         position:absolute;
         cursor: pointer;
+        word-wrap: break-word;
         .infos-css{
           display:none;
         }
