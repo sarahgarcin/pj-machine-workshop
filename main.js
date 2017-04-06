@@ -491,7 +491,7 @@ module.exports = function(app, io){
       ph.createPage().then(function(page) {
         page.open(url)
         .then(function(){
-          page.property('paperSize', {width: 1500, height: 2268, orientation: 'portrait'})
+          page.property('paperSize', {width: 1512, height: 2268, orientation: 'portrait'})
           .then(function() {
             return page.property('content')
             .then(function() {
