@@ -35,7 +35,8 @@ var settings = {
 
 	//WORD SPACING SETTINGS
 	"spacePlus" : 5,
-	"spaceMinus" : 3
+	"spaceMinus" : 3,
+	"space" : 3
 
 }
 

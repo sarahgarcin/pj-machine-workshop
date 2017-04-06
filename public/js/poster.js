@@ -47,13 +47,11 @@ socket.on('updateBlock', onUpdateBlock);
 			changeBlock(activePJBlock, code);
 			moveBlock(activePJBlock, code);
 			zoomBlock(activePJBlock, code);
-			// wordSpacing(data, code);
-			// // changeFontFamily(data, code);
+			wordSpacing(activePJBlock, code);
 			changeBlockSize(activePJBlock, code);
 			
 			generatePDF(code);
 
-			// gridDisplayer(code);
 			
 			e.preventDefault(); // prevent the default action (scroll / move caret)
 		}
@@ -294,6 +292,31 @@ socket.on('updateBlock', onUpdateBlock);
 		// }
 	}
 
+	function wordSpacing(blockActive, code){
+
+		//press "y" to add space between each words
+		var increaseKey = 121;
+		//press "r" to decrease space between each words
+		var decreaseKey = 114;
+		var direction;
+
+		if(code == decreaseKey){
+			direction = "decreaseSpacing";
+		}
+		
+		if(code == increaseKey){
+			direction = "increaseSpacing";
+		}
+
+		if(code == decreaseKey || code == increaseKey){
+			socket.emit("changeWordSpacing", {
+				"currentProject" : currentProject,
+				"currentBlock" : blockActive,
+				"direction": direction
+			});
+		}
+	}
+
 	function generatePDF(code){
 
 		// press "t" to generate pdf
@@ -360,7 +383,7 @@ function makeFolderContent( projectData){
 	  	'transform-origin': '0 0',
 	  	'left': projectData.xPos+'cm',
 			'top':projectData.yPos+'cm',
-			'word-spacing': projectData.wordSpace +'px', 
+			'letter-spacing': projectData.wordSpace +'px', 
 			'width': projectData.blockSize + 'cm'
 	  })
   ;
@@ -412,8 +435,9 @@ function onUpdateBlock(blockdata){
 	var $element = $('.content[data-folder="'+blockdata.index+'"]');
 	$element.move(blockdata.xPos, blockdata.yPos);
 	$element.zoom(blockdata.zoom, '0 0');
-	// $element.blockSize(blockdata.blockSize);
-	$element.css({'width': blockdata.blockSize + 'cm'});
+	$element.blockSize(blockdata.blockSize);
+	$element.wordSpacing(blockdata.wordSpace);
+
 }
 
 

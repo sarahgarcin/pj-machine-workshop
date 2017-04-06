@@ -20,7 +20,7 @@
 
   $.fn.wordSpacing = function( space ) {
 
-    return this.css('word-spacing', ''+space +'px');
+    return this.css('letter-spacing', ''+space +'px');
 
   };
 

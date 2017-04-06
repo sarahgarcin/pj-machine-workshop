@@ -58,17 +58,8 @@ module.exports = function(app, io){
     socket.on('moveBlock', onMoveBlock);
     socket.on('zoomBlock', onZoomBlock);
     socket.on('changeBlockSize', onChangeBlockSize);
+    socket.on('changeWordSpacing', onChangeWordSpacing);
 
-
-		socket.on('increaseWordSpacing', onIncreaseWordSpacing);
-		socket.on('decreaseWordSpacing', onDecreaseWordSpacing);
-		
-		socket.on('changeFont', onChangeFont);
-		socket.on('removeFont', onRemoveFont);
-
-		
-
-		socket.on('reset', function(){onReset(socket)});
 
 		socket.on('generate', generatePDF);
     socket.on('generatePDFfromHTML', generatePDFfromHTML);
@@ -348,6 +339,39 @@ module.exports = function(app, io){
     }
     return size;
   }
+
+  function onChangeWordSpacing(data){
+    console.log("EVENT - onChangeWordSpacing");
+
+    var pathToRead = api.getContentPath(data.currentProject);
+    var folderMetaData = getFolderMeta( data.currentBlock, pathToRead);
+    var blockPath = path.join(data.currentProject, data.currentBlock);
+    
+    //console.log(folderMetaData);
+    
+    if(data.direction == "decreaseSpacing"){
+      var newSpace = parseFloat(folderMetaData.wordSpace) - settings.space;
+      newData = {
+        'wordSpace': newSpace,
+      }
+    }
+    if(data.direction == "increaseSpacing"){
+      var newSpace = parseFloat(folderMetaData.wordSpace) + settings.space;
+      newData = {
+        'wordSpace': newSpace,
+      } 
+    }
+
+    updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
+      //console.log(currentDataJSON);
+      sendEventWithContent('updateBlock', currentDataJSON, 'room', data.currentProject);
+    }, function(error) {
+      console.error("Failed to zoom the block! Error: ", error);
+    });
+
+  }
+
+
 	
 
 // BLOCK   FUNCTIONS
@@ -490,96 +514,6 @@ module.exports = function(app, io){
 	}
 
 // ------- E N D        W O R D    S P A C I N G     F U N C T I O N S -----------
-
-// -------  C H A N G E    F O N T    F U N C T I O N S -----------
-
-	function onChangeFont(data, word){
-		console.log("ON CHANGE FONT");
-		var newTextWTags = wrapInTag('span', 'change-font', word, data);
-		
-
-    var newData = {
-    	'text': newTextWTags, 
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'changeFontEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-	}
-
-	function wrapInTag(tag, className, word, data){
-		var tag = tag, 
-	  regex = RegExp(word, 'gi'), // case insensitive
-	  classname = className || 'none',
-	  replacement = '<'+ tag +' class="'+classname+'">$&</'+ tag +'>';
-	  console.log(regex, replacement);
-
-	  return data.text.replace(regex, replacement);
-
-	}
-
-	function onRemoveFont(data){
-		console.log("ON REMOVE FONT STYLE");
-		
-		var tag = 'span', 
-		classname = 'change-font',
-		regex = RegExp('<'+ tag +' class="'+classname+'">', 'gi'), 
-		spanRegex = RegExp('</'+ tag +'>', 'gi'), 
-		newText = data.text.replace(regex, '').replace(spanRegex, '');
-		
-		console.log(newText);
-
-    var newData = {
-    	'text': newText, 
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'changeFontEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-	}
-
-// -------  E N D      C H A N G E    F O N T    F U N C T I O N S -----------
-
-// -------  C H A N G E    B L O C K   S I Z E   F U N C T I O N S -----------
-
-	// function onChangeBlockSize(data){
-	// 	console.log("ON CHANGE BLOCK SIZE");
-		
-	// 	var newBlockSize = changeSizeFunction(parseFloat(data.blockSize));
-
- //    var newData = {
- //    	'blockSize': newBlockSize, 
- //    	"slugFolderName" : data.slugFolderName
- //    }
-
- //    updateFolderMeta(newData).then(function( currentDataJSON) {
- //      sendEventWithContent( 'changeBlockSizeEvents', currentDataJSON);
- //    }, function(error) {
- //      console.error("Failed to update a folder! Error: ", error);
- //    });
-	// }
-
-	// function changeSizeFunction(size){
-	// 	var maxBlockSize = 29;
-	// 	var minBlockSize = 3;
-	// 	var sizeStep = 1;
-	  
-	//   if(size > maxBlockSize){
-	//   	size = minBlockSize;
-	//   }
-	//   else{ 
-	//   	size += sizeStep;
-	//   }
-	//   return size;
-	// }
-
-// -------  E N D      C H A N G E   B L O C K   S I Z E    F U N C T I O N S -----------
 
 //------------- PDF -------------------
 
