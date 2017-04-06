@@ -62,7 +62,6 @@ module.exports = function(app, io){
 
 
 		socket.on('generate', generatePDF);
-    socket.on('generatePDFfromHTML', generatePDFfromHTML);
 
 	});
 
@@ -475,13 +474,13 @@ module.exports = function(app, io){
 
 //------------- PDF -------------------
 
-  function generatePDF(currentUrl) {
+  function generatePDF(data) {
     console.log('EVENT - pdfIsGenerating');
 
     var date = api.getCurrentDate();
-    var filePath = pdfFolderPath+'/'+date+'.pdf';
-    var url = path.join(currentUrl, 'print');
-    //io.sockets.emit('pdfIsGenerating');
+    var filePath = path.join(pdfFolderPath, data.currentProject+'-'+date+'.pdf');
+    // pdfFolderPath+'/'+date+'.pdf';
+    var url = path.join(data.currentUrl, 'print');
 
     phantom.create([
     '--ignore-ssl-errors=yes',
@@ -499,7 +498,7 @@ module.exports = function(app, io){
               setTimeout(function(){
                 page.render(filePath).then(function() {
                   console.log('success');
-                  //io.sockets.emit('pdfIsGenerated');
+                  io.sockets.in(data.currentProject).emit('pdfIsGenerated', filePath);
                   page.close();
                   ph.exit();
                 });
@@ -509,130 +508,7 @@ module.exports = function(app, io){
         });
       });
     });
-    
-    // phantom.create([
-    // '--ignore-ssl-errors=yes',
-    // '--ssl-protocol=any', 
-    // '--load-images=yes',
-    // '--local-to-remote-url-access=yes'
-    // ]).then(function(ph) {
-    //   ph.createPage().then(function(page) {
-    //     page.open(url)
-    //     .then(function(){
-    //       page.property('paperSize', {width: '40cm', height:'60cm', orientation: 'portrait'})
-    //       .then(function() {
-    //           return page.property('content')
-    //           .then(function() {
-    //             setTimeout(function(){
-    //               page.render(filePath).then(function() {
-    //                 console.log('success');
-    //                 //io.sockets.emit('pdfIsGenerated');
-    //                 page.close();
-    //                 ph.exit();
-    //               });
-    //             }, 15000)
-    //           });
-    //       });
-    //     });
-    //   });
-    // });
   }
-
-  function generatePDFfromHTML(data){
-    console.log('EVENT - generate pdf');
-    var date = api.getCurrentDate();
-    var htmlPath = pdfFolderPath+'/'+date+'.html';
-    var filePath = pdfFolderPath+'/'+date+'.pdf';
-
-    fs.writeFile(htmlPath, data.html, function(err) {
-      if (err) return( err);
-      else{
-        console.log('html print file has been writen');
-        phantom.create([
-          '--ignore-ssl-errors=yes',
-          '--ssl-protocol=any', 
-          '--load-images=yes',
-          '--local-to-remote-url-access=yes'
-          ]).then(function(ph) {
-            ph.createPage().then(function(page) {
-              page.open(htmlPath).then(function(status) {
-                console.log(status);
-                page.property('content').then(function(content) {
-                  setTimeout(function(){
-                    page.render(filePath).then(function() {
-                      console.log('success');
-                      //io.sockets.emit('pdfIsGenerated');
-                      page.close();
-                      ph.exit();
-                    });
-                  }, 2000);
-                });
-              });
-            });
-          });
-      }
-    });
-  }
-
-  // function generatePdf(currentUrl){  
-  //   console.log('EVENT - generate pdf');
-  //   var date = api.getCurrentDate();
-  //   var url = path.join(currentUrl, "print");
-  //   var filePath = pdfFolderPath+'/'+date+'.pdf';
-
-  //   phantom.create([
-  //   '--ignore-ssl-errors=yes',
-  //   '--ssl-protocol=any', 
-  //   '--load-images=yes',
-  //   '--local-to-remote-url-access=yes'
-  //   ]).then(function(ph) {
-  //     ph.createPage().then(function(page) {
-  //       page.open(url).then(function(status) {
-  //         console.log(status);
-  //         page.property('content').then(function(content) {
-  //           setTimeout(function(){
-  //             page.render(filePath).then(function() {
-  //               console.log('success');
-  //               //io.sockets.emit('pdfIsGenerated');
-  //               page.close();
-  //               ph.exit();
-  //             });
-  //           }, 2000);
-  //         });
-  //       });
-  //     });
-  //   });
-
-    
-
-  //   // phantom.create([
-  //   // '--ignore-ssl-errors=yes',
-  //   // '--ssl-protocol=any', 
-  //   // '--load-images=yes',
-  //   // '--local-to-remote-url-access=yes'
-  //   // ]).then(function(ph) {
-  //   //   ph.createPage().then(function(page) {
-  //   //     page.open(url)
-  //   //     .then(function(){
-  //   //       page.property('paperSize', {width: '40cm', height:'60cm', orientation: 'portrait'})
-  //   //       .then(function() {
-  //   //           return page.property('content')
-  //   //           .then(function() {
-  //   //             setTimeout(function(){
-  //   //               page.render(filePath).then(function() {
-  //   //                 console.log('success');
-  //   //                 //io.sockets.emit('pdfIsGenerated');
-  //   //                 page.close();
-  //   //                 ph.exit();
-  //   //               });
-  //   //             }, 2000)
-  //   //           });
-  //   //       });
-  //   //     });
-  //   //   });
-  //   // });
-
-  // }
   
 //------ E N D        P D F -------------------
 

@@ -33,6 +33,9 @@ socket.on('cssLoaded', onCSSLoaded);
 // pj machine sockets
 socket.on('blockChanged', onBlockChanged);
 socket.on('updateBlock', onUpdateBlock);
+socket.on('pdfIsGenerated', function(filepath){
+	alert('The poster has been generated in PDF \n PDF path: ' + filepath);
+});
 
 (function init(){
 
@@ -324,7 +327,10 @@ socket.on('updateBlock', onUpdateBlock);
 		var currentUrl = window.location.href ; 
 
 		if(code == pdf){
-			socket.emit('generate', currentUrl);							
+			socket.emit('generate', {
+				"currentUrl": currentUrl,
+				"currentProject" : currentProject
+			});							
 		}
 		
 	}

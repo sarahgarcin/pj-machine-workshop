@@ -85,33 +85,3 @@ function onCSSLoaded(pdata){
 	$('style').html(pdata.css);
 }
 
-function onPdfIsGenerating(){
-	$.when($.get("/css/style.css"))
-  .done(function(response) {
-  	//console.log(response);
-  	var currentCSS = $('head style').html();
-  	var styleCSS = response;
-  	var allCSS = currentCSS + response;
-
-  	$('head style').html(allCSS);
-
-  	var pageHTML = $('html').html();
-		var currentUrl = window.location.href ; 
-		console.log(pageHTML);
-		socket.emit('generatePDFfromHTML', {
-			"currentUrl":currentUrl,
-			"html":pageHTML,
-
-		});
-  });
-	// var pageHTML = $('html').html();
-	// var currentUrl = window.location.href ; 
-	// console.log(pageHTML);
-	// socket.emit('generatePDFfromHTML', {
-	// 	"currentUrl":currentUrl,
-	// 	"html":pageHTML,
-
-	// });
-}
-
-
