@@ -473,60 +473,69 @@ module.exports = function(app, io){
     });
   }
 
-// -------  W O R D    S P A C I N G     F U N C T I O N S -----------
-	
-	function onIncreaseWordSpacing(data){
-		console.log("ON INCREASE WORDSPACING");
-
-		var spacePlus = settings.spacePlus;
-
-		var newSpace = parseFloat(data.wordSpace) + spacePlus;
-
-    var newData = {
-    	'wordSpace': newSpace, 
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'wordSpacingEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-
-	}
-
-	function onDecreaseWordSpacing(data){
-		console.log("ON DECREASE WORDSPACING");
-		var spaceMinus = settings.spaceMinus;
-
-		var newSpace = parseFloat(data.wordSpace) - spaceMinus;
-
-    var newData = {
-    	'wordSpace': newSpace, 
-    	"slugFolderName" : data.slugFolderName
-    }
-
-    updateFolderMeta(newData).then(function( currentDataJSON) {
-      sendEventWithContent( 'wordSpacingEvents', currentDataJSON);
-    }, function(error) {
-      console.error("Failed to update a folder! Error: ", error);
-    });
-	}
-
-// ------- E N D        W O R D    S P A C I N G     F U N C T I O N S -----------
-
 //------------- PDF -------------------
 
-  function generatePDF() {
+  function generatePDF(currentUrl) {
     console.log('EVENT - pdfIsGenerating');
-    io.sockets.emit('pdfIsGenerating');
-    // var htmlPath = pdfFolderPath+'/'+date+'.html';
 
-    // fs.writeFile('htmlPath', data.html, function(err) {
-    //   if (err) return( err);
-    //   else{console.log('html print file has been writen')}
+    var date = api.getCurrentDate();
+    var filePath = pdfFolderPath+'/'+date+'.pdf';
+    var url = path.join(currentUrl, 'print');
+    //io.sockets.emit('pdfIsGenerating');
+
+    phantom.create([
+    '--ignore-ssl-errors=yes',
+    '--ssl-protocol=any', 
+    '--load-images=yes',
+    '--local-to-remote-url-access=yes'
+    ]).then(function(ph) {
+      ph.createPage().then(function(page) {
+        page.open(url)
+        .then(function(){
+          page.property('paperSize', {width: 1500, height: 2268, orientation: 'portrait'})
+          .then(function() {
+            return page.property('content')
+            .then(function() {
+              setTimeout(function(){
+                page.render(filePath).then(function() {
+                  console.log('success');
+                  //io.sockets.emit('pdfIsGenerated');
+                  page.close();
+                  ph.exit();
+                });
+              }, 2000)
+            });
+          });
+        });
+      });
+    });
+    
+    // phantom.create([
+    // '--ignore-ssl-errors=yes',
+    // '--ssl-protocol=any', 
+    // '--load-images=yes',
+    // '--local-to-remote-url-access=yes'
+    // ]).then(function(ph) {
+    //   ph.createPage().then(function(page) {
+    //     page.open(url)
+    //     .then(function(){
+    //       page.property('paperSize', {width: '40cm', height:'60cm', orientation: 'portrait'})
+    //       .then(function() {
+    //           return page.property('content')
+    //           .then(function() {
+    //             setTimeout(function(){
+    //               page.render(filePath).then(function() {
+    //                 console.log('success');
+    //                 //io.sockets.emit('pdfIsGenerated');
+    //                 page.close();
+    //                 ph.exit();
+    //               });
+    //             }, 15000)
+    //           });
+    //       });
+    //     });
+    //   });
     // });
-    //exportPubliToPDF.exportPubliToPDF( socket, data, io);
   }
 
   function generatePDFfromHTML(data){
@@ -628,27 +637,6 @@ module.exports = function(app, io){
 //------ E N D        P D F -------------------
 
 // -------------- Folders method !! ------------
-	
-	function readTxtDir(textDir){
-    // List text
-    console.log('COMMON - Read text files');
-    var textArray = [];
-    var arrayOfFiles = fs.readdirSync(textDir);
-    var arrayOfFiles = arrayOfFiles.filter(junk.not);
-    console.log(arrayOfFiles);
-    arrayOfFiles.forEach( function (file) {
-    	if(file != settings.confMetafilename + settings.metaFileext){
-    		console.log(path.extname(file));
-    		if(path.extname(file) == '.txt'){
-		      var textInFile = fs.readFileSync(textDir+'/'+file, 'utf8');
-		      console.log('file: '+file);
-		      textArray.push(textInFile);
-	      }
-	    }
-    });
-    return textArray;
-  }
-
 	function listAllFolders(pathToRead, slugCurrentProject) {
     return new Promise(function(resolve, reject) {
   		fs.readdir(pathToRead, function (err, filenames) {
@@ -716,30 +704,6 @@ module.exports = function(app, io){
         });
       });
       
-     //  if(newText != undefined)
-     //   fmeta.content = newText;
-     //  if(newIndex != undefined)
-     //   fmeta.index = newIndex;
-     //  else
-     //    fmeta.index = fmeta.index;
-     //  if(newZoom != undefined)
-     //   fmeta.zoom = newZoom;
-     //  if(newXPos != undefined)
-     //   fmeta.xPos = newXPos;
-     //  if(newYPos != undefined)
-     //   fmeta.yPos = newYPos;
-     //  if(newSpace != undefined)
-     //   fmeta.wordSpace = newSpace;
-     //  if(newBlockSize != undefined)
-     //   fmeta.blockSize = newBlockSize;
-
-     // console.log(api.getMetaFileOfConf( pathToRead));
-
-      // envoyer les changements dans le JSON du folder
-      // api.storeData( api.getMetaFileOfConf( pathToRead), fmeta, "update").then(function( ufmeta) {
-      //   // ufmeta.slugFolderName = slugFolderName;
-      //   resolve( ufmeta);
-      // });
     });
   }
 

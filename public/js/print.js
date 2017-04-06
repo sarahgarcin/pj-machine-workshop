@@ -42,10 +42,11 @@ function onDisplayPage(foldersData){
 }
 
 function insertOrReplaceFolder( blockIndex, $folderContent) {
-	return new Promise(function(resolve, reject) {
+	// return new Promise(function(resolve, reject) {
   	$(".page-wrapper").append($folderContent);
-  	resolve(blockIndex);
-  });
+  	return blockIndex;
+  	// resolve(blockIndex);
+  // });
 }
 
 
@@ -69,8 +70,8 @@ function makeFolderContent( projectData){
 	  	'transform-origin': '0 0',
 	  	'left': projectData.xPos+'cm',
 			'top':projectData.yPos+'cm',
-			'word-spacing': projectData.wordSpace +'px', 
-			// 'width': projectData.blockSize +'cm'
+			'letter-spacing': projectData.wordSpace +'px', 
+			'width': projectData.blockSize +'cm'
 	  })
 
   ;
