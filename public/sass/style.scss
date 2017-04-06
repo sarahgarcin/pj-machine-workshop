@@ -177,6 +177,27 @@ header{
     transform-origin: 0 0;
     left: 40%;
     margin-left: -25%;
+    &.pj-machine-mode{
+      left: 30%;
+      margin-left: 0;
+      .infos-css{
+        display:none;
+      }
+      .page-wrapper{
+        .infos-css{
+          display:none;
+        }
+        .content{
+          &.active-block{
+            border: none;
+            .infos-css{
+              display:none;
+            }
+
+          }
+        }
+      }
+    }
     .infos-css{
       font-size: 35px;
       background-color: #A6A6A6;

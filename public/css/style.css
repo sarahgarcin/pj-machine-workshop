@@ -7002,6 +7002,17 @@ header {
     transform-origin: 0 0;
     left: 40%;
     margin-left: -25%; }
+    .content-wrapper .page.pj-machine-mode {
+      left: 30%;
+      margin-left: 0; }
+      .content-wrapper .page.pj-machine-mode .infos-css {
+        display: none; }
+      .content-wrapper .page.pj-machine-mode .page-wrapper .infos-css {
+        display: none; }
+      .content-wrapper .page.pj-machine-mode .page-wrapper .content.active-block {
+        border: none; }
+        .content-wrapper .page.pj-machine-mode .page-wrapper .content.active-block .infos-css {
+          display: none; }
     .content-wrapper .page .infos-css {
       font-size: 35px;
       background-color: #A6A6A6;
