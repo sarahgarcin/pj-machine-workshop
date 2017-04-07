@@ -279,6 +279,28 @@ body.preview{
   }
 }
 
+body[data-page="pdf"]{
+  margin: 2em;
+  background: #000;
+  font-family: "nanook", sans-serif;
+  h1{
+    font-family: "nanook", sans-serif;
+    color: #FFF;
+    margin-bottom: 1em;
+  } 
+  li{
+    list-style: none;
+    padding: 0.2em;
+    a{
+      color: #FFF;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
+
+}
+
 
 // PAGE GENERATED
 .grid{

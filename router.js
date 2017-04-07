@@ -18,6 +18,7 @@ module.exports = function(app,io,m){
   app.get("/", getIndex);
   app.get("/:poster", getPoster);
   app.get("/:poster/print", getPrint);
+  app.get("/:poster/pdf", getPdf);
 
   function getIndex(req, res) {
     
@@ -61,6 +62,14 @@ module.exports = function(app,io,m){
       });
 
     });
+  };
+
+  function getPdf(req, res) {
+    var slugConfName = req.params;
+      var pageTitle = 'PDF';
+      res.render("pdf", {
+        "title" : pageTitle,
+      });
   };
 
 

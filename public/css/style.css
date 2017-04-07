@@ -7069,6 +7069,22 @@ body.preview .content {
 body.preview .infos-css, body.preview .module--sidebar {
   display: none !important; }
 
+body[data-page="pdf"] {
+  margin: 2em;
+  background: #000;
+  font-family: "nanook", sans-serif; }
+  body[data-page="pdf"] h1 {
+    font-family: "nanook", sans-serif;
+    color: #FFF;
+    margin-bottom: 1em; }
+  body[data-page="pdf"] li {
+    list-style: none;
+    padding: 0.2em; }
+    body[data-page="pdf"] li a {
+      color: #FFF; }
+      body[data-page="pdf"] li a:hover {
+        text-decoration: underline; }
+
 .grid {
   height: 58.6cm;
   width: 100%;

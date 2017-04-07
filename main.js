@@ -63,6 +63,9 @@ module.exports = function(app, io){
 
 		socket.on('generate', generatePDF);
 
+    // PDF
+    socket.on('listPDF', function(){listPDF(socket)});
+
 	});
 
 
@@ -159,7 +162,7 @@ module.exports = function(app, io){
 
 // ------
 
-  // P J   M A C H I N E
+// P J   M A C H I N E
 
   function onChangeBlock(data, socket){
     console.log('EVENT - Change Block ', data);
@@ -511,6 +514,24 @@ module.exports = function(app, io){
   }
   
 //------ E N D        P D F -------------------
+
+ function listPDF(socket){
+    console.log( "EVENT - listPDF");
+    fs.readdir(path.join("content", "pdf"), (err, files) => {
+      files.forEach(file => {
+        console.log(file);
+        sendEventWithContent( 'listAllPDF', file, socket);
+      });
+    })
+
+    // listAllFolders(path.join("content", "pdf")).then(function( allFoldersData) {
+    //   console.log(allFoldersData);
+    //   // sendEventWithContent( 'listAllFolders', allFoldersData, socket);
+    // }, function(error) {
+    //   console.error("Failed to list folders! Error: ", error);
+    // });
+
+ }
 
 // -------------- Folders method !! ------------
 	function listAllFolders(pathToRead, slugCurrentProject) {
