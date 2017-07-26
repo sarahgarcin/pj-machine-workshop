@@ -3,9 +3,7 @@ var folder = 'data';
 var settings = {
 	"title": "PJ Machine",
 
-	"architecture" : [['01', 'text'], ['02', 'text'], ['03', 'text'],['pdf', 'pdf']],
 	"folder": folder,
-	"words" :['machine', 'research', 'computer', 'vision', 'network', 'data', 'algorithm', 'learning', 'AEO', 'AMB', 'ANO', 'DSP'],
 
 	"contentDir" : "content",
   "metaFileext" : ".txt",

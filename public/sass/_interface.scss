@@ -1,0 +1,141 @@
+$t-navbarheight: 70px;
+
+header{
+  height: 45px;
+  background-color: #000;
+  color: #FFF;
+  position:fixed;
+  width: 100%;
+  top:0;
+  z-index: 200;
+  @include clearfix;
+  .module--infos{
+    padding-left: 20px;
+    h1, h2{
+      position: relative;
+      margin:0;
+      padding: 14px 10px;
+      font-size: 14px;
+      float: left;
+      line-height:120%;
+      color: #FFF;
+      font-weight: normal;
+      font-family:"nanook", serif;
+      a{color: #FFF; text-decoration:none; &:hover{color: #FFF; text-decoration:none;}}
+    }
+  }
+  .module--interface-features{
+    float:right;
+    padding-right: 20px;
+    & div{
+      float: left;
+      position:relative;
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      border: 2px solid #FFF;
+      border-radius: 15%;
+      &.zoomFunction{
+        border: none;
+        margin-top: 7px;
+        span{
+          padding-left: 10px; 
+          padding-right: 10px;
+          &.plusButton, &.minusButton{
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border: 2px solid #FFF;
+            border-radius: 20%;
+          }
+        }
+      }
+      &.active{
+        color: #000;
+        background-color: #FFF;
+      }
+    }
+  }
+}
+
+.content-wrapper{
+  background: #DFDFDF;
+  width: 100%;
+  padding-top: 70px;
+}
+
+
+body.preview{
+  .grid{
+    display:none;
+  }
+  .content{
+    border:none !important;
+  }
+
+}
+
+
+// PAGE GENERATED
+.grid{
+  height: $heightPage - ($margintop * 2);
+  width: 100%;
+  border: 1px solid #00AADA;
+  display:none;
+  div{
+    height:100%;
+    width: 3.33%;
+    border-right: 1px solid #DA0097;
+    &:last-child{border:none;}
+  }
+  &.active{
+    display:block;
+  }
+}
+
+.js--templates {
+  display: none;
+}
+
+
+
+body[data-page="print"]{
+  .content-wrapper{
+    padding-top:0;
+    background-color:#FFF;
+    .page{ 
+      transform:none;
+      left:0; 
+      margin: 0;
+      .page-wrapper{
+        margin: 0;
+      }
+    }
+  }
+}
+
+
+body[data-page="pdf"]{
+  margin: 2em;
+  background: #000;
+  font-family: "nanook", sans-serif;
+  h1{
+    font-family: "nanook", sans-serif;
+    color: #FFF;
+    margin-bottom: 1em;
+  } 
+  li{
+    list-style: none;
+    padding: 0.2em;
+    a{
+      color: #FFF;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
+
+}
+
+
+

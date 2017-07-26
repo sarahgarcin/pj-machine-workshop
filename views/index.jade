@@ -1,35 +1,40 @@
 doctype html
 html
   include snippets/head.jade
-  body(data-page='index')
+  
+  body(data-page='poster')
 
-    .module--bandeau
-      #intro
-        h1 PJ Machine
-        h1
-          span.p1 Pre
-          span.p2 Post
-          span.p3 Print
+    header
+      .module--infos
+        h1 
+          a(href="/") #{appName}
+        h2 #{confName}
+      .module--interface-features
+        .zoomFunction
+          span.plusButton + 
+          span.zoom-value 50%
+          span.minusButton - 
+        .previewButton preview
+        .gridButton grid
+        .debugButton debug
 
-    .module--listePresentations
-      .dossier-list
-        .dossier.dossier_newconfform
-          h2 Create New Poster
-          form(onsubmit='return false;' class='add-new-conf-form')
-            .title
-              input(type='text' class='title' placeholder='Title')
-            input(type='submit' class='js-add-conf' value='Add')
+
+    .content-wrapper
+      #page-content.page(data-active-block= 1)
+        .page-wrapper
+          .grid.row
+            - for (var i = 0; i < 30; ++i) {
+              div.grid-el.columns
+            - }
 
     .js--templates
-      .dossier(data-nom)
-        .index
-        .dossier-inside
-          a.folder-link(href title)
-            .title
+      .content.--js-content-el
 
 
     include snippets/footer.jade
-    //- specific scripts
-    script(src='/js/index.js')
+    script(src='/js/interface-events.js')
+    script(src='/js/pj-send-events.js')
+    script(src='/js/pj-receive-events.js')
+    script(src='/js/poster.js')
 
 

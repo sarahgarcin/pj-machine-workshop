@@ -24,8 +24,7 @@ function onSocketError(reason) {
 socket.on('connect', onSocketConnect);
 socket.on('error', onSocketError);
 socket.on('displayPageEvents', onDisplayPage);
-socket.on('cssLoaded', onCSSLoaded);
-socket.on('pdfIsGenerating', onPdfIsGenerating);
+//socket.on('pdfIsGenerating', onPdfIsGenerating);
 
 
 (function init(){
@@ -80,8 +79,4 @@ function makeFolderContent( projectData){
 	return newFolder;
 }
 
-function onCSSLoaded(pdata){
-	console.log("CSS loaded", pdata);
-	$('style').html(pdata.css);
-}
 

@@ -14,7 +14,10 @@ const fs = require('fs-extra'),
 	;
 
 	var readPageSettings = fs.readFileSync('./content/page.json', 'utf-8');
-	var pageSettings = JSON.parse(readPageSettings)
+	var pageSettings = JSON.parse(readPageSettings);
+  var widthPrintPage = pageSettings.page.widthPage.replace("cm", "");
+  var heightPrintPage = pageSettings.page.heightPage.replace("cm", "");
+
 
 	var chapterFolder = settings.folder;
 	var contentFolder = "content/";
@@ -27,13 +30,9 @@ module.exports = function(app, io){
 	
 	io.on("connection", function(socket){
 
-
 		//INDEX
 		socket.on('newConf', onNewConf);
 		socket.on('listConf', function (data){ onListConf(socket); });
-
-		// POSTER
-		socket.on('newBlock', onNewBlock);
 
     // add client in room
 		socket.on('room', function(room) {
@@ -43,22 +42,13 @@ module.exports = function(app, io){
     // List all the blocks
 		socket.on( 'listFiles', function (data){ onListBlocks(data, socket); });
 
-    // Load CSS when start
-    socket.on('loadCSS', function (data){ onLoadCSS(data, socket)});
-
-    // functions on blocks
-    socket.on('loadBlockData', onLoadBlockData);
-    socket.on('newMdContent', onNewMdContent);
-
-    socket.on('newCssContent', onNewCssContent);
-		
-
     // Pj machine function 
     socket.on('changeBlock', function (data){onChangeBlock(data, socket)});
     socket.on('moveBlock', onMoveBlock);
     socket.on('zoomBlock', onZoomBlock);
     socket.on('changeBlockSize', onChangeBlockSize);
     socket.on('changeWordSpacing', onChangeWordSpacing);
+    socket.on('changeFont', onChangeFont);
 
 
 		socket.on('generate', generatePDF);
@@ -83,9 +73,9 @@ module.exports = function(app, io){
 
   	function onNewConf( confData) {
       console.log('New Conf: ');
-      console.log(confData);
+      //console.log(confData);
       createNewConf(confData).then(function(newpdata) {
-        console.log('newpdata: '+newpdata);
+       // console.log('newpdata: '+newpdata);
         sendEventWithContent('confCreated', newpdata);
       }, function(errorpdata) {
         console.error("Failed to create a new folder! Error: ", errorpdata);
@@ -99,75 +89,23 @@ module.exports = function(app, io){
       var pathToRead = api.getContentPath(data.currentProject);
 
       listAllFolders(pathToRead).then(function( allFoldersData) {
-      	console.log(allFoldersData)
+      	//console.log(allFoldersData)
         sendEventWithContent( 'displayPageEvents', allFoldersData, socket);
       }, function(error) {
         console.error("Failed to list folders! Error: ", error);
       });
   	}
 
-    function onLoadCSS(data, socket){
-      api.readConfMeta(data.currentProject).then(function(posterData){
-        socket.emit('cssLoaded', posterData);
-      });
-    }
 
-  	function onNewBlock(blockData){
-  		createNewBlock(blockData).then(function(newpdata) {
-        console.log('newpdata: '+newpdata);
-        sendEventWithContent('blockCreated', newpdata, 'room', blockData.currentProject);
-      }, function(errorpdata) {
-        console.error("Failed to create a new folder! Error: ", errorpdata);
-      });
-  	}
-
-    function onLoadBlockData(data){
-      var pathToRead = api.getContentPath(data.currentProject);
-      var folderMetaData = getFolderMeta( data.dataFolder, pathToRead);
-      sendEventWithContent( 'BlockData', folderMetaData, 'room', data.currentProject);
-    }
-
-    function onNewMdContent(data){
-      console.log( "EVENT - onNewMdContent");
-      var pathToRead = path.join(data.currentProject, data.currentBlock);
-      var newData = {
-        'content': data.newMdContent,
-      }
-
-      updateFolderMeta(newData, pathToRead).then(function( currentDataJSON) {
-        console.log(currentDataJSON);
-        sendEventWithContent('updatePoster', currentDataJSON, 'room', data.currentProject);
-      }, function(error) {
-        console.error("Failed to update a folder! Error: ", error);
-      });
-
-    }
-
-    function onNewCssContent(data){
-      console.log( "EVENT - onNewCssContent", data.newCSSContent);
-
-      var newData = {
-        'css': data.newCSSContent,
-      }
-
-      updateFolderMeta(newData, data.currentProject).then(function( currentDataJSON) {
-        console.log(currentDataJSON);
-        sendEventWithContent('cssLoaded', newData, 'room', data.currentProject);
-      }, function(error) {
-        console.error("Failed to update a folder! Error: ", error);
-      });
-
-      // io.sockets.emit('cssContent', data.newCSSContent);
-    }
 
 // ------
 
 // P J   M A C H I N E
 
   function onChangeBlock(data, socket){
-    console.log('EVENT - Change Block ', data);
+    //console.log('EVENT - Change Block ', data);
     var blockToGo = parseInt(data.currentBlock);
-    console.log(blockToGo);
+    //console.log(blockToGo);
     if(data.direction == "prev" && data.currentBlock != "1"){
       blockToGo --;
     }  
@@ -180,7 +118,7 @@ module.exports = function(app, io){
     if(data.direction == "next" && data.currentBlock == (data.numBlocks-1)){
       blockToGo = 1;
     } 
-    console.log(blockToGo);
+    //console.log(blockToGo);
     sendEventWithContent( 'blockChanged', blockToGo, 'room', data.currentProject);
   }
 
@@ -222,7 +160,7 @@ module.exports = function(app, io){
     }
 
     updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
-      console.log(currentDataJSON);
+      //console.log(currentDataJSON);
       sendEventWithContent('updateBlock', currentDataJSON, 'room', data.currentProject);
     }, function(error) {
       console.error("Failed to move the block! Error: ", error);
@@ -254,7 +192,7 @@ module.exports = function(app, io){
     }
 
     updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
-      console.log(currentDataJSON);
+      //console.log(currentDataJSON);
       sendEventWithContent('updateBlock', currentDataJSON, 'room', data.currentProject);
     }, function(error) {
       console.error("Failed to zoom the block! Error: ", error);
@@ -373,6 +311,27 @@ module.exports = function(app, io){
 
   }
 
+  function onChangeFont(data){
+    console.log("EVENT - onChangeFont");
+
+    var pathToRead = api.getContentPath(data.currentProject);
+    var folderMetaData = getFolderMeta( data.currentBlock, pathToRead);
+    var blockPath = path.join(data.currentProject, data.currentBlock);
+    
+    var newFont = data.font;
+    newData = {
+        'font': newFont,
+      }
+
+    updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
+      //console.log(currentDataJSON);
+      sendEventWithContent('updateBlock', currentDataJSON, 'room', data.currentProject);
+    }, function(error) {
+      console.error("Failed to zoom the block! Error: ", error);
+    });
+
+  } 
+
 
 	
 
@@ -400,7 +359,10 @@ module.exports = function(app, io){
   					"wordSpace" : 0, 
   					"blockSize": 20,
   					"filesNb": 1,
-  					"content": "# Write Markdown"
+  					"content": "# Write Markdown",
+            "font":"Helvetica",
+            "color":"#000",
+            "rotation":"0"
           };
           api.storeData( api.getMetaFileOfConf(blockProjectPath), fmeta, "create").then(function( meta) {
             console.log('success ', meta);
@@ -423,7 +385,10 @@ module.exports = function(app, io){
   					"wordSpace" : 0, 
   					"filesNb":1,
   					"blockSize": 8,
-  					"content": "# Write Markdown"
+  					"content": "# Write Markdown",
+            "font":"Helvetica",
+            "color":"#000",
+            "rotation":"0"
           };
           reject( objectJson);
         }
@@ -482,8 +447,10 @@ module.exports = function(app, io){
 
     var date = api.getCurrentDate();
     var filePath = path.join(pdfFolderPath, data.currentProject+'-'+date+'.pdf');
-    // pdfFolderPath+'/'+date+'.pdf';
     var url = path.join(data.currentUrl, 'print');
+    var widthPx = widthPrintPage * 37.8;
+    var heightPx = heightPrintPage * 37.8;
+    console.log(widthPx + " - " + heightPx);
 
     phantom.create([
     '--ignore-ssl-errors=yes',
@@ -494,7 +461,7 @@ module.exports = function(app, io){
       ph.createPage().then(function(page) {
         page.open(url)
         .then(function(){
-          page.property('paperSize', {width: 1512, height: 2268, orientation: 'portrait'})
+          page.property('paperSize', {width: widthPx, height: heightPx, orientation: 'portrait'})
           .then(function() {
             return page.property('content')
             .then(function() {
@@ -523,13 +490,6 @@ module.exports = function(app, io){
         sendEventWithContent( 'listAllPDF', file, socket);
       });
     })
-
-    // listAllFolders(path.join("content", "pdf")).then(function( allFoldersData) {
-    //   console.log(allFoldersData);
-    //   // sendEventWithContent( 'listAllFolders', allFoldersData, socket);
-    // }, function(error) {
-    //   console.error("Failed to list folders! Error: ", error);
-    // });
 
  }
 
@@ -574,6 +534,9 @@ module.exports = function(app, io){
       var newSpace = newData.wordSpace;
       var newBlockSize = newData.blockSize;
       var newCSS = newData.css;
+      var newFont = newData.font;
+      var newColor = newData.color;
+      var newRotation = newData.rotation;
 
       api.readConfMeta(pathToRead).then(function(fmeta){
         if(newText != undefined)
@@ -592,7 +555,12 @@ module.exports = function(app, io){
          fmeta.blockSize = newBlockSize;
         if(newCSS != undefined)
          fmeta.css = newCSS;
-
+        if(newFont != undefined)
+         fmeta.font = newFont;
+        if(newColor != undefined)
+         fmeta.color = newColor;
+        if(newRotation != undefined)
+         fmeta.rotation = newRotation;
 
         //envoyer les changements dans le JSON du folder
         api.storeData( api.getMetaFileOfConf( pathToRead), fmeta, "update").then(function( ufmeta) {
@@ -667,7 +635,7 @@ module.exports = function(app, io){
 
   function sendEventWithContent( sendEvent, objectContent, socket, room) {
     var eventAndContentJson = eventAndContent( sendEvent, objectContent);
-    console.log("eventAndContentJson " + JSON.stringify( eventAndContentJson, null, 4));
+    //console.log("eventAndContentJson " + JSON.stringify( eventAndContentJson, null, 4));
     if( socket === undefined)
       io.sockets.emit( eventAndContentJson["socketevent"], eventAndContentJson["content"]);
     else if(socket === 'room'){

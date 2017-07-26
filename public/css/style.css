@@ -209,7 +209,7 @@ samp {
  * 2. Correct font properties not being inherited.
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
-button, body[data-page="index"] .dossier input[type="submit"],
+button,
 input,
 optgroup,
 select,
@@ -224,7 +224,7 @@ textarea {
 /**
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
  */
-button, body[data-page="index"] .dossier input[type="submit"] {
+button {
   overflow: visible; }
 
 /**
@@ -233,7 +233,7 @@ button, body[data-page="index"] .dossier input[type="submit"] {
  * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
  * Correct `select` style inheritance in Firefox.
  */
-button, body[data-page="index"] .dossier input[type="submit"],
+button,
 select {
   text-transform: none; }
 
@@ -244,7 +244,7 @@ select {
  * 3. Improve usability and consistency of cursor style between image-type
  *    `input` and others.
  */
-button, body[data-page="index"] .dossier input[type="submit"],
+button,
 html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
@@ -256,14 +256,14 @@ input[type="submit"] {
 /**
  * Re-set default cursor for disabled elements.
  */
-button[disabled], body[data-page="index"] .dossier input[disabled][type="submit"],
+button[disabled],
 html input[disabled] {
   cursor: default; }
 
 /**
  * Remove inner padding and border in Firefox 4+.
  */
-button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]::-moz-focus-inner,
+button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
   padding: 0; }
@@ -1709,7 +1709,7 @@ select {
 [aria-label="breadcrumbs"] [aria-hidden="true"]:after {
   content: "/"; }
 
-button, body[data-page="index"] .dossier input[type="submit"], .button {
+button, .button {
   -webkit-appearance: none;
   -moz-appearance: none;
   border-radius: 0;
@@ -1730,60 +1730,60 @@ button, body[data-page="index"] .dossier input[type="submit"], .button {
   border-color: #007095;
   color: #FFFFFF;
   transition: background-color 300ms ease-out; }
-  button:hover, body[data-page="index"] .dossier input[type="submit"]:hover, button:focus, body[data-page="index"] .dossier input[type="submit"]:focus, .button:hover, .button:focus {
+  button:hover, button:focus, .button:hover, .button:focus {
     background-color: #007095; }
-  button:hover, body[data-page="index"] .dossier input[type="submit"]:hover, button:focus, body[data-page="index"] .dossier input[type="submit"]:focus, .button:hover, .button:focus {
+  button:hover, button:focus, .button:hover, .button:focus {
     color: #FFFFFF; }
-  button.secondary, body[data-page="index"] .dossier input.secondary[type="submit"], .button.secondary {
+  button.secondary, .button.secondary {
     background-color: #e7e7e7;
     border-color: #b9b9b9;
     color: #333333; }
-    button.secondary:hover, body[data-page="index"] .dossier input.secondary[type="submit"]:hover, button.secondary:focus, body[data-page="index"] .dossier input.secondary[type="submit"]:focus, .button.secondary:hover, .button.secondary:focus {
+    button.secondary:hover, button.secondary:focus, .button.secondary:hover, .button.secondary:focus {
       background-color: #b9b9b9; }
-    button.secondary:hover, body[data-page="index"] .dossier input.secondary[type="submit"]:hover, button.secondary:focus, body[data-page="index"] .dossier input.secondary[type="submit"]:focus, .button.secondary:hover, .button.secondary:focus {
+    button.secondary:hover, button.secondary:focus, .button.secondary:hover, .button.secondary:focus {
       color: #333333; }
-  button.success, body[data-page="index"] .dossier input.success[type="submit"], .button.success {
+  button.success, .button.success {
     background-color: #43AC6A;
     border-color: #368a55;
     color: #FFFFFF; }
-    button.success:hover, body[data-page="index"] .dossier input.success[type="submit"]:hover, button.success:focus, body[data-page="index"] .dossier input.success[type="submit"]:focus, .button.success:hover, .button.success:focus {
+    button.success:hover, button.success:focus, .button.success:hover, .button.success:focus {
       background-color: #368a55; }
-    button.success:hover, body[data-page="index"] .dossier input.success[type="submit"]:hover, button.success:focus, body[data-page="index"] .dossier input.success[type="submit"]:focus, .button.success:hover, .button.success:focus {
+    button.success:hover, button.success:focus, .button.success:hover, .button.success:focus {
       color: #FFFFFF; }
-  button.alert, body[data-page="index"] .dossier input.alert[type="submit"], .button.alert {
+  button.alert, .button.alert {
     background-color: #f04124;
     border-color: #cf2a0e;
     color: #FFFFFF; }
-    button.alert:hover, body[data-page="index"] .dossier input.alert[type="submit"]:hover, button.alert:focus, body[data-page="index"] .dossier input.alert[type="submit"]:focus, .button.alert:hover, .button.alert:focus {
+    button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus {
       background-color: #cf2a0e; }
-    button.alert:hover, body[data-page="index"] .dossier input.alert[type="submit"]:hover, button.alert:focus, body[data-page="index"] .dossier input.alert[type="submit"]:focus, .button.alert:hover, .button.alert:focus {
+    button.alert:hover, button.alert:focus, .button.alert:hover, .button.alert:focus {
       color: #FFFFFF; }
-  button.warning, body[data-page="index"] .dossier input.warning[type="submit"], .button.warning {
+  button.warning, .button.warning {
     background-color: #f08a24;
     border-color: #cf6e0e;
     color: #FFFFFF; }
-    button.warning:hover, body[data-page="index"] .dossier input.warning[type="submit"]:hover, button.warning:focus, body[data-page="index"] .dossier input.warning[type="submit"]:focus, .button.warning:hover, .button.warning:focus {
+    button.warning:hover, button.warning:focus, .button.warning:hover, .button.warning:focus {
       background-color: #cf6e0e; }
-    button.warning:hover, body[data-page="index"] .dossier input.warning[type="submit"]:hover, button.warning:focus, body[data-page="index"] .dossier input.warning[type="submit"]:focus, .button.warning:hover, .button.warning:focus {
+    button.warning:hover, button.warning:focus, .button.warning:hover, .button.warning:focus {
       color: #FFFFFF; }
-  button.info, body[data-page="index"] .dossier input.info[type="submit"], .button.info {
+  button.info, .button.info {
     background-color: #a0d3e8;
     border-color: #61b6d9;
     color: #333333; }
-    button.info:hover, body[data-page="index"] .dossier input.info[type="submit"]:hover, button.info:focus, body[data-page="index"] .dossier input.info[type="submit"]:focus, .button.info:hover, .button.info:focus {
+    button.info:hover, button.info:focus, .button.info:hover, .button.info:focus {
       background-color: #61b6d9; }
-    button.info:hover, body[data-page="index"] .dossier input.info[type="submit"]:hover, button.info:focus, body[data-page="index"] .dossier input.info[type="submit"]:focus, .button.info:hover, .button.info:focus {
+    button.info:hover, button.info:focus, .button.info:hover, .button.info:focus {
       color: #FFFFFF; }
-  button.large, body[data-page="index"] .dossier input.large[type="submit"], .button.large {
+  button.large, .button.large {
     padding: 1.125rem 2.25rem 1.1875rem 2.25rem;
     font-size: 1.25rem; }
-  button.small, body[data-page="index"] .dossier input.small[type="submit"], .button.small {
+  button.small, .button.small {
     padding: 0.875rem 1.75rem 0.9375rem 1.75rem;
     font-size: 0.8125rem; }
-  button.tiny, body[data-page="index"] .dossier input.tiny[type="submit"], .button.tiny {
+  button.tiny, .button.tiny {
     padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
     font-size: 0.6875rem; }
-  button.expand, body[data-page="index"] .dossier input.expand[type="submit"], .button.expand {
+  button.expand, .button.expand {
     padding: 1rem 2rem 1.0625rem 2rem;
     font-size: 1rem;
     padding-bottom: 1.0625rem;
@@ -1791,101 +1791,101 @@ button, body[data-page="index"] .dossier input[type="submit"], .button {
     padding-left: 1rem;
     padding-right: 1rem;
     width: 100%; }
-  button.left-align, body[data-page="index"] .dossier input.left-align[type="submit"], .button.left-align {
+  button.left-align, .button.left-align {
     text-align: left;
     text-indent: 0.75rem; }
-  button.right-align, body[data-page="index"] .dossier input.right-align[type="submit"], .button.right-align {
+  button.right-align, .button.right-align {
     text-align: right;
     padding-right: 0.75rem; }
-  button.radius, body[data-page="index"] .dossier input.radius[type="submit"], .button.radius {
+  button.radius, .button.radius {
     border-radius: 3px; }
-  button.round, body[data-page="index"] .dossier input.round[type="submit"], .button.round {
+  button.round, .button.round {
     border-radius: 1000px; }
-  button.disabled, body[data-page="index"] .dossier input.disabled[type="submit"], button[disabled], body[data-page="index"] .dossier input[disabled][type="submit"], .button.disabled, .button[disabled] {
+  button.disabled, button[disabled], .button.disabled, .button[disabled] {
     background-color: #008CBA;
     border-color: #007095;
     color: #FFFFFF;
     box-shadow: none;
     cursor: default;
     opacity: 0.7; }
-    button.disabled:hover, body[data-page="index"] .dossier input.disabled[type="submit"]:hover, button.disabled:focus, body[data-page="index"] .dossier input.disabled[type="submit"]:focus, button[disabled]:hover, body[data-page="index"] .dossier input[disabled][type="submit"]:hover, button[disabled]:focus, body[data-page="index"] .dossier input[disabled][type="submit"]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
+    button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
       background-color: #007095; }
-    button.disabled:hover, body[data-page="index"] .dossier input.disabled[type="submit"]:hover, button.disabled:focus, body[data-page="index"] .dossier input.disabled[type="submit"]:focus, button[disabled]:hover, body[data-page="index"] .dossier input[disabled][type="submit"]:hover, button[disabled]:focus, body[data-page="index"] .dossier input[disabled][type="submit"]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
+    button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
       color: #FFFFFF; }
-    button.disabled:hover, body[data-page="index"] .dossier input.disabled[type="submit"]:hover, button.disabled:focus, body[data-page="index"] .dossier input.disabled[type="submit"]:focus, button[disabled]:hover, body[data-page="index"] .dossier input[disabled][type="submit"]:hover, button[disabled]:focus, body[data-page="index"] .dossier input[disabled][type="submit"]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
+    button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
       background-color: #008CBA; }
-    button.disabled.secondary, body[data-page="index"] .dossier input.disabled.secondary[type="submit"], button[disabled].secondary, body[data-page="index"] .dossier input[disabled].secondary[type="submit"], .button.disabled.secondary, .button[disabled].secondary {
+    button.disabled.secondary, button[disabled].secondary, .button.disabled.secondary, .button[disabled].secondary {
       background-color: #e7e7e7;
       border-color: #b9b9b9;
       color: #333333;
       box-shadow: none;
       cursor: default;
       opacity: 0.7; }
-      button.disabled.secondary:hover, body[data-page="index"] .dossier input.disabled.secondary[type="submit"]:hover, button.disabled.secondary:focus, body[data-page="index"] .dossier input.disabled.secondary[type="submit"]:focus, button[disabled].secondary:hover, body[data-page="index"] .dossier input[disabled].secondary[type="submit"]:hover, button[disabled].secondary:focus, body[data-page="index"] .dossier input[disabled].secondary[type="submit"]:focus, .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
+      button.disabled.secondary:hover, button.disabled.secondary:focus, button[disabled].secondary:hover, button[disabled].secondary:focus, .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
         background-color: #b9b9b9; }
-      button.disabled.secondary:hover, body[data-page="index"] .dossier input.disabled.secondary[type="submit"]:hover, button.disabled.secondary:focus, body[data-page="index"] .dossier input.disabled.secondary[type="submit"]:focus, button[disabled].secondary:hover, body[data-page="index"] .dossier input[disabled].secondary[type="submit"]:hover, button[disabled].secondary:focus, body[data-page="index"] .dossier input[disabled].secondary[type="submit"]:focus, .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
+      button.disabled.secondary:hover, button.disabled.secondary:focus, button[disabled].secondary:hover, button[disabled].secondary:focus, .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
         color: #333333; }
-      button.disabled.secondary:hover, body[data-page="index"] .dossier input.disabled.secondary[type="submit"]:hover, button.disabled.secondary:focus, body[data-page="index"] .dossier input.disabled.secondary[type="submit"]:focus, button[disabled].secondary:hover, body[data-page="index"] .dossier input[disabled].secondary[type="submit"]:hover, button[disabled].secondary:focus, body[data-page="index"] .dossier input[disabled].secondary[type="submit"]:focus, .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
+      button.disabled.secondary:hover, button.disabled.secondary:focus, button[disabled].secondary:hover, button[disabled].secondary:focus, .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
         background-color: #e7e7e7; }
-    button.disabled.success, body[data-page="index"] .dossier input.disabled.success[type="submit"], button[disabled].success, body[data-page="index"] .dossier input[disabled].success[type="submit"], .button.disabled.success, .button[disabled].success {
+    button.disabled.success, button[disabled].success, .button.disabled.success, .button[disabled].success {
       background-color: #43AC6A;
       border-color: #368a55;
       color: #FFFFFF;
       box-shadow: none;
       cursor: default;
       opacity: 0.7; }
-      button.disabled.success:hover, body[data-page="index"] .dossier input.disabled.success[type="submit"]:hover, button.disabled.success:focus, body[data-page="index"] .dossier input.disabled.success[type="submit"]:focus, button[disabled].success:hover, body[data-page="index"] .dossier input[disabled].success[type="submit"]:hover, button[disabled].success:focus, body[data-page="index"] .dossier input[disabled].success[type="submit"]:focus, .button.disabled.success:hover, .button.disabled.success:focus, .button[disabled].success:hover, .button[disabled].success:focus {
+      button.disabled.success:hover, button.disabled.success:focus, button[disabled].success:hover, button[disabled].success:focus, .button.disabled.success:hover, .button.disabled.success:focus, .button[disabled].success:hover, .button[disabled].success:focus {
         background-color: #368a55; }
-      button.disabled.success:hover, body[data-page="index"] .dossier input.disabled.success[type="submit"]:hover, button.disabled.success:focus, body[data-page="index"] .dossier input.disabled.success[type="submit"]:focus, button[disabled].success:hover, body[data-page="index"] .dossier input[disabled].success[type="submit"]:hover, button[disabled].success:focus, body[data-page="index"] .dossier input[disabled].success[type="submit"]:focus, .button.disabled.success:hover, .button.disabled.success:focus, .button[disabled].success:hover, .button[disabled].success:focus {
+      button.disabled.success:hover, button.disabled.success:focus, button[disabled].success:hover, button[disabled].success:focus, .button.disabled.success:hover, .button.disabled.success:focus, .button[disabled].success:hover, .button[disabled].success:focus {
         color: #FFFFFF; }
-      button.disabled.success:hover, body[data-page="index"] .dossier input.disabled.success[type="submit"]:hover, button.disabled.success:focus, body[data-page="index"] .dossier input.disabled.success[type="submit"]:focus, button[disabled].success:hover, body[data-page="index"] .dossier input[disabled].success[type="submit"]:hover, button[disabled].success:focus, body[data-page="index"] .dossier input[disabled].success[type="submit"]:focus, .button.disabled.success:hover, .button.disabled.success:focus, .button[disabled].success:hover, .button[disabled].success:focus {
+      button.disabled.success:hover, button.disabled.success:focus, button[disabled].success:hover, button[disabled].success:focus, .button.disabled.success:hover, .button.disabled.success:focus, .button[disabled].success:hover, .button[disabled].success:focus {
         background-color: #43AC6A; }
-    button.disabled.alert, body[data-page="index"] .dossier input.disabled.alert[type="submit"], button[disabled].alert, body[data-page="index"] .dossier input[disabled].alert[type="submit"], .button.disabled.alert, .button[disabled].alert {
+    button.disabled.alert, button[disabled].alert, .button.disabled.alert, .button[disabled].alert {
       background-color: #f04124;
       border-color: #cf2a0e;
       color: #FFFFFF;
       box-shadow: none;
       cursor: default;
       opacity: 0.7; }
-      button.disabled.alert:hover, body[data-page="index"] .dossier input.disabled.alert[type="submit"]:hover, button.disabled.alert:focus, body[data-page="index"] .dossier input.disabled.alert[type="submit"]:focus, button[disabled].alert:hover, body[data-page="index"] .dossier input[disabled].alert[type="submit"]:hover, button[disabled].alert:focus, body[data-page="index"] .dossier input[disabled].alert[type="submit"]:focus, .button.disabled.alert:hover, .button.disabled.alert:focus, .button[disabled].alert:hover, .button[disabled].alert:focus {
+      button.disabled.alert:hover, button.disabled.alert:focus, button[disabled].alert:hover, button[disabled].alert:focus, .button.disabled.alert:hover, .button.disabled.alert:focus, .button[disabled].alert:hover, .button[disabled].alert:focus {
         background-color: #cf2a0e; }
-      button.disabled.alert:hover, body[data-page="index"] .dossier input.disabled.alert[type="submit"]:hover, button.disabled.alert:focus, body[data-page="index"] .dossier input.disabled.alert[type="submit"]:focus, button[disabled].alert:hover, body[data-page="index"] .dossier input[disabled].alert[type="submit"]:hover, button[disabled].alert:focus, body[data-page="index"] .dossier input[disabled].alert[type="submit"]:focus, .button.disabled.alert:hover, .button.disabled.alert:focus, .button[disabled].alert:hover, .button[disabled].alert:focus {
+      button.disabled.alert:hover, button.disabled.alert:focus, button[disabled].alert:hover, button[disabled].alert:focus, .button.disabled.alert:hover, .button.disabled.alert:focus, .button[disabled].alert:hover, .button[disabled].alert:focus {
         color: #FFFFFF; }
-      button.disabled.alert:hover, body[data-page="index"] .dossier input.disabled.alert[type="submit"]:hover, button.disabled.alert:focus, body[data-page="index"] .dossier input.disabled.alert[type="submit"]:focus, button[disabled].alert:hover, body[data-page="index"] .dossier input[disabled].alert[type="submit"]:hover, button[disabled].alert:focus, body[data-page="index"] .dossier input[disabled].alert[type="submit"]:focus, .button.disabled.alert:hover, .button.disabled.alert:focus, .button[disabled].alert:hover, .button[disabled].alert:focus {
+      button.disabled.alert:hover, button.disabled.alert:focus, button[disabled].alert:hover, button[disabled].alert:focus, .button.disabled.alert:hover, .button.disabled.alert:focus, .button[disabled].alert:hover, .button[disabled].alert:focus {
         background-color: #f04124; }
-    button.disabled.warning, body[data-page="index"] .dossier input.disabled.warning[type="submit"], button[disabled].warning, body[data-page="index"] .dossier input[disabled].warning[type="submit"], .button.disabled.warning, .button[disabled].warning {
+    button.disabled.warning, button[disabled].warning, .button.disabled.warning, .button[disabled].warning {
       background-color: #f08a24;
       border-color: #cf6e0e;
       color: #FFFFFF;
       box-shadow: none;
       cursor: default;
       opacity: 0.7; }
-      button.disabled.warning:hover, body[data-page="index"] .dossier input.disabled.warning[type="submit"]:hover, button.disabled.warning:focus, body[data-page="index"] .dossier input.disabled.warning[type="submit"]:focus, button[disabled].warning:hover, body[data-page="index"] .dossier input[disabled].warning[type="submit"]:hover, button[disabled].warning:focus, body[data-page="index"] .dossier input[disabled].warning[type="submit"]:focus, .button.disabled.warning:hover, .button.disabled.warning:focus, .button[disabled].warning:hover, .button[disabled].warning:focus {
+      button.disabled.warning:hover, button.disabled.warning:focus, button[disabled].warning:hover, button[disabled].warning:focus, .button.disabled.warning:hover, .button.disabled.warning:focus, .button[disabled].warning:hover, .button[disabled].warning:focus {
         background-color: #cf6e0e; }
-      button.disabled.warning:hover, body[data-page="index"] .dossier input.disabled.warning[type="submit"]:hover, button.disabled.warning:focus, body[data-page="index"] .dossier input.disabled.warning[type="submit"]:focus, button[disabled].warning:hover, body[data-page="index"] .dossier input[disabled].warning[type="submit"]:hover, button[disabled].warning:focus, body[data-page="index"] .dossier input[disabled].warning[type="submit"]:focus, .button.disabled.warning:hover, .button.disabled.warning:focus, .button[disabled].warning:hover, .button[disabled].warning:focus {
+      button.disabled.warning:hover, button.disabled.warning:focus, button[disabled].warning:hover, button[disabled].warning:focus, .button.disabled.warning:hover, .button.disabled.warning:focus, .button[disabled].warning:hover, .button[disabled].warning:focus {
         color: #FFFFFF; }
-      button.disabled.warning:hover, body[data-page="index"] .dossier input.disabled.warning[type="submit"]:hover, button.disabled.warning:focus, body[data-page="index"] .dossier input.disabled.warning[type="submit"]:focus, button[disabled].warning:hover, body[data-page="index"] .dossier input[disabled].warning[type="submit"]:hover, button[disabled].warning:focus, body[data-page="index"] .dossier input[disabled].warning[type="submit"]:focus, .button.disabled.warning:hover, .button.disabled.warning:focus, .button[disabled].warning:hover, .button[disabled].warning:focus {
+      button.disabled.warning:hover, button.disabled.warning:focus, button[disabled].warning:hover, button[disabled].warning:focus, .button.disabled.warning:hover, .button.disabled.warning:focus, .button[disabled].warning:hover, .button[disabled].warning:focus {
         background-color: #f08a24; }
-    button.disabled.info, body[data-page="index"] .dossier input.disabled.info[type="submit"], button[disabled].info, body[data-page="index"] .dossier input[disabled].info[type="submit"], .button.disabled.info, .button[disabled].info {
+    button.disabled.info, button[disabled].info, .button.disabled.info, .button[disabled].info {
       background-color: #a0d3e8;
       border-color: #61b6d9;
       color: #333333;
       box-shadow: none;
       cursor: default;
       opacity: 0.7; }
-      button.disabled.info:hover, body[data-page="index"] .dossier input.disabled.info[type="submit"]:hover, button.disabled.info:focus, body[data-page="index"] .dossier input.disabled.info[type="submit"]:focus, button[disabled].info:hover, body[data-page="index"] .dossier input[disabled].info[type="submit"]:hover, button[disabled].info:focus, body[data-page="index"] .dossier input[disabled].info[type="submit"]:focus, .button.disabled.info:hover, .button.disabled.info:focus, .button[disabled].info:hover, .button[disabled].info:focus {
+      button.disabled.info:hover, button.disabled.info:focus, button[disabled].info:hover, button[disabled].info:focus, .button.disabled.info:hover, .button.disabled.info:focus, .button[disabled].info:hover, .button[disabled].info:focus {
         background-color: #61b6d9; }
-      button.disabled.info:hover, body[data-page="index"] .dossier input.disabled.info[type="submit"]:hover, button.disabled.info:focus, body[data-page="index"] .dossier input.disabled.info[type="submit"]:focus, button[disabled].info:hover, body[data-page="index"] .dossier input[disabled].info[type="submit"]:hover, button[disabled].info:focus, body[data-page="index"] .dossier input[disabled].info[type="submit"]:focus, .button.disabled.info:hover, .button.disabled.info:focus, .button[disabled].info:hover, .button[disabled].info:focus {
+      button.disabled.info:hover, button.disabled.info:focus, button[disabled].info:hover, button[disabled].info:focus, .button.disabled.info:hover, .button.disabled.info:focus, .button[disabled].info:hover, .button[disabled].info:focus {
         color: #FFFFFF; }
-      button.disabled.info:hover, body[data-page="index"] .dossier input.disabled.info[type="submit"]:hover, button.disabled.info:focus, body[data-page="index"] .dossier input.disabled.info[type="submit"]:focus, button[disabled].info:hover, body[data-page="index"] .dossier input[disabled].info[type="submit"]:hover, button[disabled].info:focus, body[data-page="index"] .dossier input[disabled].info[type="submit"]:focus, .button.disabled.info:hover, .button.disabled.info:focus, .button[disabled].info:hover, .button[disabled].info:focus {
+      button.disabled.info:hover, button.disabled.info:focus, button[disabled].info:hover, button[disabled].info:focus, .button.disabled.info:hover, .button.disabled.info:focus, .button[disabled].info:hover, .button[disabled].info:focus {
         background-color: #a0d3e8; }
 
-button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]::-moz-focus-inner {
+button::-moz-focus-inner {
   border: 0;
   padding: 0; }
 
 @media only screen and (min-width: 40.0625em) {
-  button, body[data-page="index"] .dossier input[type="submit"], .button {
+  button, .button {
     display: inline-block; } }
 
 .button-group {
@@ -1901,152 +1901,150 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
     display: inline-block;
     margin: 0 -2px;
     width: 50%; }
-    .button-group.even-2 li > button, .button-group.even-2 body[data-page="index"] .dossier li > input[type="submit"], body[data-page="index"] .dossier .button-group.even-2 li > input[type="submit"], .button-group.even-2 li .button {
+    .button-group.even-2 li > button, .button-group.even-2 li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.even-2 li:first-child button, .button-group.even-2 li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-2 li:first-child input[type="submit"], .button-group.even-2 li:first-child .button {
+    .button-group.even-2 li:first-child button, .button-group.even-2 li:first-child .button {
       border-left: 0; }
-    .button-group.even-2 li button, .button-group.even-2 li body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-2 li input[type="submit"], .button-group.even-2 li .button {
+    .button-group.even-2 li button, .button-group.even-2 li .button {
       width: 100%; }
   .button-group.even-3 li {
     display: inline-block;
     margin: 0 -2px;
     width: 33.33333%; }
-    .button-group.even-3 li > button, .button-group.even-3 body[data-page="index"] .dossier li > input[type="submit"], body[data-page="index"] .dossier .button-group.even-3 li > input[type="submit"], .button-group.even-3 li .button {
+    .button-group.even-3 li > button, .button-group.even-3 li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.even-3 li:first-child button, .button-group.even-3 li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-3 li:first-child input[type="submit"], .button-group.even-3 li:first-child .button {
+    .button-group.even-3 li:first-child button, .button-group.even-3 li:first-child .button {
       border-left: 0; }
-    .button-group.even-3 li button, .button-group.even-3 li body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-3 li input[type="submit"], .button-group.even-3 li .button {
+    .button-group.even-3 li button, .button-group.even-3 li .button {
       width: 100%; }
   .button-group.even-4 li {
     display: inline-block;
     margin: 0 -2px;
     width: 25%; }
-    .button-group.even-4 li > button, .button-group.even-4 body[data-page="index"] .dossier li > input[type="submit"], body[data-page="index"] .dossier .button-group.even-4 li > input[type="submit"], .button-group.even-4 li .button {
+    .button-group.even-4 li > button, .button-group.even-4 li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.even-4 li:first-child button, .button-group.even-4 li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-4 li:first-child input[type="submit"], .button-group.even-4 li:first-child .button {
+    .button-group.even-4 li:first-child button, .button-group.even-4 li:first-child .button {
       border-left: 0; }
-    .button-group.even-4 li button, .button-group.even-4 li body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-4 li input[type="submit"], .button-group.even-4 li .button {
+    .button-group.even-4 li button, .button-group.even-4 li .button {
       width: 100%; }
   .button-group.even-5 li {
     display: inline-block;
     margin: 0 -2px;
     width: 20%; }
-    .button-group.even-5 li > button, .button-group.even-5 body[data-page="index"] .dossier li > input[type="submit"], body[data-page="index"] .dossier .button-group.even-5 li > input[type="submit"], .button-group.even-5 li .button {
+    .button-group.even-5 li > button, .button-group.even-5 li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.even-5 li:first-child button, .button-group.even-5 li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-5 li:first-child input[type="submit"], .button-group.even-5 li:first-child .button {
+    .button-group.even-5 li:first-child button, .button-group.even-5 li:first-child .button {
       border-left: 0; }
-    .button-group.even-5 li button, .button-group.even-5 li body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-5 li input[type="submit"], .button-group.even-5 li .button {
+    .button-group.even-5 li button, .button-group.even-5 li .button {
       width: 100%; }
   .button-group.even-6 li {
     display: inline-block;
     margin: 0 -2px;
     width: 16.66667%; }
-    .button-group.even-6 li > button, .button-group.even-6 body[data-page="index"] .dossier li > input[type="submit"], body[data-page="index"] .dossier .button-group.even-6 li > input[type="submit"], .button-group.even-6 li .button {
+    .button-group.even-6 li > button, .button-group.even-6 li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.even-6 li:first-child button, .button-group.even-6 li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-6 li:first-child input[type="submit"], .button-group.even-6 li:first-child .button {
+    .button-group.even-6 li:first-child button, .button-group.even-6 li:first-child .button {
       border-left: 0; }
-    .button-group.even-6 li button, .button-group.even-6 li body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-6 li input[type="submit"], .button-group.even-6 li .button {
+    .button-group.even-6 li button, .button-group.even-6 li .button {
       width: 100%; }
   .button-group.even-7 li {
     display: inline-block;
     margin: 0 -2px;
     width: 14.28571%; }
-    .button-group.even-7 li > button, .button-group.even-7 body[data-page="index"] .dossier li > input[type="submit"], body[data-page="index"] .dossier .button-group.even-7 li > input[type="submit"], .button-group.even-7 li .button {
+    .button-group.even-7 li > button, .button-group.even-7 li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.even-7 li:first-child button, .button-group.even-7 li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-7 li:first-child input[type="submit"], .button-group.even-7 li:first-child .button {
+    .button-group.even-7 li:first-child button, .button-group.even-7 li:first-child .button {
       border-left: 0; }
-    .button-group.even-7 li button, .button-group.even-7 li body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-7 li input[type="submit"], .button-group.even-7 li .button {
+    .button-group.even-7 li button, .button-group.even-7 li .button {
       width: 100%; }
   .button-group.even-8 li {
     display: inline-block;
     margin: 0 -2px;
     width: 12.5%; }
-    .button-group.even-8 li > button, .button-group.even-8 body[data-page="index"] .dossier li > input[type="submit"], body[data-page="index"] .dossier .button-group.even-8 li > input[type="submit"], .button-group.even-8 li .button {
+    .button-group.even-8 li > button, .button-group.even-8 li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.even-8 li:first-child button, .button-group.even-8 li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-8 li:first-child input[type="submit"], .button-group.even-8 li:first-child .button {
+    .button-group.even-8 li:first-child button, .button-group.even-8 li:first-child .button {
       border-left: 0; }
-    .button-group.even-8 li button, .button-group.even-8 li body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.even-8 li input[type="submit"], .button-group.even-8 li .button {
+    .button-group.even-8 li button, .button-group.even-8 li .button {
       width: 100%; }
   .button-group > li {
     display: inline-block;
     margin: 0 -2px; }
-    .button-group > li > button, body[data-page="index"] .dossier .button-group > li > input[type="submit"], .button-group > li .button {
+    .button-group > li > button, .button-group > li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group > li:first-child button, .button-group > li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group > li:first-child input[type="submit"], .button-group > li:first-child .button {
+    .button-group > li:first-child button, .button-group > li:first-child .button {
       border-left: 0; }
   .button-group.stack > li {
     display: block;
     margin: 0;
     float: none; }
-    .button-group.stack > li > button, body[data-page="index"] .dossier .button-group.stack > li > input[type="submit"], .button-group.stack > li .button {
+    .button-group.stack > li > button, .button-group.stack > li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.stack > li:first-child button, .button-group.stack > li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.stack > li:first-child input[type="submit"], .button-group.stack > li:first-child .button {
+    .button-group.stack > li:first-child button, .button-group.stack > li:first-child .button {
       border-left: 0; }
-    .button-group.stack > li > button, body[data-page="index"] .dossier .button-group.stack > li > input[type="submit"], .button-group.stack > li .button {
+    .button-group.stack > li > button, .button-group.stack > li .button {
       border-color: rgba(255, 255, 255, 0.5);
       border-left-width: 0;
       border-top: 1px solid;
       display: block;
       margin: 0; }
-    .button-group.stack > li > button, body[data-page="index"] .dossier .button-group.stack > li > input[type="submit"] {
+    .button-group.stack > li > button {
       width: 100%; }
-    .button-group.stack > li:first-child button, .button-group.stack > li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.stack > li:first-child input[type="submit"], .button-group.stack > li:first-child .button {
+    .button-group.stack > li:first-child button, .button-group.stack > li:first-child .button {
       border-top: 0; }
   .button-group.stack-for-small > li {
     display: inline-block;
     margin: 0 -2px; }
-    .button-group.stack-for-small > li > button, body[data-page="index"] .dossier .button-group.stack-for-small > li > input[type="submit"], .button-group.stack-for-small > li .button {
+    .button-group.stack-for-small > li > button, .button-group.stack-for-small > li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.stack-for-small > li:first-child button, .button-group.stack-for-small > li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.stack-for-small > li:first-child input[type="submit"], .button-group.stack-for-small > li:first-child .button {
+    .button-group.stack-for-small > li:first-child button, .button-group.stack-for-small > li:first-child .button {
       border-left: 0; }
     @media only screen and (max-width: 40em) {
       .button-group.stack-for-small > li {
         display: block;
         margin: 0;
         width: 100%; }
-        .button-group.stack-for-small > li > button, body[data-page="index"] .dossier .button-group.stack-for-small > li > input[type="submit"], .button-group.stack-for-small > li .button {
+        .button-group.stack-for-small > li > button, .button-group.stack-for-small > li .button {
           border-left: 1px solid;
           border-color: rgba(255, 255, 255, 0.5); }
-        .button-group.stack-for-small > li:first-child button, .button-group.stack-for-small > li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.stack-for-small > li:first-child input[type="submit"], .button-group.stack-for-small > li:first-child .button {
+        .button-group.stack-for-small > li:first-child button, .button-group.stack-for-small > li:first-child .button {
           border-left: 0; }
-        .button-group.stack-for-small > li > button, body[data-page="index"] .dossier .button-group.stack-for-small > li > input[type="submit"], .button-group.stack-for-small > li .button {
+        .button-group.stack-for-small > li > button, .button-group.stack-for-small > li .button {
           border-color: rgba(255, 255, 255, 0.5);
           border-left-width: 0;
           border-top: 1px solid;
           display: block;
           margin: 0; }
-        .button-group.stack-for-small > li > button, body[data-page="index"] .dossier .button-group.stack-for-small > li > input[type="submit"] {
+        .button-group.stack-for-small > li > button {
           width: 100%; }
-        .button-group.stack-for-small > li:first-child button, .button-group.stack-for-small > li:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.stack-for-small > li:first-child input[type="submit"], .button-group.stack-for-small > li:first-child .button {
+        .button-group.stack-for-small > li:first-child button, .button-group.stack-for-small > li:first-child .button {
           border-top: 0; } }
   .button-group.radius > * {
     display: inline-block;
     margin: 0 -2px; }
-    .button-group.radius > * > button, body[data-page="index"] .dossier .button-group.radius > * > input[type="submit"], .button-group.radius > * .button {
+    .button-group.radius > * > button, .button-group.radius > * .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.radius > *:first-child button, .button-group.radius > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.radius > *:first-child input[type="submit"], .button-group.radius > *:first-child .button {
+    .button-group.radius > *:first-child button, .button-group.radius > *:first-child .button {
       border-left: 0; }
     .button-group.radius > *,
     .button-group.radius > * > a,
-    .button-group.radius > * > button, body[data-page="index"] .dossier
-    .button-group.radius > * > input[type="submit"],
+    .button-group.radius > * > button,
     .button-group.radius > * > .button {
       border-radius: 0; }
     .button-group.radius > *:first-child,
     .button-group.radius > *:first-child > a,
-    .button-group.radius > *:first-child > button, body[data-page="index"] .dossier
-    .button-group.radius > *:first-child > input[type="submit"],
+    .button-group.radius > *:first-child > button,
     .button-group.radius > *:first-child > .button {
       -webkit-border-bottom-left-radius: 3px;
       -webkit-border-top-left-radius: 3px;
@@ -2054,8 +2052,7 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
       border-top-left-radius: 3px; }
     .button-group.radius > *:last-child,
     .button-group.radius > *:last-child > a,
-    .button-group.radius > *:last-child > button, body[data-page="index"] .dossier
-    .button-group.radius > *:last-child > input[type="submit"],
+    .button-group.radius > *:last-child > button,
     .button-group.radius > *:last-child > .button {
       -webkit-border-bottom-right-radius: 3px;
       -webkit-border-top-right-radius: 3px;
@@ -2064,31 +2061,29 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
   .button-group.radius.stack > * {
     display: block;
     margin: 0; }
-    .button-group.radius.stack > * > button, body[data-page="index"] .dossier .button-group.radius.stack > * > input[type="submit"], .button-group.radius.stack > * .button {
+    .button-group.radius.stack > * > button, .button-group.radius.stack > * .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.radius.stack > *:first-child button, .button-group.radius.stack > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.radius.stack > *:first-child input[type="submit"], .button-group.radius.stack > *:first-child .button {
+    .button-group.radius.stack > *:first-child button, .button-group.radius.stack > *:first-child .button {
       border-left: 0; }
-    .button-group.radius.stack > * > button, body[data-page="index"] .dossier .button-group.radius.stack > * > input[type="submit"], .button-group.radius.stack > * .button {
+    .button-group.radius.stack > * > button, .button-group.radius.stack > * .button {
       border-color: rgba(255, 255, 255, 0.5);
       border-left-width: 0;
       border-top: 1px solid;
       display: block;
       margin: 0; }
-    .button-group.radius.stack > * > button, body[data-page="index"] .dossier .button-group.radius.stack > * > input[type="submit"] {
+    .button-group.radius.stack > * > button {
       width: 100%; }
-    .button-group.radius.stack > *:first-child button, .button-group.radius.stack > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.radius.stack > *:first-child input[type="submit"], .button-group.radius.stack > *:first-child .button {
+    .button-group.radius.stack > *:first-child button, .button-group.radius.stack > *:first-child .button {
       border-top: 0; }
     .button-group.radius.stack > *,
     .button-group.radius.stack > * > a,
-    .button-group.radius.stack > * > button, body[data-page="index"] .dossier
-    .button-group.radius.stack > * > input[type="submit"],
+    .button-group.radius.stack > * > button,
     .button-group.radius.stack > * > .button {
       border-radius: 0; }
     .button-group.radius.stack > *:first-child,
     .button-group.radius.stack > *:first-child > a,
-    .button-group.radius.stack > *:first-child > button, body[data-page="index"] .dossier
-    .button-group.radius.stack > *:first-child > input[type="submit"],
+    .button-group.radius.stack > *:first-child > button,
     .button-group.radius.stack > *:first-child > .button {
       -webkit-top-left-radius: 3px;
       -webkit-top-right-radius: 3px;
@@ -2096,8 +2091,7 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
       border-top-right-radius: 3px; }
     .button-group.radius.stack > *:last-child,
     .button-group.radius.stack > *:last-child > a,
-    .button-group.radius.stack > *:last-child > button, body[data-page="index"] .dossier
-    .button-group.radius.stack > *:last-child > input[type="submit"],
+    .button-group.radius.stack > *:last-child > button,
     .button-group.radius.stack > *:last-child > .button {
       -webkit-bottom-left-radius: 3px;
       -webkit-bottom-right-radius: 3px;
@@ -2107,21 +2101,19 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
     .button-group.radius.stack-for-small > * {
       display: inline-block;
       margin: 0 -2px; }
-      .button-group.radius.stack-for-small > * > button, body[data-page="index"] .dossier .button-group.radius.stack-for-small > * > input[type="submit"], .button-group.radius.stack-for-small > * .button {
+      .button-group.radius.stack-for-small > * > button, .button-group.radius.stack-for-small > * .button {
         border-left: 1px solid;
         border-color: rgba(255, 255, 255, 0.5); }
-      .button-group.radius.stack-for-small > *:first-child button, .button-group.radius.stack-for-small > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.radius.stack-for-small > *:first-child input[type="submit"], .button-group.radius.stack-for-small > *:first-child .button {
+      .button-group.radius.stack-for-small > *:first-child button, .button-group.radius.stack-for-small > *:first-child .button {
         border-left: 0; }
       .button-group.radius.stack-for-small > *,
       .button-group.radius.stack-for-small > * > a,
-      .button-group.radius.stack-for-small > * > button, body[data-page="index"] .dossier
-      .button-group.radius.stack-for-small > * > input[type="submit"],
+      .button-group.radius.stack-for-small > * > button,
       .button-group.radius.stack-for-small > * > .button {
         border-radius: 0; }
       .button-group.radius.stack-for-small > *:first-child,
       .button-group.radius.stack-for-small > *:first-child > a,
-      .button-group.radius.stack-for-small > *:first-child > button, body[data-page="index"] .dossier
-      .button-group.radius.stack-for-small > *:first-child > input[type="submit"],
+      .button-group.radius.stack-for-small > *:first-child > button,
       .button-group.radius.stack-for-small > *:first-child > .button {
         -webkit-border-bottom-left-radius: 3px;
         -webkit-border-top-left-radius: 3px;
@@ -2129,8 +2121,7 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
         border-top-left-radius: 3px; }
       .button-group.radius.stack-for-small > *:last-child,
       .button-group.radius.stack-for-small > *:last-child > a,
-      .button-group.radius.stack-for-small > *:last-child > button, body[data-page="index"] .dossier
-      .button-group.radius.stack-for-small > *:last-child > input[type="submit"],
+      .button-group.radius.stack-for-small > *:last-child > button,
       .button-group.radius.stack-for-small > *:last-child > .button {
         -webkit-border-bottom-right-radius: 3px;
         -webkit-border-top-right-radius: 3px;
@@ -2140,31 +2131,29 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
     .button-group.radius.stack-for-small > * {
       display: block;
       margin: 0; }
-      .button-group.radius.stack-for-small > * > button, body[data-page="index"] .dossier .button-group.radius.stack-for-small > * > input[type="submit"], .button-group.radius.stack-for-small > * .button {
+      .button-group.radius.stack-for-small > * > button, .button-group.radius.stack-for-small > * .button {
         border-left: 1px solid;
         border-color: rgba(255, 255, 255, 0.5); }
-      .button-group.radius.stack-for-small > *:first-child button, .button-group.radius.stack-for-small > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.radius.stack-for-small > *:first-child input[type="submit"], .button-group.radius.stack-for-small > *:first-child .button {
+      .button-group.radius.stack-for-small > *:first-child button, .button-group.radius.stack-for-small > *:first-child .button {
         border-left: 0; }
-      .button-group.radius.stack-for-small > * > button, body[data-page="index"] .dossier .button-group.radius.stack-for-small > * > input[type="submit"], .button-group.radius.stack-for-small > * .button {
+      .button-group.radius.stack-for-small > * > button, .button-group.radius.stack-for-small > * .button {
         border-color: rgba(255, 255, 255, 0.5);
         border-left-width: 0;
         border-top: 1px solid;
         display: block;
         margin: 0; }
-      .button-group.radius.stack-for-small > * > button, body[data-page="index"] .dossier .button-group.radius.stack-for-small > * > input[type="submit"] {
+      .button-group.radius.stack-for-small > * > button {
         width: 100%; }
-      .button-group.radius.stack-for-small > *:first-child button, .button-group.radius.stack-for-small > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.radius.stack-for-small > *:first-child input[type="submit"], .button-group.radius.stack-for-small > *:first-child .button {
+      .button-group.radius.stack-for-small > *:first-child button, .button-group.radius.stack-for-small > *:first-child .button {
         border-top: 0; }
       .button-group.radius.stack-for-small > *,
       .button-group.radius.stack-for-small > * > a,
-      .button-group.radius.stack-for-small > * > button, body[data-page="index"] .dossier
-      .button-group.radius.stack-for-small > * > input[type="submit"],
+      .button-group.radius.stack-for-small > * > button,
       .button-group.radius.stack-for-small > * > .button {
         border-radius: 0; }
       .button-group.radius.stack-for-small > *:first-child,
       .button-group.radius.stack-for-small > *:first-child > a,
-      .button-group.radius.stack-for-small > *:first-child > button, body[data-page="index"] .dossier
-      .button-group.radius.stack-for-small > *:first-child > input[type="submit"],
+      .button-group.radius.stack-for-small > *:first-child > button,
       .button-group.radius.stack-for-small > *:first-child > .button {
         -webkit-top-left-radius: 3px;
         -webkit-top-right-radius: 3px;
@@ -2172,8 +2161,7 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
         border-top-right-radius: 3px; }
       .button-group.radius.stack-for-small > *:last-child,
       .button-group.radius.stack-for-small > *:last-child > a,
-      .button-group.radius.stack-for-small > *:last-child > button, body[data-page="index"] .dossier
-      .button-group.radius.stack-for-small > *:last-child > input[type="submit"],
+      .button-group.radius.stack-for-small > *:last-child > button,
       .button-group.radius.stack-for-small > *:last-child > .button {
         -webkit-bottom-left-radius: 3px;
         -webkit-bottom-right-radius: 3px;
@@ -2182,21 +2170,19 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
   .button-group.round > * {
     display: inline-block;
     margin: 0 -2px; }
-    .button-group.round > * > button, body[data-page="index"] .dossier .button-group.round > * > input[type="submit"], .button-group.round > * .button {
+    .button-group.round > * > button, .button-group.round > * .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.round > *:first-child button, .button-group.round > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.round > *:first-child input[type="submit"], .button-group.round > *:first-child .button {
+    .button-group.round > *:first-child button, .button-group.round > *:first-child .button {
       border-left: 0; }
     .button-group.round > *,
     .button-group.round > * > a,
-    .button-group.round > * > button, body[data-page="index"] .dossier
-    .button-group.round > * > input[type="submit"],
+    .button-group.round > * > button,
     .button-group.round > * > .button {
       border-radius: 0; }
     .button-group.round > *:first-child,
     .button-group.round > *:first-child > a,
-    .button-group.round > *:first-child > button, body[data-page="index"] .dossier
-    .button-group.round > *:first-child > input[type="submit"],
+    .button-group.round > *:first-child > button,
     .button-group.round > *:first-child > .button {
       -webkit-border-bottom-left-radius: 1000px;
       -webkit-border-top-left-radius: 1000px;
@@ -2204,8 +2190,7 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
       border-top-left-radius: 1000px; }
     .button-group.round > *:last-child,
     .button-group.round > *:last-child > a,
-    .button-group.round > *:last-child > button, body[data-page="index"] .dossier
-    .button-group.round > *:last-child > input[type="submit"],
+    .button-group.round > *:last-child > button,
     .button-group.round > *:last-child > .button {
       -webkit-border-bottom-right-radius: 1000px;
       -webkit-border-top-right-radius: 1000px;
@@ -2214,31 +2199,29 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
   .button-group.round.stack > * {
     display: block;
     margin: 0; }
-    .button-group.round.stack > * > button, body[data-page="index"] .dossier .button-group.round.stack > * > input[type="submit"], .button-group.round.stack > * .button {
+    .button-group.round.stack > * > button, .button-group.round.stack > * .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
-    .button-group.round.stack > *:first-child button, .button-group.round.stack > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.round.stack > *:first-child input[type="submit"], .button-group.round.stack > *:first-child .button {
+    .button-group.round.stack > *:first-child button, .button-group.round.stack > *:first-child .button {
       border-left: 0; }
-    .button-group.round.stack > * > button, body[data-page="index"] .dossier .button-group.round.stack > * > input[type="submit"], .button-group.round.stack > * .button {
+    .button-group.round.stack > * > button, .button-group.round.stack > * .button {
       border-color: rgba(255, 255, 255, 0.5);
       border-left-width: 0;
       border-top: 1px solid;
       display: block;
       margin: 0; }
-    .button-group.round.stack > * > button, body[data-page="index"] .dossier .button-group.round.stack > * > input[type="submit"] {
+    .button-group.round.stack > * > button {
       width: 100%; }
-    .button-group.round.stack > *:first-child button, .button-group.round.stack > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.round.stack > *:first-child input[type="submit"], .button-group.round.stack > *:first-child .button {
+    .button-group.round.stack > *:first-child button, .button-group.round.stack > *:first-child .button {
       border-top: 0; }
     .button-group.round.stack > *,
     .button-group.round.stack > * > a,
-    .button-group.round.stack > * > button, body[data-page="index"] .dossier
-    .button-group.round.stack > * > input[type="submit"],
+    .button-group.round.stack > * > button,
     .button-group.round.stack > * > .button {
       border-radius: 0; }
     .button-group.round.stack > *:first-child,
     .button-group.round.stack > *:first-child > a,
-    .button-group.round.stack > *:first-child > button, body[data-page="index"] .dossier
-    .button-group.round.stack > *:first-child > input[type="submit"],
+    .button-group.round.stack > *:first-child > button,
     .button-group.round.stack > *:first-child > .button {
       -webkit-top-left-radius: 1rem;
       -webkit-top-right-radius: 1rem;
@@ -2246,8 +2229,7 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
       border-top-right-radius: 1rem; }
     .button-group.round.stack > *:last-child,
     .button-group.round.stack > *:last-child > a,
-    .button-group.round.stack > *:last-child > button, body[data-page="index"] .dossier
-    .button-group.round.stack > *:last-child > input[type="submit"],
+    .button-group.round.stack > *:last-child > button,
     .button-group.round.stack > *:last-child > .button {
       -webkit-bottom-left-radius: 1rem;
       -webkit-bottom-right-radius: 1rem;
@@ -2257,21 +2239,19 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
     .button-group.round.stack-for-small > * {
       display: inline-block;
       margin: 0 -2px; }
-      .button-group.round.stack-for-small > * > button, body[data-page="index"] .dossier .button-group.round.stack-for-small > * > input[type="submit"], .button-group.round.stack-for-small > * .button {
+      .button-group.round.stack-for-small > * > button, .button-group.round.stack-for-small > * .button {
         border-left: 1px solid;
         border-color: rgba(255, 255, 255, 0.5); }
-      .button-group.round.stack-for-small > *:first-child button, .button-group.round.stack-for-small > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.round.stack-for-small > *:first-child input[type="submit"], .button-group.round.stack-for-small > *:first-child .button {
+      .button-group.round.stack-for-small > *:first-child button, .button-group.round.stack-for-small > *:first-child .button {
         border-left: 0; }
       .button-group.round.stack-for-small > *,
       .button-group.round.stack-for-small > * > a,
-      .button-group.round.stack-for-small > * > button, body[data-page="index"] .dossier
-      .button-group.round.stack-for-small > * > input[type="submit"],
+      .button-group.round.stack-for-small > * > button,
       .button-group.round.stack-for-small > * > .button {
         border-radius: 0; }
       .button-group.round.stack-for-small > *:first-child,
       .button-group.round.stack-for-small > *:first-child > a,
-      .button-group.round.stack-for-small > *:first-child > button, body[data-page="index"] .dossier
-      .button-group.round.stack-for-small > *:first-child > input[type="submit"],
+      .button-group.round.stack-for-small > *:first-child > button,
       .button-group.round.stack-for-small > *:first-child > .button {
         -webkit-border-bottom-left-radius: 1000px;
         -webkit-border-top-left-radius: 1000px;
@@ -2279,8 +2259,7 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
         border-top-left-radius: 1000px; }
       .button-group.round.stack-for-small > *:last-child,
       .button-group.round.stack-for-small > *:last-child > a,
-      .button-group.round.stack-for-small > *:last-child > button, body[data-page="index"] .dossier
-      .button-group.round.stack-for-small > *:last-child > input[type="submit"],
+      .button-group.round.stack-for-small > *:last-child > button,
       .button-group.round.stack-for-small > *:last-child > .button {
         -webkit-border-bottom-right-radius: 1000px;
         -webkit-border-top-right-radius: 1000px;
@@ -2290,31 +2269,29 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
     .button-group.round.stack-for-small > * {
       display: block;
       margin: 0; }
-      .button-group.round.stack-for-small > * > button, body[data-page="index"] .dossier .button-group.round.stack-for-small > * > input[type="submit"], .button-group.round.stack-for-small > * .button {
+      .button-group.round.stack-for-small > * > button, .button-group.round.stack-for-small > * .button {
         border-left: 1px solid;
         border-color: rgba(255, 255, 255, 0.5); }
-      .button-group.round.stack-for-small > *:first-child button, .button-group.round.stack-for-small > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.round.stack-for-small > *:first-child input[type="submit"], .button-group.round.stack-for-small > *:first-child .button {
+      .button-group.round.stack-for-small > *:first-child button, .button-group.round.stack-for-small > *:first-child .button {
         border-left: 0; }
-      .button-group.round.stack-for-small > * > button, body[data-page="index"] .dossier .button-group.round.stack-for-small > * > input[type="submit"], .button-group.round.stack-for-small > * .button {
+      .button-group.round.stack-for-small > * > button, .button-group.round.stack-for-small > * .button {
         border-color: rgba(255, 255, 255, 0.5);
         border-left-width: 0;
         border-top: 1px solid;
         display: block;
         margin: 0; }
-      .button-group.round.stack-for-small > * > button, body[data-page="index"] .dossier .button-group.round.stack-for-small > * > input[type="submit"] {
+      .button-group.round.stack-for-small > * > button {
         width: 100%; }
-      .button-group.round.stack-for-small > *:first-child button, .button-group.round.stack-for-small > *:first-child body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .button-group.round.stack-for-small > *:first-child input[type="submit"], .button-group.round.stack-for-small > *:first-child .button {
+      .button-group.round.stack-for-small > *:first-child button, .button-group.round.stack-for-small > *:first-child .button {
         border-top: 0; }
       .button-group.round.stack-for-small > *,
       .button-group.round.stack-for-small > * > a,
-      .button-group.round.stack-for-small > * > button, body[data-page="index"] .dossier
-      .button-group.round.stack-for-small > * > input[type="submit"],
+      .button-group.round.stack-for-small > * > button,
       .button-group.round.stack-for-small > * > .button {
         border-radius: 0; }
       .button-group.round.stack-for-small > *:first-child,
       .button-group.round.stack-for-small > *:first-child > a,
-      .button-group.round.stack-for-small > *:first-child > button, body[data-page="index"] .dossier
-      .button-group.round.stack-for-small > *:first-child > input[type="submit"],
+      .button-group.round.stack-for-small > *:first-child > button,
       .button-group.round.stack-for-small > *:first-child > .button {
         -webkit-top-left-radius: 1rem;
         -webkit-top-right-radius: 1rem;
@@ -2322,8 +2299,7 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
         border-top-right-radius: 1rem; }
       .button-group.round.stack-for-small > *:last-child,
       .button-group.round.stack-for-small > *:last-child > a,
-      .button-group.round.stack-for-small > *:last-child > button, body[data-page="index"] .dossier
-      .button-group.round.stack-for-small > *:last-child > input[type="submit"],
+      .button-group.round.stack-for-small > *:last-child > button,
       .button-group.round.stack-for-small > *:last-child > .button {
         -webkit-bottom-left-radius: 1rem;
         -webkit-bottom-right-radius: 1rem;
@@ -2757,10 +2733,10 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
     .f-dropdown.mega.open {
       left: 0 !important; }
 
-.dropdown.button, button.dropdown, body[data-page="index"] .dossier input.dropdown[type="submit"] {
+.dropdown.button, button.dropdown {
   position: relative;
   padding-right: 3.5625rem; }
-  .dropdown.button::after, button.dropdown::after, body[data-page="index"] .dossier input.dropdown[type="submit"]::after {
+  .dropdown.button::after, button.dropdown::after {
     border-color: #FFFFFF transparent transparent transparent;
     border-style: solid;
     content: "";
@@ -2769,37 +2745,37 @@ button::-moz-focus-inner, body[data-page="index"] .dossier input[type="submit"]:
     position: absolute;
     top: 50%;
     width: 0; }
-  .dropdown.button::after, button.dropdown::after, body[data-page="index"] .dossier input.dropdown[type="submit"]::after {
+  .dropdown.button::after, button.dropdown::after {
     border-width: 0.375rem;
     right: 1.40625rem;
     margin-top: -0.15625rem; }
-  .dropdown.button::after, button.dropdown::after, body[data-page="index"] .dossier input.dropdown[type="submit"]::after {
+  .dropdown.button::after, button.dropdown::after {
     border-color: #FFFFFF transparent transparent transparent; }
-  .dropdown.button.tiny, button.dropdown.tiny, body[data-page="index"] .dossier input.dropdown.tiny[type="submit"] {
+  .dropdown.button.tiny, button.dropdown.tiny {
     padding-right: 2.625rem; }
-    .dropdown.button.tiny:after, button.dropdown.tiny:after, body[data-page="index"] .dossier input.dropdown.tiny[type="submit"]:after {
+    .dropdown.button.tiny:after, button.dropdown.tiny:after {
       border-width: 0.375rem;
       right: 1.125rem;
       margin-top: -0.125rem; }
-    .dropdown.button.tiny::after, button.dropdown.tiny::after, body[data-page="index"] .dossier input.dropdown.tiny[type="submit"]::after {
+    .dropdown.button.tiny::after, button.dropdown.tiny::after {
       border-color: #FFFFFF transparent transparent transparent; }
-  .dropdown.button.small, button.dropdown.small, body[data-page="index"] .dossier input.dropdown.small[type="submit"] {
+  .dropdown.button.small, button.dropdown.small {
     padding-right: 3.0625rem; }
-    .dropdown.button.small::after, button.dropdown.small::after, body[data-page="index"] .dossier input.dropdown.small[type="submit"]::after {
+    .dropdown.button.small::after, button.dropdown.small::after {
       border-width: 0.4375rem;
       right: 1.3125rem;
       margin-top: -0.15625rem; }
-    .dropdown.button.small::after, button.dropdown.small::after, body[data-page="index"] .dossier input.dropdown.small[type="submit"]::after {
+    .dropdown.button.small::after, button.dropdown.small::after {
       border-color: #FFFFFF transparent transparent transparent; }
-  .dropdown.button.large, button.dropdown.large, body[data-page="index"] .dossier input.dropdown.large[type="submit"] {
+  .dropdown.button.large, button.dropdown.large {
     padding-right: 3.625rem; }
-    .dropdown.button.large::after, button.dropdown.large::after, body[data-page="index"] .dossier input.dropdown.large[type="submit"]::after {
+    .dropdown.button.large::after, button.dropdown.large::after {
       border-width: 0.3125rem;
       right: 1.71875rem;
       margin-top: -0.15625rem; }
-    .dropdown.button.large::after, button.dropdown.large::after, body[data-page="index"] .dossier input.dropdown.large[type="submit"]::after {
+    .dropdown.button.large::after, button.dropdown.large::after {
       border-color: #FFFFFF transparent transparent transparent; }
-  .dropdown.button.secondary:after, button.dropdown.secondary:after, body[data-page="index"] .dossier input.dropdown.secondary[type="submit"]:after {
+  .dropdown.button.secondary:after, button.dropdown.secondary:after {
     border-color: #333333 transparent transparent transparent; }
 
 .flex-video {
@@ -3003,9 +2979,7 @@ input:not([type]), input[type="text"], input[type="password"], input[type="date"
 form .row .prefix-radius.row.collapse input,
 form .row .prefix-radius.row.collapse textarea,
 form .row .prefix-radius.row.collapse select,
-form .row .prefix-radius.row.collapse button,
-form .row .prefix-radius.row.collapse body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier
-form .row .prefix-radius.row.collapse input[type="submit"] {
+form .row .prefix-radius.row.collapse button {
   border-radius: 0;
   -webkit-border-bottom-right-radius: 3px;
   -webkit-border-top-right-radius: 3px;
@@ -3022,9 +2996,7 @@ form .row .prefix-radius.row.collapse .prefix {
 form .row .postfix-radius.row.collapse input,
 form .row .postfix-radius.row.collapse textarea,
 form .row .postfix-radius.row.collapse select,
-form .row .postfix-radius.row.collapse button,
-form .row .postfix-radius.row.collapse body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier
-form .row .postfix-radius.row.collapse input[type="submit"] {
+form .row .postfix-radius.row.collapse button {
   border-radius: 0;
   -webkit-border-bottom-left-radius: 3px;
   -webkit-border-top-left-radius: 3px;
@@ -3041,9 +3013,7 @@ form .row .postfix-radius.row.collapse .postfix {
 form .row .prefix-round.row.collapse input,
 form .row .prefix-round.row.collapse textarea,
 form .row .prefix-round.row.collapse select,
-form .row .prefix-round.row.collapse button,
-form .row .prefix-round.row.collapse body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier
-form .row .prefix-round.row.collapse input[type="submit"] {
+form .row .prefix-round.row.collapse button {
   border-radius: 0;
   -webkit-border-bottom-right-radius: 1000px;
   -webkit-border-top-right-radius: 1000px;
@@ -3060,9 +3030,7 @@ form .row .prefix-round.row.collapse .prefix {
 form .row .postfix-round.row.collapse input,
 form .row .postfix-round.row.collapse textarea,
 form .row .postfix-round.row.collapse select,
-form .row .postfix-round.row.collapse button,
-form .row .postfix-round.row.collapse body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier
-form .row .postfix-round.row.collapse input[type="submit"] {
+form .row .postfix-round.row.collapse button {
   border-radius: 0;
   -webkit-border-bottom-left-radius: 1000px;
   -webkit-border-top-left-radius: 1000px;
@@ -3970,7 +3938,7 @@ ul.pagination {
     font-size: 0.875rem;
     height: 1.5rem;
     margin-left: 0.3125rem; }
-    ul.pagination li a, ul.pagination li button, ul.pagination li body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier ul.pagination li input[type="submit"] {
+    ul.pagination li a, ul.pagination li button {
       border-radius: 3px;
       transition: background-color 300ms ease-out;
       background: none;
@@ -3983,31 +3951,23 @@ ul.pagination {
     ul.pagination li:hover a,
     ul.pagination li a:focus,
     ul.pagination li:hover button,
-    ul.pagination li:hover body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier
-    ul.pagination li:hover input[type="submit"],
-    ul.pagination li button:focus,
-    ul.pagination li body[data-page="index"] .dossier input[type="submit"]:focus, body[data-page="index"] .dossier
-    ul.pagination li input[type="submit"]:focus {
+    ul.pagination li button:focus {
       background: #e6e6e6; }
-    ul.pagination li.unavailable a, ul.pagination li.unavailable button, ul.pagination li.unavailable body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier ul.pagination li.unavailable input[type="submit"] {
+    ul.pagination li.unavailable a, ul.pagination li.unavailable button {
       cursor: default;
       color: #999999;
       pointer-events: none; }
     ul.pagination li.unavailable:hover a,
     ul.pagination li.unavailable a:focus,
     ul.pagination li.unavailable:hover button,
-    ul.pagination li.unavailable:hover body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier
-    ul.pagination li.unavailable:hover input[type="submit"],
-    ul.pagination li.unavailable button:focus,
-    ul.pagination li.unavailable body[data-page="index"] .dossier input[type="submit"]:focus, body[data-page="index"] .dossier
-    ul.pagination li.unavailable input[type="submit"]:focus {
+    ul.pagination li.unavailable button:focus {
       background: transparent; }
-    ul.pagination li.current a, ul.pagination li.current button, ul.pagination li.current body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier ul.pagination li.current input[type="submit"] {
+    ul.pagination li.current a, ul.pagination li.current button {
       background: #008CBA;
       color: #FFFFFF;
       cursor: default;
       font-weight: bold; }
-      ul.pagination li.current a:hover, ul.pagination li.current a:focus, ul.pagination li.current button:hover, ul.pagination li.current body[data-page="index"] .dossier input[type="submit"]:hover, body[data-page="index"] .dossier ul.pagination li.current input[type="submit"]:hover, ul.pagination li.current button:focus, ul.pagination li.current body[data-page="index"] .dossier input[type="submit"]:focus, body[data-page="index"] .dossier ul.pagination li.current input[type="submit"]:focus {
+      ul.pagination li.current a:hover, ul.pagination li.current a:focus, ul.pagination li.current button:hover, ul.pagination li.current button:focus {
         background: #008CBA; }
   ul.pagination li {
     display: block;
@@ -4914,13 +4874,13 @@ meta.foundation-mq-topbar {
     height: 1.75rem;
     padding-bottom: .35rem;
     padding-top: .35rem; }
-  .top-bar .button, .top-bar button, .top-bar body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .top-bar input[type="submit"] {
+  .top-bar .button, .top-bar button {
     font-size: 0.75rem;
     margin-bottom: 0;
     padding-bottom: 0.4125rem;
     padding-top: 0.4125rem; }
     @media only screen and (max-width: 40em) {
-      .top-bar .button, .top-bar button, .top-bar body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier .top-bar input[type="submit"] {
+      .top-bar .button, .top-bar button {
         position: relative;
         top: -1px; } }
   .top-bar .title-area {
@@ -5072,56 +5032,56 @@ meta.foundation-mq-topbar {
           background-color: #61b6d9; }
         .top-bar-section ul li > a.button.info:hover, .top-bar-section ul li > a.button.info:focus {
           color: #FFFFFF; }
-    .top-bar-section ul li > button, .top-bar-section ul body[data-page="index"] .dossier li > input[type="submit"], body[data-page="index"] .dossier .top-bar-section ul li > input[type="submit"] {
+    .top-bar-section ul li > button {
       font-size: 0.8125rem;
       padding-left: 0.9375rem;
       padding-right: 0.9375rem;
       background-color: #008CBA;
       border-color: #007095;
       color: #FFFFFF; }
-      .top-bar-section ul li > button:hover, .top-bar-section ul body[data-page="index"] .dossier li > input[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input[type="submit"]:hover, .top-bar-section ul li > button:focus, .top-bar-section ul body[data-page="index"] .dossier li > input[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input[type="submit"]:focus {
+      .top-bar-section ul li > button:hover, .top-bar-section ul li > button:focus {
         background-color: #007095; }
-      .top-bar-section ul li > button:hover, .top-bar-section ul body[data-page="index"] .dossier li > input[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input[type="submit"]:hover, .top-bar-section ul li > button:focus, .top-bar-section ul body[data-page="index"] .dossier li > input[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input[type="submit"]:focus {
+      .top-bar-section ul li > button:hover, .top-bar-section ul li > button:focus {
         color: #FFFFFF; }
-      .top-bar-section ul li > button.secondary, .top-bar-section ul body[data-page="index"] .dossier li > input.secondary[type="submit"], body[data-page="index"] .dossier .top-bar-section ul li > input.secondary[type="submit"] {
+      .top-bar-section ul li > button.secondary {
         background-color: #e7e7e7;
         border-color: #b9b9b9;
         color: #333333; }
-        .top-bar-section ul li > button.secondary:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.secondary[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.secondary[type="submit"]:hover, .top-bar-section ul li > button.secondary:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.secondary[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.secondary[type="submit"]:focus {
+        .top-bar-section ul li > button.secondary:hover, .top-bar-section ul li > button.secondary:focus {
           background-color: #b9b9b9; }
-        .top-bar-section ul li > button.secondary:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.secondary[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.secondary[type="submit"]:hover, .top-bar-section ul li > button.secondary:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.secondary[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.secondary[type="submit"]:focus {
+        .top-bar-section ul li > button.secondary:hover, .top-bar-section ul li > button.secondary:focus {
           color: #333333; }
-      .top-bar-section ul li > button.success, .top-bar-section ul body[data-page="index"] .dossier li > input.success[type="submit"], body[data-page="index"] .dossier .top-bar-section ul li > input.success[type="submit"] {
+      .top-bar-section ul li > button.success {
         background-color: #43AC6A;
         border-color: #368a55;
         color: #FFFFFF; }
-        .top-bar-section ul li > button.success:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.success[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.success[type="submit"]:hover, .top-bar-section ul li > button.success:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.success[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.success[type="submit"]:focus {
+        .top-bar-section ul li > button.success:hover, .top-bar-section ul li > button.success:focus {
           background-color: #368a55; }
-        .top-bar-section ul li > button.success:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.success[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.success[type="submit"]:hover, .top-bar-section ul li > button.success:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.success[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.success[type="submit"]:focus {
+        .top-bar-section ul li > button.success:hover, .top-bar-section ul li > button.success:focus {
           color: #FFFFFF; }
-      .top-bar-section ul li > button.alert, .top-bar-section ul body[data-page="index"] .dossier li > input.alert[type="submit"], body[data-page="index"] .dossier .top-bar-section ul li > input.alert[type="submit"] {
+      .top-bar-section ul li > button.alert {
         background-color: #f04124;
         border-color: #cf2a0e;
         color: #FFFFFF; }
-        .top-bar-section ul li > button.alert:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.alert[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.alert[type="submit"]:hover, .top-bar-section ul li > button.alert:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.alert[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.alert[type="submit"]:focus {
+        .top-bar-section ul li > button.alert:hover, .top-bar-section ul li > button.alert:focus {
           background-color: #cf2a0e; }
-        .top-bar-section ul li > button.alert:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.alert[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.alert[type="submit"]:hover, .top-bar-section ul li > button.alert:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.alert[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.alert[type="submit"]:focus {
+        .top-bar-section ul li > button.alert:hover, .top-bar-section ul li > button.alert:focus {
           color: #FFFFFF; }
-      .top-bar-section ul li > button.warning, .top-bar-section ul body[data-page="index"] .dossier li > input.warning[type="submit"], body[data-page="index"] .dossier .top-bar-section ul li > input.warning[type="submit"] {
+      .top-bar-section ul li > button.warning {
         background-color: #f08a24;
         border-color: #cf6e0e;
         color: #FFFFFF; }
-        .top-bar-section ul li > button.warning:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.warning[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.warning[type="submit"]:hover, .top-bar-section ul li > button.warning:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.warning[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.warning[type="submit"]:focus {
+        .top-bar-section ul li > button.warning:hover, .top-bar-section ul li > button.warning:focus {
           background-color: #cf6e0e; }
-        .top-bar-section ul li > button.warning:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.warning[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.warning[type="submit"]:hover, .top-bar-section ul li > button.warning:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.warning[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.warning[type="submit"]:focus {
+        .top-bar-section ul li > button.warning:hover, .top-bar-section ul li > button.warning:focus {
           color: #FFFFFF; }
-      .top-bar-section ul li > button.info, .top-bar-section ul body[data-page="index"] .dossier li > input.info[type="submit"], body[data-page="index"] .dossier .top-bar-section ul li > input.info[type="submit"] {
+      .top-bar-section ul li > button.info {
         background-color: #a0d3e8;
         border-color: #61b6d9;
         color: #333333; }
-        .top-bar-section ul li > button.info:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.info[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.info[type="submit"]:hover, .top-bar-section ul li > button.info:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.info[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.info[type="submit"]:focus {
+        .top-bar-section ul li > button.info:hover, .top-bar-section ul li > button.info:focus {
           background-color: #61b6d9; }
-        .top-bar-section ul li > button.info:hover, .top-bar-section ul body[data-page="index"] .dossier li > input.info[type="submit"]:hover, body[data-page="index"] .dossier .top-bar-section ul li > input.info[type="submit"]:hover, .top-bar-section ul li > button.info:focus, .top-bar-section ul body[data-page="index"] .dossier li > input.info[type="submit"]:focus, body[data-page="index"] .dossier .top-bar-section ul li > input.info[type="submit"]:focus {
+        .top-bar-section ul li > button.info:hover, .top-bar-section ul li > button.info:focus {
           color: #FFFFFF; }
     .top-bar-section ul li:hover:not(.has-form) > a {
       background-color: #555555;
@@ -5195,9 +5155,7 @@ meta.foundation-mq-topbar {
       .top-bar-section .dropdown li.has-form {
         padding: 8px 0.9375rem; }
       .top-bar-section .dropdown li .button,
-      .top-bar-section .dropdown li button,
-      .top-bar-section .dropdown li body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier
-      .top-bar-section .dropdown li input[type="submit"] {
+      .top-bar-section .dropdown li button {
         top: auto; }
     .top-bar-section .dropdown label {
       color: #777777;
@@ -5233,17 +5191,13 @@ meta.foundation-mq-topbar {
     .top-bar input,
     .top-bar select,
     .top-bar .button,
-    .top-bar button,
-    .top-bar body[data-page="index"] .dossier input[type="submit"], body[data-page="index"] .dossier
-    .top-bar input[type="submit"] {
+    .top-bar button {
       font-size: 0.875rem;
       height: 1.75rem;
       position: relative;
       top: 0.53125rem; }
     .top-bar .has-form > .button,
-    .top-bar .has-form > button,
-    .top-bar body[data-page="index"] .dossier .has-form > input[type="submit"], body[data-page="index"] .dossier
-    .top-bar .has-form > input[type="submit"] {
+    .top-bar .has-form > button {
       font-size: 0.875rem;
       height: 1.75rem;
       position: relative;
@@ -6796,126 +6750,6 @@ th.hide-for-touch {
   th.show-for-print {
     display: table-cell !important; } }
 
-/******************
-  Mixins
-  ********************/
-button, body[data-page="index"] .dossier input[type="submit"], .btn {
-  -webkit-appearance: none;
-  display: inline-block;
-  background: #FFF;
-  color: #000;
-  border: none;
-  padding: 10px 15px;
-  font-size: .8em;
-  border-radius: 5px;
-  margin: 5px;
-  cursor: pointer;
-  text-align: center;
-  font-family: inherit; }
-  button:hover, body[data-page="index"] .dossier input[type="submit"]:hover, .btn:hover {
-    background-color: #FFF;
-    color: #000; }
-  button:focus, body[data-page="index"] .dossier input[type="submit"]:focus, .btn:focus {
-    outline: none; }
-
-body[data-page="index"] {
-  background: #000;
-  color: #FFF;
-  font-family: "nanook", sans-serif; }
-  body[data-page="index"] h1, body[data-page="index"] h2, body[data-page="index"] h3, body[data-page="index"] h4, body[data-page="index"] h5 {
-    font-family: "nanook", sans-serif;
-    color: #FFF; }
-  body[data-page="index"] .module--bandeau {
-    margin: 2em 3em; }
-    body[data-page="index"] .module--bandeau h1 {
-      font-family: "nanook", sans-serif;
-      font-weight: normal;
-      color: #FFF; }
-      body[data-page="index"] .module--bandeau h1 .p1 {
-        transform: scale(1) rotate(0deg) translate(0px, 0px) skew(20deg, 0deg);
-        position: absolute;
-        left: 1.7em; }
-      body[data-page="index"] .module--bandeau h1 .p2 {
-        transform: scale(1) rotate(0deg) translate(0px, 0px) skew(-20deg, 0deg);
-        position: absolute;
-        left: 3.6em; }
-      body[data-page="index"] .module--bandeau h1 .p3 {
-        position: absolute;
-        left: 5.8em; }
-  body[data-page="index"] .module--listePresentations {
-    padding-top: 70px;
-    position: relative;
-    margin: 0 auto;
-    width: 90%;
-    max-width: 1200px; }
-    body[data-page="index"] .module--listePresentations h2 {
-      color: #FFF;
-      font-size: 1.2em;
-      margin-bottom: 1em; }
-  body[data-page="index"] .dossier-list {
-    margin: 0 -10px; }
-    body[data-page="index"] .dossier-list:before, body[data-page="index"] .dossier-list:after {
-      content: " ";
-      display: table; }
-    body[data-page="index"] .dossier-list:after {
-      clear: both; }
-  body[data-page="index"] .dossier {
-    position: relative;
-    width: 285px;
-    float: left;
-    padding: 15px 20px 20px;
-    margin: 10px;
-    background-color: #FFF;
-    border-bottom: 2px solid #FFF;
-    border-radius: 2px; }
-    body[data-page="index"] .dossier_newconfform {
-      background-color: transparent;
-      border: 2px solid #f0f0f0; }
-    body[data-page="index"] .dossier input.title {
-      font-size: 1rem; }
-    body[data-page="index"] .dossier .title {
-      font-size: 1.2em;
-      margin-bottom: 30px;
-      color: #000;
-      margin-bottom: 0; }
-    body[data-page="index"] .dossier input, body[data-page="index"] .dossier textarea {
-      width: 100%;
-      padding: 5px;
-      border: 2px solid #eee; }
-      body[data-page="index"] .dossier input:focus, body[data-page="index"] .dossier textarea:focus {
-        outline: 2px solid #FFF; }
-    body[data-page="index"] .dossier input[type="submit"] {
-      width: auto;
-      float: right;
-      margin-top: 15px; }
-
-* {
-  box-sizing: border-box; }
-
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0; }
-
-p {
-  margin-bottom: 0;
-  width: 100%; }
-
-p + img {
-  width: 100%; }
-
-img {
-  max-width: 100%; }
-
-.row {
-  width: 100%;
-  max-width: 100%; }
-
-textarea {
-  font-family: monospace;
-  font-size: 11pt; }
-
 header {
   height: 45px;
   background-color: #000;
@@ -6978,77 +6812,29 @@ header {
   background: #DFDFDF;
   width: 100%;
   padding-top: 70px; }
-  .content-wrapper .module--sidebar {
-    width: 400px;
-    height: 92vh;
-    position: fixed;
-    top: 50px;
-    right: 0;
-    background-color: #C3C3C3;
-    z-index: 100; }
-    .content-wrapper .module--sidebar textarea {
-      height: 28vh; }
-    .content-wrapper .module--sidebar.pj-machine-mode {
-      display: none; }
-  .content-wrapper .page {
-    width: 40cm;
-    height: 60cm;
-    border-right: 1px solid #000;
-    border-bottom: 1px solid #000;
-    border-top: 1px solid #000;
-    border-left: 1px solid #000;
-    position: relative;
-    transform: scale(0.3);
-    transform-origin: 0 0;
-    left: 40%;
-    margin-left: -25%; }
-    .content-wrapper .page.pj-machine-mode {
-      left: 30%;
-      margin-left: 0; }
-      .content-wrapper .page.pj-machine-mode .infos-css {
-        display: none; }
-      .content-wrapper .page.pj-machine-mode .page-wrapper .infos-css {
-        display: none; }
-      .content-wrapper .page.pj-machine-mode .page-wrapper .content.active-block {
-        border: none; }
-        .content-wrapper .page.pj-machine-mode .page-wrapper .content.active-block .infos-css {
-          display: none; }
-    .content-wrapper .page .infos-css {
-      font-size: 35px;
-      background-color: #A6A6A6;
-      padding: 10px 20px;
-      position: absolute;
-      right: 0;
-      transform: translateX(100%);
-      top: 0; }
-      .content-wrapper .page .infos-css span {
-        color: #000; }
-    .content-wrapper .page .page-wrapper {
-      margin: 0.7cm 0cm;
-      width: 40cm;
-      height: 58.6cm; }
-      .content-wrapper .page .page-wrapper .content {
-        width: auto;
-        height: auto;
-        min-width: 1cm;
-        min-height: 1cm;
-        position: absolute;
-        cursor: pointer;
-        word-wrap: break-word; }
-        .content-wrapper .page .page-wrapper .content .infos-css {
-          display: none; }
-        .content-wrapper .page .page-wrapper .content.active-block {
-          border: 2px solid violet; }
-          .content-wrapper .page .page-wrapper .content.active-block .infos-css {
-            display: block; }
-        .content-wrapper .page .page-wrapper .content.debug {
-          border: 2px solid red; }
 
-.page {
-  background-color: #FFF; }
+body.preview .grid {
+  display: none; }
 
-.page.pj-machine-mode .content.active-pj {
-  border: 2px solid blue !important; }
+body.preview .content {
+  border: none !important; }
+
+.grid {
+  height: 28.3cm;
+  width: 100%;
+  border: 1px solid #00AADA;
+  display: none; }
+  .grid div {
+    height: 100%;
+    width: 3.33%;
+    border-right: 1px solid #DA0097; }
+    .grid div:last-child {
+      border: none; }
+  .grid.active {
+    display: block; }
+
+.js--templates {
+  display: none; }
 
 body[data-page="print"] .content-wrapper {
   padding-top: 0;
@@ -7059,15 +6845,6 @@ body[data-page="print"] .content-wrapper {
     margin: 0; }
     body[data-page="print"] .content-wrapper .page .page-wrapper {
       margin: 0; }
-
-body.preview .grid {
-  display: none; }
-
-body.preview .content {
-  border: none !important; }
-
-body.preview .infos-css, body.preview .module--sidebar {
-  display: none !important; }
 
 body[data-page="pdf"] {
   margin: 2em;
@@ -7085,19 +6862,44 @@ body[data-page="pdf"] {
       body[data-page="pdf"] li a:hover {
         text-decoration: underline; }
 
-.grid {
-  height: 58.6cm;
-  width: 100%;
-  border: 1px solid #00AADA;
-  display: none; }
-  .grid div {
-    height: 100%;
-    width: 3.33%;
-    border-right: 1px solid #DA0097; }
-    .grid div:last-child {
-      border: none; }
-  .grid.active {
-    display: block; }
+.content-wrapper .page {
+  width: 21cm;
+  height: 29.7cm;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+  position: relative;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  left: 30%;
+  margin-left: 0%;
+  background-color: #FFF; }
+  .content-wrapper .page .page-wrapper {
+    margin: 0.7cm 0.7cm;
+    width: 19.6cm;
+    height: 28.3cm; }
+    .content-wrapper .page .page-wrapper .content {
+      width: auto;
+      height: auto;
+      min-width: 1cm;
+      min-height: 1cm;
+      position: absolute;
+      cursor: pointer;
+      word-wrap: break-word; }
+      .content-wrapper .page .page-wrapper .content.active-pj {
+        border: 2px solid blue; }
+      .content-wrapper .page .page-wrapper .content.debug {
+        border: 2px solid red; }
 
-.js--templates {
-  display: none; }
+* {
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0; }
+
+img {
+  max-width: 100%; }

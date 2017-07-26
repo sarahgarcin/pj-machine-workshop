@@ -1,4 +1,4 @@
-// I M P O R T    F O N T 
+// I M P O R T    F O N T S
 @import "../fonts/aileron/stylesheet.css";
 @import "../fonts/Fira-Sans/stylesheet.css";
 @import "../fonts/inknut/stylesheet.css";
@@ -7,10 +7,10 @@
 @import "../fonts/roboto/stylesheet.css";
 @import "../fonts/terminal/stylesheet.css";
 @import "../fonts/volkorn/stylesheet.css";
+
 @import "settings.scss";
 
-
-// PAGE
+// PAGE SETTINGS
 $widthPage: $page-widthPage;
 $heightPage: $page-heightPage;
 $margintop: $page-margintop;
@@ -18,34 +18,7 @@ $marginleft: $page-marginleft;
 
 $scale : $page-scale;
 
-// T A I L L E S
-$margin: 16px;
-$marginrem: .9375rem;
-$t-navbarheight: 70px;
 
-
-// FONT SIZE
-$h1Size: 30pt;
-$h2Size: 25pt;
-$h3Size: 18pt;
-$h6Size: 16pt;
-$textSize: 15pt;
-
-// FONT FAMILY
-$titleFont : "inknut", sans-serif;
-$textFont: "vollkorn", sans-serif;
-
-@mixin titleStyle{
-	font-size: $h1Size;
-	font-family: $titleFont;
-	font-weight: bold;
-}
-
-@mixin textStyle{
-	font-size: $textSize;
-	font-family: $textFont;
-	font-weight: normal;
-}
 
 
 

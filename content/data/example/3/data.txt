@@ -70,6 +70,50 @@ space + space + return → linebreak
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ----
 
 index: 3
@@ -97,6 +141,10 @@ blockSize: 8
 ----
 
 filesNb: 1
+
+----
+
+font: nanook
 
 ----
 
