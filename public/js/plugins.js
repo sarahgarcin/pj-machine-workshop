@@ -25,9 +25,15 @@
   };
 
   $.fn.changeFont = function( font) {
-    var font = "'"+font+"'";
     return this.children().css({
       'font-family': font + ", sans-serif",
+    });
+  };
+
+  $.fn.changeColor = function( color) {
+    console.log(color);
+    return this.children().css({
+      'color': color,
     });
   };
  

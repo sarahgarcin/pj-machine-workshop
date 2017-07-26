@@ -157,11 +157,37 @@
 		if(code == shuffle){
 			randomFont = fonts[Math.floor(Math.random() * fonts.length)];
 			console.log(randomFont);
-		}
+		
 
-		socket.emit('changeFont', {
-			"currentProject" : currentProject,
-			"currentBlock" : blockActive,
-			"font": randomFont, 
-		});
+			socket.emit('changeFont', {
+				"currentProject" : currentProject,
+				"currentBlock" : blockActive,
+				"font": randomFont, 
+			});
+		}
 	}
+
+	function changeColor(blockActive, code){
+
+		// press "b" to shuffle fonts
+		var shuffle = 98;
+
+		// variable for generating random colors
+		var letters = '0123456789ABCDEF';
+	  var color = '#';
+	  
+
+	  if(code == shuffle){
+	  	for (var i = 0; i < 6; i++) {
+	    	color += letters[Math.floor(Math.random() * 16)];
+	  	}
+	  	console.log(color);
+		  socket.emit('changeColor', {
+				"currentProject" : currentProject,
+				"currentBlock" : blockActive,
+				"color": color, 
+			});
+	  }
+
+	}
+

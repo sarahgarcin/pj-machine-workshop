@@ -49,6 +49,7 @@ module.exports = function(app, io){
     socket.on('changeBlockSize', onChangeBlockSize);
     socket.on('changeWordSpacing', onChangeWordSpacing);
     socket.on('changeFont', onChangeFont);
+    socket.on('changeColor', onChangeColor);
 
 
 		socket.on('generate', generatePDF);
@@ -321,6 +322,27 @@ module.exports = function(app, io){
     var newFont = data.font;
     newData = {
         'font': newFont,
+      }
+
+    updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
+      //console.log(currentDataJSON);
+      sendEventWithContent('updateBlock', currentDataJSON, 'room', data.currentProject);
+    }, function(error) {
+      console.error("Failed to zoom the block! Error: ", error);
+    });
+
+  } 
+
+  function onChangeColor(data){
+    console.log("EVENT - onChangeColor");
+
+    var pathToRead = api.getContentPath(data.currentProject);
+    var folderMetaData = getFolderMeta( data.currentBlock, pathToRead);
+    var blockPath = path.join(data.currentProject, data.currentBlock);
+    
+    var newColor = data.color;
+    newData = {
+        'color': newColor,
       }
 
     updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {

@@ -63,6 +63,27 @@ content: # Welcome on the PJ Machine
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ----
 
 index: 1
@@ -94,6 +115,10 @@ filesNb: 1
 ----
 
 font: roboto
+
+----
+
+color: #6042B9
 
 ----
 

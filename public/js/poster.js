@@ -47,6 +47,7 @@ socket.on('pdfIsGenerated', function(filepath){
 		wordSpacing(activePJBlock, code);
 		changeBlockSize(activePJBlock, code);
 		changeFont(activePJBlock, code);
+		changeColor(activePJBlock, code);
 		
 		generatePDF(code);
 
@@ -101,12 +102,16 @@ function makeFolderContent( projectData){
 	  	'left': projectData.xPos+'cm',
 			'top':projectData.yPos+'cm',
 			'letter-spacing': projectData.wordSpace +'px', 
-			'width': projectData.blockSize + 'cm'
+			'width': projectData.blockSize + 'cm', 
 	  })
   ;
 
   newFolder
   	.html(converter.makeHtml(projectData.content))
+  	.children().css({
+  		'font-family': projectData.font + ", sans-serif",
+  		'color': projectData.color
+  	})
   	;
 
 	return newFolder;
