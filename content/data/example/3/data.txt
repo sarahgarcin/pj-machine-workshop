@@ -11,7 +11,7 @@ content: # Big Title
 
 *Italic*
 
-![Alt](https://github.com/sarahgarcin/pj-machine/raw/master/content/data/02/01.jpg) → add an image  
+![alt](http://www06.zkm.de/zkmarchive/www02_religion/mediumreligion/img/robotlab.jpg) → add an image  
   
 space + space + return → linebreak
 

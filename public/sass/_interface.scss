@@ -8,7 +8,7 @@ header{
   width: 100%;
   top:0;
   z-index: 200;
-  @include clearfix;
+//  @include clearfix;
   .module--infos{
     padding-left: 20px;
     h1, h2{
@@ -103,6 +103,7 @@ body.preview{
 
 
 body[data-page="print"]{
+
   .content-wrapper{
     padding-top:0;
     background-color:#FFF;
@@ -112,6 +113,9 @@ body[data-page="print"]{
       margin: 0;
       .page-wrapper{
         margin: 0;
+        .content.active-pj{
+          border:none;
+        }
       }
     }
   }
