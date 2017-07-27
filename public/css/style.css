@@ -6811,13 +6811,16 @@ header {
 .content-wrapper {
   background: #DFDFDF;
   width: 100%;
-  padding-top: 70px; }
+  padding-top: 50px; }
 
 body.preview .grid {
   display: none; }
 
 body.preview .content {
   border: none !important; }
+
+body.preview .page {
+  overflow: hidden; }
 
 .grid {
   height: 28.3cm;
@@ -6865,10 +6868,6 @@ body[data-page="pdf"] {
 .content-wrapper .page {
   width: 21cm;
   height: 29.7cm;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
-  border-top: 1px solid #000;
-  border-left: 1px solid #000;
   position: relative;
   transform: scale(0.5);
   transform-origin: 0 0;

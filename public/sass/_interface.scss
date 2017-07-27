@@ -61,7 +61,7 @@ header{
 .content-wrapper{
   background: #DFDFDF;
   width: 100%;
-  padding-top: 70px;
+  padding-top: 50px;
 }
 
 
@@ -71,6 +71,9 @@ body.preview{
   }
   .content{
     border:none !important;
+  }
+  .page{
+    overflow:hidden;
   }
 
 }

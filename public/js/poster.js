@@ -48,6 +48,7 @@ socket.on('pdfIsGenerated', function(filepath){
 		changeBlockSize(activePJBlock, code);
 		changeFont(activePJBlock, code);
 		changeColor(activePJBlock, code);
+		rotateBlock(activePJBlock, code);
 		
 		generatePDF(code);
 
@@ -97,12 +98,13 @@ function makeFolderContent( projectData){
 	  .addClass('active-pj')
 	  .addClass(blockClass)
 	  .css({
-	  	'transform': 'scale('+projectData.zoom+')',
+	  	'transform': 'scale('+projectData.zoom+') rotate('+projectData.rotation+'deg)',
 	  	'transform-origin': '0 0',
 	  	'left': projectData.xPos+'cm',
 			'top':projectData.yPos+'cm',
 			'letter-spacing': projectData.wordSpace +'px', 
 			'width': projectData.blockSize + 'cm', 
+			//'transform': 'rotate('+projectData.rotation+'deg)'
 	  })
   ;
 

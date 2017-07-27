@@ -50,6 +50,7 @@ module.exports = function(app, io){
     socket.on('changeWordSpacing', onChangeWordSpacing);
     socket.on('changeFont', onChangeFont);
     socket.on('changeColor', onChangeColor);
+    socket.on('rotateBlock', onRotateBlock);
 
 
 		socket.on('generate', generatePDF);
@@ -353,6 +354,43 @@ module.exports = function(app, io){
     });
 
   } 
+
+  function onRotateBlock(data){
+    console.log("EVENT - onRotateBlock");
+
+    var pathToRead = api.getContentPath(data.currentProject);
+    var folderMetaData = getFolderMeta( data.currentBlock, pathToRead);
+    var blockPath = path.join(data.currentProject, data.currentBlock);
+    
+    //console.log(folderMetaData);
+    
+    if(data.direction == "clockwise"){
+      var newRotation = parseFloat(folderMetaData.rotation) + settings.rotationStep;
+      console.log(newRotation, parseFloat(folderMetaData.rotation), settings.rotationStep);
+      if(newRotation > 360){
+        newRotation = 0;
+      }
+      newData = {
+        'rotation': newRotation,
+      }
+    }
+    if(data.direction == "counterclockwise"){
+      var newRotation = parseFloat(folderMetaData.rotation) - settings.rotationStep;
+      if(newRotation < 0){
+        newRotation = 360 - settings.rotationStep;
+      }
+      newData = {
+        'rotation': newRotation,
+      } 
+    }
+
+    updateFolderMeta(newData, blockPath).then(function( currentDataJSON) {
+      //console.log(currentDataJSON);
+      sendEventWithContent('updateBlock', currentDataJSON, 'room', data.currentProject);
+    }, function(error) {
+      console.error("Failed to zoom the block! Error: ", error);
+    });
+  }
 
 
 	

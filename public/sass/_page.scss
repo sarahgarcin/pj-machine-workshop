@@ -2,10 +2,6 @@
   .page{
     width: $widthPage;
     height: $heightPage;
-    border-right: 1px solid #000;
-    border-bottom: 1px solid #000;
-    border-top: 1px solid #000;
-    border-left: 1px solid #000;
     position: relative;
     transform: scale($scale);
     transform-origin: 0 0;

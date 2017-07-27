@@ -36,6 +36,13 @@
       'color': color,
     });
   };
+
+  $.fn.rotateBlock = function( rotation) {
+    console.log(rotation);
+    return this.children().css({
+      'transform': 'rotate('+rotation+'deg)',
+    });
+  };
  
 }( jQuery ));
 

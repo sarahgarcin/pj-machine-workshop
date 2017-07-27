@@ -191,3 +191,29 @@
 
 	}
 
+	function rotateBlock(blockActive, code){
+
+		//press "m" to rotate clockwise
+		var rotateRight = 109;
+		//press "l" to rotate counterclockwise
+		var rotateLeft = 108;
+		var direction;
+
+		if(code == rotateRight){
+			direction = "clockwise";
+		}
+		
+		if(code == rotateLeft){
+			direction = "counterclockwise";
+		}
+
+		if(code == rotateLeft || code == rotateRight){
+			socket.emit("rotateBlock", {
+				"currentProject" : currentProject,
+				"currentBlock" : blockActive,
+				"direction": direction
+			});
+		}
+
+	}
+

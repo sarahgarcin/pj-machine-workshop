@@ -7,5 +7,6 @@ function onUpdateBlock(blockdata){
 	$element.wordSpacing(blockdata.wordSpace);
 	$element.changeFont(blockdata.font);
 	$element.changeColor(blockdata.color);
+	$element.rotateBlock(blockdata.rotation);
 
 }
