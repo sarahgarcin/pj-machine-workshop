@@ -28,6 +28,18 @@ socket.on('displayPageEvents', onDisplayPage);
 // pj machine sockets
 socket.on('blockChanged', onBlockChanged);
 socket.on('updateBlock', onUpdateBlock);
+socket.on('joystick', function(direction){
+	console.log(direction);
+	var blockActive = $(".active-pj").attr('data-folder');
+	var numBlocks = $('.content').length;
+	console.log(blockActive);
+		socket.emit('moveBlock', {
+			"currentProject" : currentProject,
+			"currentBlock" : blockActive,
+			"direction": direction, 
+			"numBlocks":numBlocks
+		});
+});
 socket.on('pdfIsGenerated', function(filepath){
 	alert('The poster has been generated in PDF \n PDF path: ' + filepath);
 });

@@ -6,12 +6,18 @@ const fs = require('fs-extra'),
 	exec = require('child_process').exec,
 	parsedown = require('woods-parsedown'),
 	phantom = require('phantom'),
-	slugg = require('slugg');
+	slugg = require('slugg'), 
+  five = require("johnny-five");
+
+  var board = new five.Board();
 
 	const
 	  settings  = require('./content/settings.js'),
 	  api = require('./bin/api')
+    //arduino = require('./bin/arduino');
 	;
+
+
 
 	var readPageSettings = fs.readFileSync('./content/page.json', 'utf-8');
 	var pageSettings = JSON.parse(readPageSettings);
@@ -30,9 +36,43 @@ module.exports = function(app, io){
 	
 	io.on("connection", function(socket){
 
-		//INDEX
-		socket.on('newConf', onNewConf);
-		socket.on('listConf', function (data){ onListConf(socket); });
+    // call arduino functions here
+    board.on("ready", function(socket) {
+      console.log("ARDUINO READY");
+      // Create a new `joystick` hardware instance.
+      var joystick = new five.Joystick({
+        //   [ x, y ]
+        pins: ["A0", "A1"]
+      });
+      var direction; 
+
+      joystick.on("change", function(socket) {
+        if(this.x == 1){
+          direction = "right";
+        }
+        else if(this.x == -1){
+          direction = "left";
+        }
+        else if(this.y < -0.97){
+          direction = "up";
+        }
+        else if(this.y == 1){
+          direction = "down";
+        }
+        else{
+          direction = undefined;
+        }
+
+
+        var data = {
+          "direction": direction
+        }
+
+        if(data.direction == "up" || data.direction == "down" || data.direction == "left" || data.direction == "right" ){
+          io.sockets.emit("joystick", direction);
+        }
+      });
+    });
 
     // add client in room
 		socket.on('room', function(room) {
@@ -62,28 +102,6 @@ module.exports = function(app, io){
 
 
 // ------------- F U N C T I O N S -------------------
-
-  // I N D E X    P A G E
-    function onListConf( socket){
-      console.log( "EVENT - onListConf");
-      listAllFolders(api.getContentPath()).then(function( allFoldersData) {
-        sendEventWithContent( 'listAllFolders', allFoldersData, socket);
-      }, function(error) {
-        console.error("Failed to list folders! Error: ", error);
-      });
-    }
-
-  	function onNewConf( confData) {
-      console.log('New Conf: ');
-      //console.log(confData);
-      createNewConf(confData).then(function(newpdata) {
-       // console.log('newpdata: '+newpdata);
-        sendEventWithContent('confCreated', newpdata);
-      }, function(errorpdata) {
-        console.error("Failed to create a new folder! Error: ", errorpdata);
-        sendEventWithContent('confAlreadyExist', errorpdata);
-      });
-    }
 
   // P O S T E R   P A G E 
   	function onListBlocks(data, socket){
@@ -392,113 +410,6 @@ module.exports = function(app, io){
     });
   }
 
-
-	
-
-// BLOCK   FUNCTIONS
-  function createNewBlock( blockData) {
-    return new Promise(function(resolve, reject) {
-      console.log("COMMON — createNewBlock");
-
-      var blockName = blockData.numBlocks;
-      var blockProjectPath = path.join(blockData.currentProject, blockName);
-      var blockPath = api.getContentPath(blockProjectPath);
-  		var currentDateString = api.getCurrentDate();
-
-      fs.access(blockPath, fs.F_OK, function( err) {
-        // if there's nothing at path
-        if (err) {
-          console.log("New block created with name " + blockName + " and path " + blockPath);
-          fs.ensureDirSync(blockPath);//write new folder in folders
-          var fmeta = {
-            "path": blockPath,
-  					"index" : blockName,
-  					"zoom" : 1,
-  					"xPos" : 0,
-  					"yPos" : blockName * blockName,
-  					"wordSpace" : 0, 
-  					"blockSize": 20,
-  					"filesNb": 1,
-  					"content": "# Write Markdown",
-            "font":"Helvetica",
-            "color":"#000",
-            "rotation":"0"
-          };
-          api.storeData( api.getMetaFileOfConf(blockProjectPath), fmeta, "create").then(function( meta) {
-            console.log('success ', meta);
-            storeMarkdownContent( path.join(meta.path, "1.txt"), fmeta.content, "create") 
-            resolve( meta);
-          }, function(err) {
-            console.log( gutil.colors.red('--> Couldn\'t create conf meta.'));
-            reject( 'Couldn\'t create conf meta ' + err);
-          });
-
-        } else {
-          // if there's already something at path
-          console.log("WARNING - the following folder name already exists: " + blockName);
-          var objectJson = {
-            "path": blockPath,
-  					"index" : 0,
-  					"zoom" : 1,
-  					"xPos" : 0,
-  					"yPos" : 1,
-  					"wordSpace" : 0, 
-  					"filesNb":1,
-  					"blockSize": 8,
-  					"content": "# Write Markdown",
-            "font":"Helvetica",
-            "color":"#000",
-            "rotation":"0"
-          };
-          reject( objectJson);
-        }
-      });
-
-    });
-  }
-
-// C O N F    F U N C T I O N S
-  function createNewConf( confData) {
-    return new Promise(function(resolve, reject) {
-      console.log("COMMON — createNewFolder");
-
-      var confName = confData.titre;
-      var slugConfName = slugg(confName);
-      var confPath = api.getContentPath(slugConfName);
-      var currentDateString = api.getCurrentDate();
-
-
-      fs.access(confPath, fs.F_OK, function( err) {
-        // if there's nothing at path
-        if (err) {
-          console.log("New conf created with name " + confName + " and path " + confPath);
-          fs.ensureDirSync(confPath);//write new folder in folders
-          var fmeta =
-            {
-              "name" : confName,
-              "created" : currentDateString,
-            };
-          api.storeData( api.getMetaFileOfConf(slugConfName), fmeta, "create").then(function( meta) {
-              console.log('sucess ' + meta)
-            resolve( meta);
-          }, function(err) {
-            console.log( gutil.colors.red('--> Couldn\'t create conf meta.'));
-            reject( 'Couldn\'t create conf meta ' + err);
-          });
-
-        } else {
-          // if there's already something at path
-          console.log("WARNING - the following folder name already exists: " + slugConfName);
-          var objectJson = {
-            "name": confName,
-            "timestamp": currentDateString
-          };
-          reject( objectJson);
-        }
-      });
-
-    });
-  }
 
 //------------- PDF -------------------
 

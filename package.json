@@ -17,6 +17,7 @@
     "gulp-json-sass": "0.0.2",
     "http": "0.0.0",
     "jade": "^1.11.0",
+    "johnny-five": "^0.11.3",
     "junk": "^2.0.0",
     "marked": "^0.3.6",
     "moment": "^2.13.0",
