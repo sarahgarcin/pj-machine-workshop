@@ -1,24 +1,10 @@
-var folder = 'data';
-
 var settings = {
-	"title": "PJ Machine",
+	
+	"title": "PJ Machine", // Change project title
 
-	"folder": folder,
-
-	"contentDir" : "content",
-  "metaFileext" : ".txt",
-  "confMetafilename" : "data",
-
-  "metaDateFormat" : "YYYYMMDD_HHmmss",
-  "textEncoding" : "UTF-8",
-  "textFieldSeparator" : "\n\n----\n\n",
-
-  "regexpMatchFolderNames" : "^([^.]+)$",
-  "regexpMatchProjectPreviewNames" : "^(apercu|preview)",
-  "regexpGetFileExtension" : "\\.[^.]*$",
-  "regexpRemoveFileExtension" : "(.+?)(\\.[^.]*$|$)",
-
-  // ZOOM settings
+/* ------- Features settings ------ */
+	
+	// ZOOM settings
   "maxZoom" : 3,
   "minZoom" : 0.2,
 	"zoomStep" : 0.05, 
@@ -31,13 +17,34 @@ var settings = {
 	"minY" : -12,
 	"yStep" : 0.2,
 
-	//WORD SPACING SETTINGS
+	// LETTER SPACING SETTINGS
 	"spacePlus" : 5,
 	"spaceMinus" : 3,
-	"space" : 3,
+	"space" : 3, // step for letter spacing
 
 	// ROTATION
-	"rotationStep" : 15
+	"rotationStep" : 15,
+
+
+
+/* ------- Content Folder settings ------ */
+
+	"contentDir" : "content",
+	"folder": 'data',
+	"blockFolder" : "blocks",
+
+  "metaFileext" : ".txt",
+  "confMetafilename" : "data",
+
+  "metaDateFormat" : "YYYYMMDD_HHmmss",
+  "textEncoding" : "UTF-8",
+  "textFieldSeparator" : "\n\n----\n\n",
+
+  "regexpMatchFolderNames" : "^([^.]+)$",
+  "regexpMatchProjectPreviewNames" : "^(apercu|preview)",
+  "regexpGetFileExtension" : "\\.[^.]*$",
+  "regexpRemoveFileExtension" : "(.+?)(\\.[^.]*$|$)"
+
 
 }
 

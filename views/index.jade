@@ -6,9 +6,7 @@ html
 
     header
       .module--infos
-        h1 
-          a(href="/") #{appName}
-        h2 #{confName}
+        h1 #{appName}
       .module--interface-features
         .zoomFunction
           span.plusButton + 
@@ -33,7 +31,7 @@ html
 
     include snippets/footer.jade
     script(src='/js/interface-events.js')
-    script(src='/js/pj-send-events.js')
+    script(src='/js/pj-send-events-keypress.js.js')
     script(src='/js/pj-receive-events.js')
     script(src='/js/create-page.js')
     script(src='/js/poster.js')

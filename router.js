@@ -20,7 +20,7 @@ module.exports = function(app,io,m){
   app.get("/pdf", getPdf);
 
   function getIndex(req, res) {
-    var slugConfName = "example";
+    var slugConfName = settings.blockFolder;
     api.readConfMeta(slugConfName).then(function(c) {
       var pageTitle = c.name + ' | ' + projectTitle;
       res.render("index", {
@@ -37,7 +37,7 @@ module.exports = function(app,io,m){
   };
 
   function getPrint(req, res) {
-    var slugConfName = "example";
+    var slugConfName = settings.blockFolder;
     api.readConfMeta(slugConfName).then(function(c) {
 
       var pageTitle = c.name + ' | ' + projectTitle;

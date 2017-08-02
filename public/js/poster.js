@@ -28,18 +28,34 @@ socket.on('displayPageEvents', onDisplayPage);
 // pj machine sockets
 socket.on('blockChanged', onBlockChanged);
 socket.on('updateBlock', onUpdateBlock);
-socket.on('joystick', function(direction){
-	console.log(direction);
-	var blockActive = $(".active-pj").attr('data-folder');
-	var numBlocks = $('.content').length;
-	console.log(blockActive);
-		socket.emit('moveBlock', {
-			"currentProject" : currentProject,
-			"currentBlock" : blockActive,
-			"direction": direction, 
-			"numBlocks":numBlocks
-		});
+
+// Prepared function for receiving data from arduino
+socket.on('arduinoMove', function(data){
+	sendEvent('moveBlock', data);
 });
+socket.on('arduinoChangeBlock', function(data){
+	sendEvent('changeBlock', data);
+});
+socket.on('arduinoZoomBlock', function(data){
+	sendEvent('zoomBlock', data);
+});
+socket.on('arduinoChangeBlockSize', function(data){
+	sendEvent('changeBlockSize', data);
+});
+
+socket.on('arduinoChangeWordSpacing', function(data){
+	sendEvent('changeWordSpacing', data);
+});
+socket.on('arduinoChangeFont', function(data){
+	sendEvent('changeFont', data);
+});
+socket.on('arduinoChangeColor', function(data){
+	sendEvent('changeColor', data);
+});
+socket.on('arduinoRotateBlock', function(data){
+	sendEvent('rotateBlock', data);
+});
+
 socket.on('pdfIsGenerated', function(filepath){
 	alert('The poster has been generated in PDF \n PDF path: ' + filepath);
 });
@@ -50,17 +66,17 @@ socket.on('pdfIsGenerated', function(filepath){
 	$(document).on('keypress', function(e){
 		var code = e.keyCode;
 		console.log(code);
-		var activePJBlock = $(".active-pj").attr('data-folder');
+
 		// CALL FUNCTION YOU NEED HERE 
 		// CHANGE THE KEYPRESS CODE IN EACH FUNCTION
-		changeBlock(activePJBlock, code);
-		moveBlock(activePJBlock, code);
-		zoomBlock(activePJBlock, code);
-		wordSpacing(activePJBlock, code);
-		changeBlockSize(activePJBlock, code);
-		changeFont(activePJBlock, code);
-		changeColor(activePJBlock, code);
-		rotateBlock(activePJBlock, code);
+		changeBlock(code);
+		moveBlock(code);
+		zoomBlock(code);
+		wordSpacing(code);
+		changeBlockSize(code);
+		changeFont(code);
+		changeColor(code);
+		rotateBlock(code);
 		
 		generatePDF(code);
 
@@ -89,6 +105,20 @@ function insertOrReplaceFolder( blockIndex, $folderContent) {
   	$(".page-wrapper").append($folderContent);
   	resolve(blockIndex);
   });
+}
+
+
+function sendEvent(eventName, data){
+	var blockActive = $(".active-pj").attr('data-folder');
+	var numBlocks = $('.content').length;
+	console.log(eventName, data);
+	socket.emit(eventName, {
+		"currentProject" : currentProject,
+		"currentBlock" : blockActive,
+		"direction": data, 
+		"numBlocks":numBlocks
+	});
+
 }
 
 

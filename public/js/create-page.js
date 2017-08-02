@@ -1,7 +1,5 @@
 function makeFolderContent( projectData){
 
-	//console.log(projectData)
-	
 	var index = projectData.index;
 	var folder = projectData.index;
 	var blockClass = 'block' + index;
@@ -9,7 +7,7 @@ function makeFolderContent( projectData){
 	var newFolder = $(".js--templates > .content").clone(false);
 	$('.content').removeClass('active-block').removeClass('active-pj');
 
-	// customisation du projet
+	// Load content 
 	newFolder
 	  .attr( 'data-index', index)
 	  .attr( 'data-folder', folder)

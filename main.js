@@ -14,10 +14,7 @@ const fs = require('fs-extra'),
 	const
 	  settings  = require('./content/settings.js'),
 	  api = require('./bin/api')
-    //arduino = require('./bin/arduino');
 	;
-
-
 
 	var readPageSettings = fs.readFileSync('./content/page.json', 'utf-8');
 	var pageSettings = JSON.parse(readPageSettings);
@@ -35,43 +32,13 @@ module.exports = function(app, io){
 	console.log("main module initialized");
 	
 	io.on("connection", function(socket){
+   
+    board.on("ready", function(socket) { // Call arduino board
+      console.log("--- ARDUINO READY ---- ");
+      
+      // write your arduino functions here
+      arduinoJoystick();
 
-    // call arduino functions here
-    board.on("ready", function(socket) {
-      console.log("ARDUINO READY");
-      // Create a new `joystick` hardware instance.
-      var joystick = new five.Joystick({
-        //   [ x, y ]
-        pins: ["A0", "A1"]
-      });
-      var direction; 
-
-      joystick.on("change", function(socket) {
-        if(this.x == 1){
-          direction = "right";
-        }
-        else if(this.x == -1){
-          direction = "left";
-        }
-        else if(this.y < -0.97){
-          direction = "up";
-        }
-        else if(this.y == 1){
-          direction = "down";
-        }
-        else{
-          direction = undefined;
-        }
-
-
-        var data = {
-          "direction": direction
-        }
-
-        if(data.direction == "up" || data.direction == "down" || data.direction == "left" || data.direction == "right" ){
-          io.sockets.emit("joystick", direction);
-        }
-      });
     });
 
     // add client in room
@@ -100,6 +67,41 @@ module.exports = function(app, io){
 
 	});
 
+// ------------- A R D U I N O  -------------
+  function arduinoJoystick(){
+    // Create a new `joystick` hardware instance.
+    var joystick = new five.Joystick({
+      //   [ x, y ]
+      pins: ["A0", "A1"]
+    });
+    var direction; 
+
+    // Detect when joystick changes
+    joystick.on("change", function(socket) {
+     
+      if(this.x == 1){
+        direction = "right";
+      }
+      else if(this.x == -1){
+        direction = "left";
+      }
+      else if(this.y < -0.97){
+        direction = "up";
+      }
+      else if(this.y == 1){
+        direction = "down";
+      }
+      else{
+        direction = undefined;
+      }
+
+      // Send data only if there is a direction
+      if(data.direction == "up" || data.direction == "down" || data.direction == "left" || data.direction == "right" ){
+        // send json data up / down / left / right
+        io.sockets.emit("arduinoMove", direction);
+      }
+    });
+  }
 
 // ------------- F U N C T I O N S -------------------
 
@@ -198,13 +200,13 @@ module.exports = function(app, io){
     
     console.log(folderMetaData);
     
-    if(data.zoom == "zoomin"){
+    if(data.direction == "zoomin"){
       var newZoom = zoomIn(parseFloat(folderMetaData.zoom));
       newData = {
         'zoom': newZoom,
       }
     }
-    if(data.zoom == "zoomout"){
+    if(data.direction == "zoomout"){
       var newZoom = zoomOut(parseFloat(folderMetaData.zoom));
       newData = {
         'zoom': newZoom,
@@ -338,7 +340,7 @@ module.exports = function(app, io){
     var folderMetaData = getFolderMeta( data.currentBlock, pathToRead);
     var blockPath = path.join(data.currentProject, data.currentBlock);
     
-    var newFont = data.font;
+    var newFont = data.direction;
     newData = {
         'font': newFont,
       }
@@ -359,7 +361,7 @@ module.exports = function(app, io){
     var folderMetaData = getFolderMeta( data.currentBlock, pathToRead);
     var blockPath = path.join(data.currentProject, data.currentBlock);
     
-    var newColor = data.color;
+    var newColor = data.direction;
     newData = {
         'color': newColor,
       }
