@@ -240,7 +240,7 @@ https://github.com/rwaldron/johnny-five/wiki/Getting-Started#trouble-shooting
 ### Adding Arduino code
 - Open main.js file
 - Write your code below the Arduino joystick function call line 41
-Functions are presetted in the program. 
+Functions are presetted in the program.   
 Write your code in the server-side and send the data to the client-side.
 
 Syntax to broadcast data in real time from server side to client side: ```io.sockets.emit(“nameOfEvent”, data);```
@@ -248,39 +248,39 @@ Syntax to broadcast data in real time from server side to client side: ```io.soc
 The list of functions and how to use it:
 
 #### Change block 
-Changing the selected block to act on. 
-```io.sockets.emit("arduinoChangeBlock", direction);```
+Changing the selected block to act on.   
+```io.sockets.emit("arduinoChangeBlock", direction);```  
 Where direction should be “next” or “prev”
 
 #### Move the block
-Moving the block up, down, left and right
-```io.sockets.emit("arduinoMove", direction);```
+Moving the block up, down, left and right  
+```io.sockets.emit("arduinoMove", direction);```  
 Where direction should be “up”, “down”, “left” or “right”
 
 #### Zoom In / Zoom Out in block
-```io.sockets.emit("arduinoZoomBlock", direction);```
+```io.sockets.emit("arduinoZoomBlock", direction);```  
 Where zoom should be “zoomin” or “zoomout”
 
 #### Change the size of a block
-```io.sockets.emit("arduinoChangeBlockSize", direction);```
+```io.sockets.emit("arduinoChangeBlockSize", direction);```  
 Where direction should be “decreaseSize” or “increaseSize”
 
 #### Change letter spacing
-```io.sockets.emit("arduinoChangeWordSpacing", direction);```
+```io.sockets.emit("arduinoChangeWordSpacing", direction);```  
 Where direction should be “decreaseSpacing” or “increaseSpacing”
 
 #### Change the font
-```io.sockets.emit("arduinoChangeFont", direction);```
-Where font is the name of the font.
-List of fonts available in the PJ Machine
+```io.sockets.emit("arduinoChangeFont", direction);```  
+Where font is the name of the font.  
+List of fonts available in the PJ Machine  
 "aileron", "fira", "inknut", "nanook", "reglo", "roboto", "terminal", "vollkorn"
 
 #### Change the font color
-```io.sockets.emit("arduinoChangeColor", direction);```
+```io.sockets.emit("arduinoChangeColor", direction);```  
 Where color is the color you want for your font (color can be in hex or rgb)
 
 #### Rotate the block
-```io.sockets.emit("arduinoRotateBlock", direction);```
+```io.sockets.emit("arduinoRotateBlock", direction);```  
 Where direction should be “clockwise” or “counterclockwise”
 
 - When you want to test your code, restart the server and reload you page in browser
@@ -288,9 +288,9 @@ Where direction should be “clockwise” or “counterclockwise”
 ## Adding new features
 
 ### Sending events to server 
-At this time PJ Machine is working with keypress. 
-The programm is calling a function relative to specific keys. 
-If you want to change the kind of interaction in javascript, you could get the data from where you want and send them to the server. 
+At this time PJ Machine is working with keypress.   
+The programm is calling a function relative to specific keys.   
+If you want to change the kind of interaction in javascript, you could get the data from where you want and send them to the server.   
 Write your code in the ```public/js/pj-send-events.js``` file (jquery is installed)
 
 Functions are pre-defined, and can be used easily.
@@ -298,39 +298,39 @@ Functions are pre-defined, and can be used easily.
 The list of functions: 
 
 #### Change block 
-Changing the selected block to act on. 
-```sendEvent('changeBlock', direction);```
+Changing the selected block to act on.   
+```sendEvent('changeBlock', direction);```  
 Where direction should be “next” or “prev”
 
-#### Move the block
-Moving the block up, down, left and right
-```sendEvent('moveBlock', direction);```
+#### Move the block 
+Moving the block up, down, left and right  
+```sendEvent('moveBlock', direction);```  
 Where direction should be “up”, “down”, “left” or “right”
 
 #### Zoom In / Zoom Out in block
-```sendEvent('zoomBlock', zoom);```
+```sendEvent('zoomBlock', zoom);```  
 Where zoom should be “zoomin” or “zoomout”
 
 #### Change the size of a block
-```sendEvent('changeBlockSize', direction);```
+```sendEvent('changeBlockSize', direction);```  
 Where direction should be “decreaseSize” or “increaseSize”
 
 #### Change letter spacing
-```sendEvent('changeWordSpacing', direction);```
+```sendEvent('changeWordSpacing', direction);```  
 Where direction should be “decreaseSpacing” or “increaseSpacing”
 
 #### Change the font
-```sendEvent('changeFont', font);```
-Where font is the name of the font.
-List of fonts available in the PJ Machine
+```sendEvent('changeFont', font);```  
+Where font is the name of the font.  
+List of fonts available in the PJ Machine  
 "aileron", "fira", "inknut", "nanook", "reglo", "roboto", "terminal", "vollkorn"
 
 #### Change the font color
-```sendEvent('changeColor', color);```
+```sendEvent('changeColor', color);```  
 Where color is the color you want for your font (color can be in hex or rgb)
 
 #### Rotate the block
-```sendEvent('rotateBlock', direction);```
+```sendEvent('rotateBlock', direction);```  
 Where direction should be “clockwise” or “counterclockwise”
 
 ## Adding / Changing style (css or sass)
@@ -339,13 +339,13 @@ Where direction should be “clockwise” or “counterclockwise”
 Add your own css in ```public/css/public.css```
 
 ### SASS
-If you feel sassy, you can add your style with sass in ```public/sass/style.scss```
+If you feel sassy, you can add your style with sass in ```public/sass/style.scss```  
 Then run ```gulp``` in the terminal (you need to have gulp install)
 
 ## Adding / Changing html (jade)
-The program is using a html template named jade.
-Changing jade in ```views/index.jade```
-Jade documentation: https://naltatis.github.io/jade-syntax-docs/
+The program is using a html template named jade.  
+Changing jade in ```views/index.jade```  
+Jade documentation: https://naltatis.github.io/jade-syntax-docs/  
 Html to Jade Converter: http://html2jade.org/
 
 ---
