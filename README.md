@@ -191,19 +191,19 @@ The content should be written in markdown.
 
 ### Markdown memo
 
-```# Big Title (h1)```
-```## Sub Title (h2)```
-```### Sub Sub Title (h3)```
-```#### Sub Sub Sub Title (h4)```
-```#### Sub Sub Sub Sub Title (h5)```
-```**Bold**```
-```*Italic*```
+```# Big Title (h1)```  
+```## Sub Title (h2)```  
+```### Sub Sub Title (h3)```  
+```#### Sub Sub Sub Title (h4)```  
+```#### Sub Sub Sub Sub Title (h5)```  
+```**Bold**```  
+```*Italic*```  
 
 #### Add an image
-- Put your image in the folder 
+- Add your image in the folder   
 ```![alt](data/blocks/nameoftheblockfolder/nameofimage.jpg)```
 - Or add an image from the web
-```![alt](http://website.com/image.jpg)``
+```![alt](http://website.com/image.jpg)``` 
 
 ## Page settings
 You can easily change the page settings: size, scale and margins
