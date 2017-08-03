@@ -83,64 +83,64 @@ To stop the server: ctrl + c in terminal
 
 ## App architecture
 
-- content  
-    - data   
+- ```content ```  
+    - ```data ```  
     folder where the content is stored  
-        - blocks  
+        - ```blocks  ```
         add folder here to add a block to your project   
         (see “How to add content” in the documentation)  
-        - data.md 
+        - ```data.md```  
         a setting file for data, we don’t need it  
-        - page.json  
+        - ```page.json ```   
         edit this file to change your page settings (size and margin)  
         (see “Page settings” in the documentation)  
-        - pdf  
+        - ```pdf  ```
         folder where pdf are exported   
-        - settings.js  
+        - ```settings.js  ```
         edit this file to change app settings  
         (see “App settings” in the documentation)  
 
-- main.js  
-Node serveur file — In this file you can add server functions. 
-We will use it mainly to add Arduino code 
+- ```main.js  ```  
+Node serveur file — In this file you can add server functions.  
+We will use it mainly to add Arduino code  
 (see “Arduino and Nodejs” in the documentation)
 
->public     
-    > js
-        > create-page.js
+- ```public ```    
+    - ```js```  
+        - ``` create-page.js```  
         js file that load the content and display every block correctly
     
-        > interface-events.js
+        - ```interface-events.js```  
         js functions for interface (grid, zooming in page, preview etc.)
     
-        > pj-receive-events.js
-        functions to call when you make a move on a block 
+        - ```pj-receive-events.js```  
+        functions to call when you make a move on a block  
         (see “Adding new features” in the documentation)
 
-        > pj-send-events-keypress.js
+        - ```pj-send-events-keypress.js```  
         js functions send events from keypress 
     
-        > pj-send-events.js
-        add your own events functions here
+        - ```pj-send-events.js```  
+        add your own events functions here  
         (see “Adding new features” in the documentation)
 
-        > poster.js
+        - ``` poster.js```  
         main javascript client-side file for poster page
 
-    > css
-        > public.css
-        Write your own css here
+    - ```css```
+        - ```public.css```  
+        Write your own css here  
         (see “Adding / Changing style (css or sass)” in the documentation)
    
-    > sass 
-        > style.scss
-        Write your own sass here
+    - ```sass ```
+        - ```style.scss```  
+        Write your own sass here  
         (see “Adding / Changing style (css or sass)” in the documentation)
 
-> views
-Folder where html files are stored. I’m using a html template named jade
-    > index.jade
-    main jade / html file
+- ```views```  
+Folder where html files are stored. I’m using a html template named jade  
+    - ```index.jade```  
+    main jade / html file  
     (see “Adding / Changing html (jade)” in the documentation)
 
 ## Keyboard events
