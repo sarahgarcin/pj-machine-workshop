@@ -42,7 +42,6 @@ socket.on('arduinoZoomBlock', function(data){
 socket.on('arduinoChangeBlockSize', function(data){
 	sendEvent('changeBlockSize', data);
 });
-
 socket.on('arduinoChangeWordSpacing', function(data){
 	sendEvent('changeWordSpacing', data);
 });
@@ -61,28 +60,6 @@ socket.on('pdfIsGenerated', function(filepath){
 });
 
 (function init(){
-
-	// KEY PRESS EVENTS
-	$(document).on('keypress', function(e){
-		var code = e.keyCode;
-		console.log(code);
-
-		// CALL FUNCTION YOU NEED HERE 
-		// CHANGE THE KEYPRESS CODE IN EACH FUNCTION
-		changeBlock(code);
-		moveBlock(code);
-		zoomBlock(code);
-		wordSpacing(code);
-		changeBlockSize(code);
-		changeFont(code);
-		changeColor(code);
-		rotateBlock(code);
-		
-		generatePDF(code);
-
-		
-		e.preventDefault(); // prevent the default action (scroll / move caret)
-	});
 
 
 })();
