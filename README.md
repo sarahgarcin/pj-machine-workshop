@@ -22,26 +22,26 @@ The PJ Machine (Publishing Jockey Machine) is a box with arcade buttons to contr
 ![](images/tr-2.png)
 
 ### Alternative publishing tools
-http://computedlayout.tumblr.com/
-http://www.indianen.be/work/longhand-publishers
-http://banc.g-u-i.net/dispositifs/compte-fil
+http://computedlayout.tumblr.com/  
+http://www.indianen.be/work/longhand-publishers  
+http://banc.g-u-i.net/dispositifs/compte-fil  
 
 ## Materials for the workshop
-    - Makey-Makey (http://www.makeymakey.com/)
-    - Arduinos
-    - Buttons
-    - Joystick
-    - Potentiometers
-    - Smartphone
-    - Paper
-    - Printer
-    - Cardboard
+- Makey-Makey (http://www.makeymakey.com/)
+- Arduinos
+- Buttons
+- Joystick
+- Potentiometers
+- Smartphone
+- Paper
+- Printer
+- Cardboard
 
 ## Installation
 
 ### Dependencies
 
-- Install[node.js](https://nodejs.org/)
+Install [node.js](https://nodejs.org/)
 
 #### 1. Download this repository
 
@@ -83,24 +83,24 @@ To stop the server: ctrl + c in terminal
 
 ## App architecture
 
-> content
-    > data 
-    folder where the content is stored
-        > blocks
-        add folder here to add a block to your project 
-        (see “How to add content” in the documentation)
-        > data.md 
-        a setting file for data, we don’t need it
-        > page.json
-        edit this file to change your page settings (size and margin)
-        (see “Page settings” in the documentation)
-        > pdf
-        folder where pdf are exported 
-        > settings.js
-        edit this file to change app settings
-        (see “App settings” in the documentation)
+- content  
+    - data   
+    folder where the content is stored  
+        - blocks  
+        add folder here to add a block to your project   
+        (see “How to add content” in the documentation)  
+        - data.md 
+        a setting file for data, we don’t need it  
+        - page.json  
+        edit this file to change your page settings (size and margin)  
+        (see “Page settings” in the documentation)  
+        - pdf  
+        folder where pdf are exported   
+        - settings.js  
+        edit this file to change app settings  
+        (see “App settings” in the documentation)  
 
-> main.js
+- main.js  
 Node serveur file — In this file you can add server functions. 
 We will use it mainly to add Arduino code 
 (see “Arduino and Nodejs” in the documentation)
@@ -203,7 +203,7 @@ The content should be written in markdown.
 - Put your image in the folder 
 ```![alt](data/blocks/nameoftheblockfolder/nameofimage.jpg)```
 - Or add an image from the web
-```![alt](http://website.com/image.jpg)```
+```![alt](http://website.com/image.jpg)``
 
 ## Page settings
 You can easily change the page settings: size, scale and margins
@@ -347,6 +347,11 @@ The program is using a html template named jade.
 Changing jade in ```views/index.jade```
 Jade documentation: https://naltatis.github.io/jade-syntax-docs/
 Html to Jade Converter: http://html2jade.org/
+
+---
+
+## License 
+GPL v.3
 
 
 
