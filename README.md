@@ -175,10 +175,10 @@ All functions can be fired by a keypress.
 
 ## How to add content 
 - Go to PJ Machine folder 
-- Open ```content/blocks``` folder
+- Open ```content/data/blocks``` folder
 - Here you have all the content folders
 - One folder = a block on the PJ Machine interface
-- Copy paste the example-folder you find here into ```content/blocks```
+- Copy paste the ```example-folder``` (find it in the project root) in ```content/data/blocks`` 
 - Rename the folder with the next number 
 - Open data.txt — data.txt are files where block data are stored
 - Change the path replacing example-folder by the name of your folder
