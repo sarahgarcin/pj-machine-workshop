@@ -1,0 +1,48 @@
+path: content/data/blocks/example-folder
+
+----
+
+index: 5
+
+----
+
+content: Hello world
+
+----
+
+zoom: 1
+
+----
+
+xPos: 0
+
+----
+
+yPos: 0
+
+----
+
+wordSpace: 0
+
+----
+
+blockSize: 10
+
+----
+
+filesNb: 1
+
+----
+
+font:
+
+----
+
+color: 
+
+----
+
+rotation: 0
+
+----
+
