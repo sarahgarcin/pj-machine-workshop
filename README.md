@@ -227,10 +227,10 @@ An example is setting up in the PJ Machine. You can plug a joystick and move blo
 
 ### Joystick and Jonnhy-Five 
 - Plug Joystick to Arduino, like this
-	•	Ground - wired to the ground rail
-	•	+5V - wired to the power rail
-	•	VRx - the “X” value of the joystick, wired to Analog In 0
-	•	VRy - the “Y” value of the joystick, wired to Analog In 1
+    - Ground - wired to the ground rail
+    - +5V - wired to the power rail
+    - VRx - the “X” value of the joystick, wired to Analog In 0
+    - VRy - the “Y” value of the joystick, wired to Analog In 1
 - Documentation for joystick and node is here: http://johnny-five.io/examples/joystick/
 - Code for joystick is in the main.js file line 71
 - Run ```node server.js``` in the terminal 
