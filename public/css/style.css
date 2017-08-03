@@ -436,7 +436,8 @@ body.preview .page {
   .grid div {
     height: 100%;
     width: 3.33%;
-    border-right: 1px solid #DA0097; }
+    border-right: 1px solid #DA0097;
+    display: inline-block; }
     .grid div:last-child {
       border: none; }
   .grid.active {

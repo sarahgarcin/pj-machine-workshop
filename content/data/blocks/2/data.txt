@@ -2,11 +2,15 @@ path: content/data/blocks/2
 
 ----
 
-content: You can add content by clicking on "add a block".   
-Then write your content in the Markdown Editor on the right sidebar.  
-Click on run to proceed.  
- 
-In the Markdown editor you can write in Markdown or in html. 
+content: Machines  
+Machines  
+Machines   
+Machines  
+Machines   
+Machines  
+Machines   
+Machines  
+Machines   
 
 
 

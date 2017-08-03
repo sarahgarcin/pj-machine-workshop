@@ -89,6 +89,7 @@ body.preview{
     height:100%;
     width: 3.33%;
     border-right: 1px solid #DA0097;
+    display:inline-block;
     &:last-child{border:none;}
   }
   &.active{
