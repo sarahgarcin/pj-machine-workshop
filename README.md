@@ -53,6 +53,7 @@ Open a terminal window to execute commands and install the programm.
 
 - macOS: go to Applications -> Utilities -> Terminal
 - Linux: use a terminal app such as Terminal or Konsole
+- Windows: open Command Prompt in the start menu 
 
 In your terminal, navigate to the pj-machine folder with your terminal using the `cd` command:
 ```
